@@ -8,7 +8,7 @@ public abstract class Collection {
 	private final String author;
 	protected boolean isBorrowable;
 	protected LocalDate borrowedDate;
-	protected Person Borrower;
+	protected Person borrower;
 
 	public Collection(String title, String author, boolean isBorrowable) {
 		this.title = title;
@@ -33,7 +33,7 @@ public abstract class Collection {
 	}
 
 	public Person getBorrower() {
-		return Borrower;
+		return borrower;
 	}
 
 	public abstract void setBorrowable(boolean isBorrowable) throws CollectionException;

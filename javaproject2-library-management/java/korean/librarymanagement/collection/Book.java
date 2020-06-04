@@ -20,6 +20,6 @@ public class Book extends Collection{
 
 	@Override
 	public void setBorrower(Person borrower) {
-		this.Borrower = borrower;
+		this.borrower = borrower;
 	}
 }
