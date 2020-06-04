@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.korean.librarymanagement.collection.Collection;
 
 public abstract class Person {
-	private int numberOfBorrowable;
-	private int daysOfBorrowable;
-	private int id;
-	private String name;
-	private ArrayList<Collection> borrowingCollection;
+	private final int numberOfBorrowable;
+	private final int daysOfBorrowable;
+	private final int id;
+	private final String name;
+	private final ArrayList<Collection> borrowingCollection;
 	
 	public Person(int numberOfBorrowable, int daysOfBorrowable, int id, String name) {
 		this.numberOfBorrowable = numberOfBorrowable;
@@ -34,7 +34,7 @@ public abstract class Person {
 		return borrowingCollection;
 	}
 	
-	public Collection FindCollection(String title) {
+	public Collection findCollection(String title) {
 
 	}
 }
