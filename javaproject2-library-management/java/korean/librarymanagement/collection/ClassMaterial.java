@@ -9,7 +9,7 @@ public class ClassMaterial extends Collection{
 	}
 
 	@Override
-	public void setBorrowable(boolean borrowable) throws CollectionException{
+	public void setBorrowable(boolean isBorrowable) throws CollectionException{
 		throw new CollectionException("setBorrowable 에러 - 수업자료는 대출할 수 없습니다. ");
 	}
 

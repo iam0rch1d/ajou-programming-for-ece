@@ -1,44 +1,44 @@
 package java.korean.librarymanagement.collection;
 
-import java.text.SimpleDateFormat;
+import java.korean.librarymanagement.person.Person;
 import java.time.LocalDate;
 
-import java.korean.librarymanagement.person.Person;
-
 public abstract class Collection {
-	private String title = null;
-	private String author = null;
-	protected boolean borrowable;
+	private final String title;
+	private final String author;
+	protected boolean isBorrowable;
 	protected LocalDate borrowedDate;
 	protected Person Borrower;
 
-	public Collection(String title, String author, boolean borrowable) {
+	public Collection(String title, String author, boolean isBorrowable) {
 		this.title = title;
 		this.author = author;
-		this.borrowable = borrowable;
+		this.isBorrowable = isBorrowable;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
+
 	public String getAuthor() {
 		return author;
 	}
-	public boolean isBorrowable() {
-		return borrowable;
+
+	public boolean getIsBorrowable() {
+		return isBorrowable;
 	}
 
-	public abstract void setBorrowable(boolean borrowable) throws CollectionException;
-	
 	public LocalDate getBorrowedDate() {
 		return borrowedDate;
 	}
 
-	public abstract void setBorrowedDate(LocalDate borrowedDate) throws CollectionException;
-
 	public Person getBorrower() {
 		return Borrower;
 	}
+
+	public abstract void setBorrowable(boolean isBorrowable) throws CollectionException;
+
+	public abstract void setBorrowedDate(LocalDate borrowedDate) throws CollectionException;
 
 	public abstract void setBorrower(Person borrower) throws CollectionException;
 

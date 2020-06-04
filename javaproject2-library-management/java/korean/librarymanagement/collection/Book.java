@@ -9,8 +9,8 @@ public class Book extends Collection{
 	}
 
 	@Override
-	public void setBorrowable(boolean borrowable) {
-		this.borrowable = borrowable;
+	public void setBorrowable(boolean isBorrowable) {
+		this.isBorrowable = isBorrowable;
 	}
 
 	@Override
