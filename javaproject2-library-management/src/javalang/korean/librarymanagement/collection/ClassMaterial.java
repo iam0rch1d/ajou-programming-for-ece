@@ -1,7 +1,7 @@
-package java.korean.librarymanagement.collection;
+package javalang.korean.librarymanagement.collection;
 
 import java.time.LocalDate;
-import java.korean.librarymanagement.person.Person;
+import javalang.korean.librarymanagement.person.Person;
 
 public class ClassMaterial extends Collection{
 	public ClassMaterial(String title, String author) {
@@ -9,7 +9,7 @@ public class ClassMaterial extends Collection{
 	}
 
 	@Override
-	public void setBorrowable(boolean isBorrowable) throws CollectionException{
+	public void setBorrowable(boolean isBorrowable) throws CollectionException {
 		throw new CollectionException("setBorrowable 에러 - 수업자료는 대출할 수 없습니다. ");
 	}
 

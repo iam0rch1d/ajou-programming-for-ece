@@ -1,6 +1,7 @@
-package java.korean.librarymanagement.collection;
+package javalang.korean.librarymanagement.collection;
 
-import java.korean.librarymanagement.person.Person;
+import javalang.korean.librarymanagement.person.Person;
+
 import java.time.LocalDate;
 
 public abstract class Collection {

@@ -1,4 +1,4 @@
-package java.korean.librarymanagement.collection;
+package javalang.korean.librarymanagement.collection;
 
 public class CollectionException extends Exception{
 	public CollectionException(String message) {

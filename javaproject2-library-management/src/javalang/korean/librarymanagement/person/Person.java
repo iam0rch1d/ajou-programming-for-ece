@@ -1,21 +1,21 @@
-package java.korean.librarymanagement.person;
+package javalang.korean.librarymanagement.person;
 
 import java.util.ArrayList;
-import java.korean.librarymanagement.collection.Collection;
+import javalang.korean.librarymanagement.collection.Collection;
 
 public abstract class Person {
-	private final int numberOfBorrowable;
-	private final int daysOfBorrowable;
 	private final int id;
 	private final String name;
+	private final int numberOfBorrowable;
+	private final int daysOfBorrowable;
 	private final ArrayList<Collection> borrowingCollection;
 	
-	public Person(int numberOfBorrowable, int daysOfBorrowable, int id, String name) {
-		this.numberOfBorrowable = numberOfBorrowable;
-		this.daysOfBorrowable = daysOfBorrowable;
+	public Person(int id, String name, int numberOfBorrowable, int daysOfBorrowable) {
 		this.id = id;
 		this.name = name;
-		borrowingCollection = new ArrayList<Collection>();
+		this.numberOfBorrowable = numberOfBorrowable;
+		this.daysOfBorrowable = daysOfBorrowable;
+		borrowingCollection = new ArrayList<>();
 	}
 		
 	public int getNumberOfBorrowable() {
@@ -34,7 +34,7 @@ public abstract class Person {
 		return borrowingCollection;
 	}
 	
-	public Collection findCollection(String title) {
+	//public Collection findCollection(String title) {
 
-	}
+	//}
 }

@@ -1,9 +1,9 @@
-package java.korean.librarymanagement.collection;
+package javalang.korean.librarymanagement.collection;
 
 import java.time.LocalDate;
-import java.korean.librarymanagement.person.Person;
+import javalang.korean.librarymanagement.person.Person;
 
-public class Book extends Collection{
+public class Book extends Collection {
 	public Book(String title, String author) {
 		super(title, author, true);
 	}
