@@ -2,10 +2,8 @@ package javalang.korean.librarymanagement;
 
 import java.util.Scanner;
 import javalang.korean.librarymanagement.collection.*;
-import javalang.korean.librarymanagement.person.Person;
-import javalang.korean.librarymanagement.person.PersonException;
-import javalang.korean.librarymanagement.person.Professor;
-import javalang.korean.librarymanagement.person.Student;
+import javalang.korean.librarymanagement.person.*;
+
 
 public class Core {
     private static final Scanner scanner = new Scanner(System.in);
@@ -13,77 +11,31 @@ public class Core {
 
     public static void main(String[] args) {
         while (true) {
-            System.out.println("---------------- 아주대학교 도서관 관리 페이지입니다 --------------");
-            System.out.println("1. 회원 등록");
-            System.out.println("2. 회원 목록 출력");
-            System.out.println("3. 자료 등록");
-            System.out.println("4. 자료 목록 출력");
-            System.out.println("5. 도서관 정보 저장");
-            System.out.println("6. 자료 대출");
-            System.out.println("7. 자료 반납");
-            System.out.println("8. 종료");
-            System.out.println("--------------------------------------------------------");
+            System.out.println("--------------------------------------------------------------------------------");
+            System.out.println("                        아주대학교 도서관 관리 프로그램");
+            System.out.println("--------------------------------------------------------------------------------");
+            System.out.println("[1] - 회원 등록");
+            System.out.println("[2] - 회원 목록 출력");
+            System.out.println("[3] - 자료 등록");
+            System.out.println("[4] - 자료 목록 출력");
+            System.out.println("[5] - 도서관 정보 저장");
+            System.out.println("[6] - 자료 대출");
+            System.out.println("[7] - 자료 반납");
+            System.out.println("[8] - 종료");
+            System.out.println("--------------------------------------------------------------------------------");
             System.out.print("메뉴를 선택하십시오. ([1-8]): ");
 
             try {
                 int menuSelection = Integer.parseInt(scanner.nextLine());
 
                 switch (menuSelection) {
-                    case 1 -> library.addPerson(runCreatePersonInformationUi());
+                    case 1 -> library.addPerson(runUiCreatePersonInformation());
                     case 2 -> library.printPersonArrayList();
-                    case 3 -> library.addCollection(runCreateCollectionInformationUi());
+                    case 3 -> library.addCollection(runUiCreateCollectionInformation());
                     case 4 -> library.printCollectionArrayList();
                     case 5 -> library.saveLibrary();
-                    case 6 -> {
-                        System.out.print("대출할 자료의 제목을 입력하세요: ");
-
-                        String title = scanner.nextLine();
-
-                        System.out.println("자료를 대출하려는 회원을 검색합니다. 메뉴를 선택하십시오. ([1] 또는 [2])");
-                        System.out.print("([1] - 이름으로 검색, [2] - 고유번호(UID)로 검색): ");
-
-                        try {
-                            int submenuSelection = Integer.parseInt(scanner.nextLine());
-
-                            switch (submenuSelection) {
-                                case 1 : {
-                                    System.out.print("자료를 대출할 사용자의 이름을 입력하세요: ");
-
-                                    String name = library.searchByName(scanner.nextLine());
-                                }
-                                case 2 : {
-                                    System.out.print("자료를 대출할 사용자의 고유번호를 입력하세요: ");
-                                    int id = Integer.parseInt(scanner.nextLine());
-
-                                    library.borrowCollection(title, id);
-                                }
-                            }
-                        } catch (NumberFormatException numberFormatException) {
-                            System.out.println(
-                                "에러: [1] 또는 [2]를 입력해 주십시오. ("
-                                    + numberFormatException.getClass().getName()
-                                    + ")"
-                            );
-                        }
-                    }
-                    case 7 -> {
-                        System.out.println("이름으로 반납할 경우 1, 고유번호로 반납할 경우 2를 입력하세요: ");
-                        int selectNum2 = Integer.parseInt(scanner.nextLine());
-                        System.out.println("반납할 자료의 제목을 입력하세요 : ");
-                        String title = scanner.nextLine();
-                        switch (selectNum2) {
-                            case 1 -> {
-                                System.out.println("반납할 사용자의 이름을 입력하세요: ");
-                                String name = scanner.nextLine();
-                                library.returnCollection(title, name);
-                            }
-                            case 2 -> {
-                                System.out.println("반납할 사용자의 고유번호를 입력하세요: ");
-                                int id = Integer.parseInt(scanner.nextLine());
-                                library.returnCollection(title, id);
-                            }
-                        }
-                    }
+                    case 6 -> library.borrowCollection(runUiSearchPerson(), runUiSearchCollection());
+                    case 7 -> library.returnCollection(runUiSearchPerson(), runUiSearchCollection());
                     case 8 -> {
                         return;
                     }
@@ -91,7 +43,7 @@ public class Core {
                 }
             } catch (NumberFormatException exception) {
                 System.out.println(
-                    "에러: [1-8] 사이의 숫자를 입력해 주십시오. (" + exception.getClass().getName() + ")"
+                    "에러: 숫자 형태로 입력해 주십시오. (" + exception.getClass().getName() + ")"
                 );
             } catch (PersonException | CollectionException exception) {
                 System.out.println(
@@ -101,9 +53,9 @@ public class Core {
         }
     }
 
-    private static Person runCreatePersonInformationUi() throws PersonException {
+    private static Person runUiCreatePersonInformation() throws PersonException {
         try {
-            System.out.print("회원의 고유번호(UID)를 입력하십시오.: ");
+            System.out.print("회원의 고유번호(uid)를 입력하십시오.: ");
             int uid;
 
             while (true) {
@@ -112,7 +64,7 @@ public class Core {
                 if (library.isUidUnique(uid)) {
                     break;
                 } else {
-                    System.out.print("중복된 고유번호(UID)가 존재합니다. 다시 입력해 주십시오.: ");
+                    System.out.print("중복된 고유번호(uid)가 존재합니다. 다시 입력해 주십시오.: ");
                 }
             }
 
@@ -135,8 +87,8 @@ public class Core {
                 throw new PersonException("에러: 회원 타입의 입력이 올바르지 않습니다.");
             }
 
-            System.out.println("생성할 회원의 정보는 다음과 같습니다.");
-            System.out.println("고유번호(UID): " + uid);
+            System.out.println("다음 정보를 갖는 회원을 생성합니다.");
+            System.out.println("고유번호(uid): " + uid);
             System.out.println("이름: " + name);
             System.out.println("타입: " + className);
 
@@ -146,15 +98,16 @@ public class Core {
                 return new Professor(uid, name);
             }
         } catch (NumberFormatException numberFormatException) {
-            System.out.println(
-                "에러: 숫자 형태의 고유번호(UID)를 입력해 주십시오. (" + numberFormatException.getClass().getName() + ")"
+            System.out.print("에러: 숫자 형태의 고유번호(uid)를 입력해 주십시오. ("
+                + numberFormatException.getClass().getName()
+                + ")"
             );
         }
 
         return null;
     }
 
-    private static Collection runCreateCollectionInformationUi() throws CollectionException {
+    private static Collection runUiCreateCollectionInformation() throws CollectionException {
         System.out.print("자료의 제목을 입력하십시오.: ");
 
         String title = scanner.nextLine();
@@ -178,7 +131,7 @@ public class Core {
             throw new CollectionException("에러: 자료 타입의 입력이 올바르지 않습니다.");
         }
 
-        System.out.println("생성할 자료의 정보는 다음과 같습니다.");
+        System.out.println("다음 정보를 갖는 자료를 생성합니다.");
         System.out.println("제목: " + title);
         System.out.println("저자: " + author);
         System.out.println("타입: " + className);
@@ -187,6 +140,55 @@ public class Core {
             return new Book(title, author);
         } else {
             return new ClassMaterial(title, author);
+        }
+    }
+
+    private static Person runUiSearchPerson() throws PersonException {
+        while (true) {
+            System.out.println("자료를 대출하려는 회원을 검색합니다. 메뉴를 선택하십시오. ([1-3])");
+            System.out.print("([1] - 이름으로 검색, [2] - 고유번호(uid)로 검색, [3] - 취소): ");
+
+            try {
+                int menuSelection = Integer.parseInt(scanner.nextLine());
+
+                switch (menuSelection) {
+                    case 1 -> {
+                        return library.runUiSearchPersonByName();
+                    }
+                    case 2 -> {
+                        return library.runUiSearchPersonByUid();
+                    }
+                    case 3 -> throw new PersonException("자료 대출이 취소되었습니다.");
+                    default -> System.out.println("존재하지 않는 메뉴입니다.");
+                }
+            } catch (NumberFormatException exception) {
+                System.out.println("에러: 숫자 형태로 입력해 주십시오. (" + exception.getClass().getName() + ")");
+            }
+        }
+    }
+
+    private static Collection runUiSearchCollection() throws CollectionException {
+        while (true) {
+            System.out.println("대출할 자료를 검색합니다. 메뉴를 선택하십시오. ([1-2])");
+            System.out.print("([1] - 제목으로 검색, [2] - 취소): ");
+
+            try {
+                int menuSelection = Integer.parseInt(scanner.nextLine());
+
+                switch (menuSelection) {
+                    case 1 -> {
+                        return library.runUiSearchCollectionByTitle();
+                    }
+                    case 2 -> throw new CollectionException("자료 대출이 취소되었습니다.");
+                    default -> System.out.println("존재하지 않는 메뉴입니다.");
+                }
+            } catch (NumberFormatException numberFormatException) {
+                System.out.println(
+                    "에러: 숫자 형태로 입력해 주십시오. ("
+                        + numberFormatException.getClass().getName()
+                        + ")"
+                );
+            }
         }
     }
 }

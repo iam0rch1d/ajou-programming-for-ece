@@ -42,5 +42,4 @@ public abstract class Collection {
 	public abstract void setBorrowedDate(LocalDate borrowedDate) throws CollectionException;
 
 	public abstract void setBorrower(Person borrower) throws CollectionException;
-
 }
