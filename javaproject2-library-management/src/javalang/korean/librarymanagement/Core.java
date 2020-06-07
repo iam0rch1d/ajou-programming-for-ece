@@ -4,7 +4,6 @@ import java.util.Scanner;
 import javalang.korean.librarymanagement.collection.*;
 import javalang.korean.librarymanagement.person.*;
 
-
 public class Core {
     private static final Scanner scanner = new Scanner(System.in);
     static Library library = new Library();
@@ -54,18 +53,13 @@ public class Core {
     }
 
     private static Person runUiCreatePersonInformation() throws PersonException {
+        System.out.print("회원의 고유번호(uid)를 입력하십시오.: ");
+
         try {
-            System.out.print("회원의 고유번호(uid)를 입력하십시오.: ");
-            int uid;
+            int uid = Integer.parseInt(scanner.nextLine());
 
-            while (true) {
-                uid = Integer.parseInt(scanner.nextLine());
-
-                if (library.isUidUnique(uid)) {
-                    break;
-                } else {
-                    System.out.print("중복된 고유번호(uid)가 존재합니다. 다시 입력해 주십시오.: ");
-                }
+            if (!library.isUidUnique(uid)) {
+                throw new PersonException("중복된 고유번호(uid)가 존재합니다.");
             }
 
             System.out.print("회원의 이름을 입력하십시오.: ");
@@ -84,7 +78,7 @@ public class Core {
                 || className.toLowerCase().equals("professor")) {
                 className = "Professor";
             } else {
-                throw new PersonException("에러: 회원 타입의 입력이 올바르지 않습니다.");
+                throw new PersonException("회원 타입의 입력이 올바르지 않습니다.");
             }
 
             System.out.println("다음 정보를 갖는 회원을 생성합니다.");
@@ -97,9 +91,9 @@ public class Core {
             } else {
                 return new Professor(uid, name);
             }
-        } catch (NumberFormatException numberFormatException) {
-            System.out.print("에러: 숫자 형태의 고유번호(uid)를 입력해 주십시오. ("
-                + numberFormatException.getClass().getName()
+        } catch (NumberFormatException exception) {
+            System.out.println("에러: 숫자 형태의 고유번호(uid)를 입력해 주십시오. ("
+                + exception.getClass().getName()
                 + ")"
             );
         }
@@ -128,7 +122,7 @@ public class Core {
             || className.toLowerCase().equals("classmaterial")) {
             className = "ClassMaterial";
         } else {
-            throw new CollectionException("에러: 자료 타입의 입력이 올바르지 않습니다.");
+            throw new CollectionException("자료 타입의 입력이 올바르지 않습니다.");
         }
 
         System.out.println("다음 정보를 갖는 자료를 생성합니다.");
@@ -182,13 +176,53 @@ public class Core {
                     case 2 -> throw new CollectionException("자료 대출이 취소되었습니다.");
                     default -> System.out.println("존재하지 않는 메뉴입니다.");
                 }
-            } catch (NumberFormatException numberFormatException) {
-                System.out.println(
-                    "에러: 숫자 형태로 입력해 주십시오. ("
-                        + numberFormatException.getClass().getName()
-                        + ")"
+            } catch (NumberFormatException exception) {
+                System.out.println("에러: 숫자 형태로 입력해 주십시오. ("
+                    + exception.getClass().getName()
+                    + ")"
                 );
             }
         }
+    }
+
+    static String alignString(String string, int length) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int stringLength = 0;
+
+        for (char element : string.toCharArray()) {
+            if (stringLength <= length) {
+                if (element >= 0x21 && element <= 0x7e) { // 1-byte character
+                    stringLength++;
+                } else {
+                    stringLength += 2;
+                }
+
+                stringBuilder.append(element);
+            }
+        }
+
+        if (stringLength <= length) {
+            stringBuilder.append(" ".repeat(Math.max(0, length - stringLength)));
+        } else {
+            while (stringLength > length - 2) {
+                char stringLastChar = stringBuilder.charAt(stringBuilder.length() - 1);
+                if (stringLastChar >= 0x21 && stringLastChar <= 0x7e) {
+                    stringLength--;
+                } else {
+                    stringLength -= 2;
+                }
+
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            }
+
+            if ((stringLength % 2) == 1) {
+                stringBuilder.append(" ");
+            }
+
+            stringBuilder.append("++");
+        }
+
+        return stringBuilder.toString();
     }
 }

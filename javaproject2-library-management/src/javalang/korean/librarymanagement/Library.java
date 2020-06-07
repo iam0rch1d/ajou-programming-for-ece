@@ -107,33 +107,49 @@ public class Library {
 	}
 
 	void addPerson(Person person) {
-		personArrayList.add(person);
-	}
-
-	void addCollection(Collection collection) {
-		collectionArrayList.add(collection);
+		if (person != null) {
+			personArrayList.add(person);
+		}
 	}
 
 	public void printPersonArrayList() {
+		System.out.println("--------------------------------------------");
+		System.out.println("|    uid    |       이름       | 회원 타입 |");
+		System.out.println("+-----------+------------------+-----------+");
+
 		for (Person element : personArrayList) {
-			System.out.println(element.getUid()
-				+ " | "
-				+ element.getName()
-				+ " | "
-				+ element.getClass().getSimpleName()
+			System.out.printf(
+				"| %9d | %s | %-9s |\n",
+				element.getUid(),
+				Core.alignString(element.getName(), 16),
+				element.getClass().getSimpleName()
 			);
+		}
+
+		System.out.println("--------------------------------------------");
+	}
+
+	void addCollection(Collection collection) {
+		if (collection != null) {
+			collectionArrayList.add(collection);
 		}
 	}
 
 	public void printCollectionArrayList() {
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("|               제목               |       저자       |   자료 타입   |");
+		System.out.println("+----------------------------------+------------------+---------------+");
+
 		for (Collection element : collectionArrayList) {
-			System.out.println(element.getTitle()
-				+ " | "
-				+ element.getAuthor()
-				+ " | "
-				+ element.getClass().getSimpleName()
+			System.out.printf(
+				"| %s | %s | %-13s |\n",
+				Core.alignString(element.getTitle(), 32),
+				Core.alignString(element.getAuthor(), 16),
+				element.getClass().getSimpleName()
 			);
 		}
+
+		System.out.println("-----------------------------------------------------------------------");
 	}
 
 	public void saveLibrary() {
@@ -141,9 +157,10 @@ public class Library {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/people.txt"));
 
 			for (Person element : personArrayList) {
-				bufferedWriter.write(
-					element.getUid() + "\\"
-					+ element.getName() + "\\"
+				bufferedWriter.write(element.getUid()
+					+ "\\"
+					+ element.getName()
+					+ "\\"
 					+ element.getClass().getSimpleName()
 				);
 				bufferedWriter.newLine();
@@ -159,10 +176,11 @@ public class Library {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/collections.txt"));
 
 			for (Collection element : collectionArrayList) {
-				bufferedWriter.write(
-					element.getTitle() + "\\"
-						+ element.getAuthor() + "\\"
-						+ element.getClass().getSimpleName()
+				bufferedWriter.write(element.getTitle()
+					+ "\\"
+					+ element.getAuthor()
+					+ "\\"
+					+ element.getClass().getSimpleName()
 				);
 				bufferedWriter.newLine();
 			}
@@ -188,53 +206,85 @@ public class Library {
 		}
 
 		switch (personWithNameArrayList.size()) {
-			case 0 -> throw new PersonException("입력한 이름을 가진 회원의 검색 결과가 존재하지 않습니다.");
+			case 0 -> throw new PersonException("해당 이름을 가진 회원의 검색 결과가 존재하지 않습니다.");
 			case 1 -> {
 				return personWithNameArrayList.get(0);
 			}
 			default -> {
-				System.out.println("입력한 이름을 갖는 회원이 "
+				System.out.println("해당 이름을 갖는 회원이 "
 					+ personWithNameArrayList.size()
-					+ "건 검색되었습니다.");
+					+ "건 검색되었습니다."
+				);
+
+				System.out.println("----------------------------------------------------");
+				System.out.println("| [No.] |    uid    |       이름       | 회원 타입 |");
+				System.out.println("+-------+-----------+------------------+-----------+");
 
 				for (int i = 0; i < personWithNameArrayList.size(); i++) {
-					System.out.println((i + 1)
-						+ " | "
-						+ personWithNameArrayList.get(i).getUid()
-						+ " | "
-						+ personWithNameArrayList.get(i).getName()
-						+ " | "
-						+ personWithNameArrayList.get(i).getClass().getSimpleName()
+					System.out.printf(
+						"| %s | %9d | %s | %-9s |\n",
+						Core.alignString("[" + (i + 1) + "]", 5),
+						personWithNameArrayList.get(i).getUid(),
+						Core.alignString(personWithNameArrayList.get(i).getName(), 16),
+						personWithNameArrayList.get(i).getClass().getSimpleName()
 					);
 				}
 
-				System.out.print("찾으시는 회원의 번호를 입력해 주십시오. ([1-"
-					+ personWithNameArrayList.size()
-					+ "]): "
-				);
+				System.out.println("----------------------------------------------------");
 
-				int personNoSelection = Integer.parseInt(scanner.nextLine());
+				while (true) {
+					System.out.print("찾으시는 회원의 번호(No.)를 입력해 주십시오. ([1-"
+						+ personWithNameArrayList.size()
+						+ "]): "
+					);
 
-				return personWithNameArrayList.get(personNoSelection - 1);
+					try {
+						int personNoSelection = Integer.parseInt(scanner.nextLine());
+
+						return personWithNameArrayList.get(personNoSelection - 1);
+					} catch (NumberFormatException exception) {
+						System.out.println("에러: 숫자 형태로 입력해 주십시오."
+							+ exception.getClass().getName()
+							+ ")"
+						);
+					} catch (IndexOutOfBoundsException exception) {
+						System.out.println("에러: [1-"
+							+ personWithNameArrayList.size()
+							+ "] 사이의 값을 입력해 주십시오. ("
+							+ exception.getClass().getName()
+							+ ")"
+						);
+					}
+				}
 			}
 		}
 	}
 
 	Person runUiSearchPersonByUid() throws PersonException {
-		System.out.print("검색할 회원의 고유번호(uid)를 입력하십시오.: ");
-		int uid = Integer.parseInt(scanner.nextLine());
+		while (true) {
+			System.out.print("검색할 회원의 고유번호(uid)를 입력하십시오.: ");
 
-		for (Person element : personArrayList) {
-			if (uid == element.getUid()) {
-				return element;
+			try {
+				int uid = Integer.parseInt(scanner.nextLine());
+
+				for (Person element : personArrayList) {
+					if (uid == element.getUid()) {
+						return element;
+					}
+				}
+
+				throw new PersonException("해당 고유번호(uid)를 가진 회원의 검색 결과가 존재하지 않습니다.");
+			} catch (NumberFormatException exception) {
+				System.out.println("에러: 숫자 형태로 입력해 주십시오."
+					+ exception.getClass().getName()
+					+ ")"
+				);
 			}
 		}
-
-		throw new PersonException("입력한 고유번호(uid)를 가진 회원의 검색 결과가 존재하지 않습니다.");
 	}
 
 	Collection runUiSearchCollectionByTitle() throws CollectionException {
-		System.out.print("검색할 자료의 제목을 입력하십시오.: ");
+		System.out.print("찾으실 자료의 제목을 입력하십시오.: ");
 
 		String title = scanner.nextLine();
 
@@ -247,34 +297,56 @@ public class Library {
 		}
 
 		switch (collectionWithTitleArrayList.size()) {
-			case 0 -> throw new CollectionException("입력한 제목을 가진 자료의 검색 결과가 존재하지 않습니다.");
+			case 0 -> throw new CollectionException("해당 제목을 가진 자료의 검색 결과가 존재하지 않습니다.");
 			case 1 -> {
 				return collectionWithTitleArrayList.get(0);
 			}
 			default -> {
-				System.out.println("입력한 이름을 가진 자료가 "
+				System.out.println("해당 제목을 가진 자료가 "
 					+ collectionWithTitleArrayList.size()
 					+ "건 검색되었습니다."
 				);
 
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("| [No.] |               제목               |       저자       |   자료 타입   |");
+				System.out.println("+-------+----------------------------------+------------------+---------------+");
 
 				for (int i = 0; i < collectionWithTitleArrayList.size(); i++) {
-					System.out.print((i + 1)
-						+ " | "
-						+ collectionWithTitleArrayList.get(i).getTitle()
-						+ " | "
-						+ collectionWithTitleArrayList.get(i).getAuthor()
-						+ " | "
-						+ collectionWithTitleArrayList.get(i).getClass().getSimpleName()
+					System.out.printf(
+						"| %s | %s | %s | %-13s |\n",
+						Core.alignString("[" + (i + 1) + "]", 5),
+						Core.alignString(collectionWithTitleArrayList.get(i).getTitle(), 32),
+						Core.alignString(collectionWithTitleArrayList.get(i).getAuthor(), 16),
+						collectionWithTitleArrayList.get(i).getClass().getSimpleName()
 					);
 				}
 
-				System.out.print("찾으시는 자료의 번호를 입력해 주십시오. ([1-");
-				System.out.print(collectionWithTitleArrayList.size() + "]): ");
+				System.out.println("-------------------------------------------------------------------------------");
 
-				int collectionNoSelection = Integer.parseInt(scanner.nextLine());
+				while (true) {
+					System.out.print("찾으시는 자료의 번호를 입력해 주십시오. ([1-"
+						+ collectionWithTitleArrayList.size()
+						+ "]): "
+					);
 
-				return collectionWithTitleArrayList.get(collectionNoSelection - 1);
+					try {
+						int collectionNoSelection = Integer.parseInt(scanner.nextLine());
+
+						return collectionWithTitleArrayList.get(collectionNoSelection - 1);
+					} catch (NumberFormatException exception) {
+						System.out.println("에러: 숫자 형태로 입력해 주십시오."
+							+ exception.getClass().getName()
+							+ ")"
+						);
+					} catch (IndexOutOfBoundsException exception) {
+						System.out.println("에러: [1-"
+							+ collectionWithTitleArrayList.size()
+							+ "] 사이의 값을 입력해 주십시오. ("
+							+ exception.getClass().getName()
+							+ ")"
+						);
+					}
+				}
 			}
 		}
 	}
