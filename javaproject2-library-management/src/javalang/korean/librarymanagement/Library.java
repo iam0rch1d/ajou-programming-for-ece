@@ -11,12 +11,12 @@ import java.util.Scanner;
 public class Library {
 	private static final Scanner scanner = new Scanner(System.in);
 
-	static final int PERSON_UID = 0;
-	static final int PERSON_NAME = 1;
-	static final int PERSON_CLASSNAME = 2;
-	static final int COLLECTION_TITLE = 0;
-	static final int COLLECTION_AUTHOR = 1;
-	static final int COLLECTION_CLASSNAME = 2;
+	private static final int PERSON_UID = 0;
+	private static final int PERSON_NAME = 1;
+	private static final int PERSON_CLASSNAME = 2;
+	private static final int COLLECTION_TITLE = 0;
+	private static final int COLLECTION_AUTHOR = 1;
+	private static final int COLLECTION_CLASSNAME = 2;
 
 	private final ArrayList<Person> personArrayList;
 	private final ArrayList<Collection> collectionArrayList;
@@ -56,8 +56,8 @@ public class Library {
 			}
 
 			bufferedReader.close();
-		} catch (Exception exception) {
-			System.out.println(Arrays.toString(exception.getStackTrace()));
+		} catch (Exception e) {
+			System.out.println(Arrays.toString(e.getStackTrace()));
 		}
 
 		// Input collections data
@@ -91,8 +91,8 @@ public class Library {
 			}
 
 			bufferedReader.close();
-		} catch (Exception exception) {
-			System.out.println(Arrays.toString(exception.getStackTrace()));
+		} catch (Exception e) {
+			System.out.println(Arrays.toString(e.getStackTrace()));
 		}
 	}
 
@@ -232,55 +232,49 @@ public class Library {
 
 				System.out.println("----------------------------------------------------");
 
-				while (true) {
-					System.out.print("찾으시는 회원의 번호(No.)를 입력해 주십시오. ([1-"
+				System.out.print("찾으시는 회원의 번호(No.)를 입력해 주십시오. ([1-"
+					+ personWithNameArrayList.size()
+					+ "]): "
+				);
+
+				try {
+					int personNoSelection = Integer.parseInt(scanner.nextLine());
+
+					return personWithNameArrayList.get(personNoSelection - 1);
+				} catch (NumberFormatException e) {
+					System.out.println("에러: 숫자 형태로 입력해 주십시오." + e.getClass().getName() + ")");
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println("에러: [1-"
 						+ personWithNameArrayList.size()
-						+ "]): "
+						+ "] 사이의 값을 입력해 주십시오. ("
+						+ e.getClass().getName()
+						+ ")"
 					);
-
-					try {
-						int personNoSelection = Integer.parseInt(scanner.nextLine());
-
-						return personWithNameArrayList.get(personNoSelection - 1);
-					} catch (NumberFormatException exception) {
-						System.out.println("에러: 숫자 형태로 입력해 주십시오."
-							+ exception.getClass().getName()
-							+ ")"
-						);
-					} catch (IndexOutOfBoundsException exception) {
-						System.out.println("에러: [1-"
-							+ personWithNameArrayList.size()
-							+ "] 사이의 값을 입력해 주십시오. ("
-							+ exception.getClass().getName()
-							+ ")"
-						);
-					}
 				}
 			}
 		}
+
+		return null;
 	}
 
 	Person runUiSearchPersonByUid() throws PersonException {
-		while (true) {
-			System.out.print("검색할 회원의 고유번호(uid)를 입력하십시오.: ");
+		System.out.print("검색할 회원의 고유번호(uid)를 입력하십시오.: ");
 
-			try {
-				int uid = Integer.parseInt(scanner.nextLine());
+		try {
+			int uid = Integer.parseInt(scanner.nextLine());
 
-				for (Person element : personArrayList) {
-					if (uid == element.getUid()) {
-						return element;
-					}
+			for (Person element : personArrayList) {
+				if (uid == element.getUid()) {
+					return element;
 				}
-
-				throw new PersonException("해당 고유번호(uid)를 가진 회원의 검색 결과가 존재하지 않습니다.");
-			} catch (NumberFormatException exception) {
-				System.out.println("에러: 숫자 형태로 입력해 주십시오."
-					+ exception.getClass().getName()
-					+ ")"
-				);
 			}
+
+			throw new PersonException("해당 고유번호(uid)를 가진 회원의 검색 결과가 존재하지 않습니다.");
+		} catch (NumberFormatException e) {
+			System.out.println("에러: 숫자 형태로 입력해 주십시오." + e.getClass().getName() + ")");
 		}
+
+		return null;
 	}
 
 	Collection runUiSearchCollectionByTitle() throws CollectionException {
@@ -302,11 +296,7 @@ public class Library {
 				return collectionWithTitleArrayList.get(0);
 			}
 			default -> {
-				System.out.println("해당 제목을 가진 자료가 "
-					+ collectionWithTitleArrayList.size()
-					+ "건 검색되었습니다."
-				);
-
+				System.out.println("해당 제목을 가진 자료가 " + collectionWithTitleArrayList.size() + "건 검색되었습니다.");
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("| [No.] |               제목               |       저자       |   자료 타입   |");
 				System.out.println("+-------+----------------------------------+------------------+---------------+");
@@ -323,32 +313,29 @@ public class Library {
 
 				System.out.println("-------------------------------------------------------------------------------");
 
-				while (true) {
-					System.out.print("찾으시는 자료의 번호를 입력해 주십시오. ([1-"
+				System.out.print("찾으시는 자료의 번호를 입력해 주십시오. ([1-"
+					+ collectionWithTitleArrayList.size()
+					+ "]): "
+				);
+
+				try {
+					int collectionNoSelection = Integer.parseInt(scanner.nextLine());
+
+					return collectionWithTitleArrayList.get(collectionNoSelection - 1);
+				} catch (NumberFormatException e) {
+					System.out.println("에러: 숫자 형태로 입력해 주십시오." + e.getClass().getName() + ")");
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println("에러: [1-"
 						+ collectionWithTitleArrayList.size()
-						+ "]): "
+						+ "] 사이의 값을 입력해 주십시오. ("
+						+ e.getClass().getName()
+						+ ")"
 					);
-
-					try {
-						int collectionNoSelection = Integer.parseInt(scanner.nextLine());
-
-						return collectionWithTitleArrayList.get(collectionNoSelection - 1);
-					} catch (NumberFormatException exception) {
-						System.out.println("에러: 숫자 형태로 입력해 주십시오."
-							+ exception.getClass().getName()
-							+ ")"
-						);
-					} catch (IndexOutOfBoundsException exception) {
-						System.out.println("에러: [1-"
-							+ collectionWithTitleArrayList.size()
-							+ "] 사이의 값을 입력해 주십시오. ("
-							+ exception.getClass().getName()
-							+ ")"
-						);
-					}
 				}
 			}
 		}
+
+		return null;
 	}
 
 	public void borrowCollection(Person person, Collection collection) {

@@ -40,14 +40,10 @@ public class Core {
                     }
                     default -> System.out.println("존재하지 않는 메뉴입니다.");
                 }
-            } catch (NumberFormatException exception) {
-                System.out.println(
-                    "에러: 숫자 형태로 입력해 주십시오. (" + exception.getClass().getName() + ")"
-                );
-            } catch (PersonException | CollectionException exception) {
-                System.out.println(
-                    exception.getMessage() + " (" + exception.getClass().getName() + ")"
-                );
+            } catch (NumberFormatException e) {
+                System.out.println("에러: 숫자 형태로 입력해 주십시오. (" + e.getClass().getName() + ")");
+            } catch (PersonException | CollectionException e) {
+                System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
             }
         }
     }
@@ -91,11 +87,8 @@ public class Core {
             } else {
                 return new Professor(uid, name);
             }
-        } catch (NumberFormatException exception) {
-            System.out.println("에러: 숫자 형태의 고유번호(uid)를 입력해 주십시오. ("
-                + exception.getClass().getName()
-                + ")"
-            );
+        } catch (NumberFormatException e) {
+            System.out.println("에러: 숫자 형태의 고유번호(uid)를 입력해 주십시오. (" + e.getClass().getName() + ")");
         }
 
         return null;
@@ -155,8 +148,8 @@ public class Core {
                     case 3 -> throw new PersonException("자료 대출이 취소되었습니다.");
                     default -> System.out.println("존재하지 않는 메뉴입니다.");
                 }
-            } catch (NumberFormatException exception) {
-                System.out.println("에러: 숫자 형태로 입력해 주십시오. (" + exception.getClass().getName() + ")");
+            } catch (NumberFormatException e) {
+                System.out.println("에러: 숫자 형태로 입력해 주십시오. (" + e.getClass().getName() + ")");
             }
         }
     }
@@ -176,11 +169,8 @@ public class Core {
                     case 2 -> throw new CollectionException("자료 대출이 취소되었습니다.");
                     default -> System.out.println("존재하지 않는 메뉴입니다.");
                 }
-            } catch (NumberFormatException exception) {
-                System.out.println("에러: 숫자 형태로 입력해 주십시오. ("
-                    + exception.getClass().getName()
-                    + ")"
-                );
+            } catch (NumberFormatException e) {
+                System.out.println("에러: 숫자 형태로 입력해 주십시오. (" + e.getClass().getName() + ")");
             }
         }
     }
