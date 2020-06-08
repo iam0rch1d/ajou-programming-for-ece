@@ -50,12 +50,10 @@ public class Core {
 
     private static Person runUiCreatePersonInformation() throws PersonException {
         System.out.println("--------------------------------------------------------------------------------");
-        System.out.print("회원의 고유번호(uid)를 입력하십시오.: ");
+        System.out.println("회원의 타입을 입력하십시오.");
+        System.out.print("([s] 또는 [Student] - Student / [p] 또는 [Professor] - Professor): ");
 
         try {
-            System.out.println("회원의 타입을 입력하십시오.");
-            System.out.print("([s] 또는 [Student] - Student / [p] 또는 [Professor] - Professor): ");
-
             String className = scanner.nextLine();
 
             if (className.toLowerCase().equals("s")
@@ -67,6 +65,8 @@ public class Core {
             } else {
                 throw new PersonException("회원 타입의 입력이 올바르지 않습니다.");
             }
+
+            System.out.print("회원의 고유번호(uid)를 입력하십시오.: ");
 
             int uid = Integer.parseInt(scanner.nextLine());
 
