@@ -144,8 +144,13 @@ public class Library {
 		}
 	}
 
-	public void printPersonArrayList() {
+	public void printPersonArrayList() throws PersonException {
 		System.out.println("--------------------------------------------------------------------------------");
+
+		if (personArrayList.isEmpty()) {
+			throw new PersonException("회원의 데이터가 존재하지 않습니다.");
+		}
+
 		System.out.println("등록된 회원 목록");
 		System.out.println("--------------------------------------------");
 		System.out.println("| 회원 타입 |    uid    |       이름       |");
@@ -169,8 +174,13 @@ public class Library {
 		}
 	}
 
-	public void printCollectionArrayList() {
+	public void printCollectionArrayList() throws CollectionException {
 		System.out.println("--------------------------------------------------------------------------------");
+
+		if (collectionArrayList.isEmpty()) {
+			throw new CollectionException("회원의 데이터가 존재하지 않습니다.");
+		}
+
 		System.out.println("소장 중인 자료 목록");
 		System.out.println("---------------------------------------------------------------------------------------"
 			+ "--------------------------------------------"
