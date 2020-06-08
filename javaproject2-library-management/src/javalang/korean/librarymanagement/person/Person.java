@@ -1,7 +1,9 @@
 package javalang.korean.librarymanagement.person;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javalang.korean.librarymanagement.collection.Collection;
+import javalang.korean.librarymanagement.collection.CollectionException;
 
 public abstract class Person {
 	private final int uid;
@@ -36,5 +38,16 @@ public abstract class Person {
 
 	public ArrayList<Collection> getBorrowingCollection() {
 		return borrowingCollection;
+	}
+
+	public void borrowCollection(Collection collection) throws CollectionException {
+		if (collection.getIsBorrowable()) {
+			collection.setIsBorrowable(false);
+			collection.setBorrower(this);
+			collection.setBorrowedDate(LocalDate.now());
+			getBorrowingCollection().add(collection);
+		} else {
+			throw new CollectionException("해당 자료는 이미 대출 중입니다.");
+		}
 	}
 }

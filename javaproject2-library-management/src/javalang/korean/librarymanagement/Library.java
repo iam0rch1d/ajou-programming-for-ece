@@ -124,7 +124,7 @@ class Library {
 			System.out.println("자료의 데이터를 불러왔습니다.");
 			bufferedReader.close();
 		} catch (IOException e) {
-			System.out.println("에러: 회원의 데이터를 불러오는 데 실패했습니다. (" + e.getClass().getName() + ")");
+			System.out.println("에러: 자료의 데이터를 불러오는 데 실패했습니다. (" + e.getClass().getName() + ")");
 		}
 	}
 
@@ -178,7 +178,7 @@ class Library {
 		System.out.println("--------------------------------------------------------------------------------");
 
 		if (collectionArrayList.isEmpty()) {
-			throw new CollectionException("회원의 데이터가 존재하지 않습니다.");
+			throw new CollectionException("자료의 데이터가 존재하지 않습니다.");
 		}
 
 		System.out.println("소장 중인 자료 목록");
@@ -364,6 +364,11 @@ class Library {
 
 			for (Person element : personArrayList) {
 				if (element.getUid() == uid) {
+					System.out.println("선택하신 회원의 정보는 다음과 같습니다.");
+					System.out.println("회원 타입: " + element.getClass().getSimpleName());
+					System.out.println("고유번호(uid): " + element.getUid());
+					System.out.println("이름: " + element.getName());
+
 					return element;
 				}
 			}
@@ -487,10 +492,8 @@ class Library {
 		}
 
 		try {
-			collection.setIsBorrowable(false);
-			collection.setBorrower(person);
-			collection.setBorrowedDate(LocalDate.now());
-			person.getBorrowingCollection().add(collection);
+			System.out.println("--------------------------------------------------------------------------------");
+			person.borrowCollection(collection);
 			System.out.println("자료를 성공적으로 대출했습니다.");
 		} catch (CollectionException e) {
 			System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
@@ -502,11 +505,12 @@ class Library {
 		Person borrower = collection.getBorrower();
 
 		if (borrower == null) {
-			throw new CollectionException("해당 자료는 대출 중이 아닙니다.");
+			throw new CollectionException("해당 자료는 현재 대출 중이 아닙니다.");
 		} else if (!borrower.getBorrowingCollection().contains(collection)) {
 			throw new PersonException(borrower + " 님은 해당 자료를 대출하지 않았습니다.");
 		}
 
+		System.out.println("--------------------------------------------------------------------------------");
 		collection.setIsBorrowable(true);
 		collection.setBorrower(null);
 		collection.setBorrowedDate(null);

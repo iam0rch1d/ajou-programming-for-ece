@@ -36,6 +36,8 @@ class Core {
                     case 6 -> library.borrowCollection(runUiSearchPerson(), runUiSearchCollection());
                     case 7 -> library.returnCollection(runUiSearchCollection());
                     case 8 -> {
+                        System.out.println("프로그램이 종료됩니다.");
+
                         return;
                     }
                     default -> System.out.println("존재하지 않는 메뉴입니다.");
