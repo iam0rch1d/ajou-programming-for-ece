@@ -1,20 +1,44 @@
 package javalang.korean.librarymanagement.collection;
 
 import javalang.korean.librarymanagement.person.Person;
-
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public abstract class Collection {
 	private final String title;
 	private final String author;
-	protected boolean isBorrowable;
-	protected LocalDate borrowedDate;
-	protected Person borrower;
+	boolean isBorrowable;
+	Person borrower;
+	LocalDate borrowedDate;
 
-	public Collection(String title, String author, boolean isBorrowable) {
+	Collection(String title, String author, boolean isBorrowable) {
 		this.title = title;
 		this.author = author;
 		this.isBorrowable = isBorrowable;
+	}
+
+	Collection(
+		ArrayList<Person> personArrayList,
+		String title,
+		String author,
+		String isBorrowableToString,
+		String borrowerUidToString,
+		String borrowedDateToString
+	) {
+		this.title = title;
+		this.author = author;
+		this.isBorrowable = Boolean.parseBoolean(isBorrowableToString);
+
+		for (Person element : personArrayList) {
+			if (element.getUid() == Integer.parseInt(borrowerUidToString)) {
+				this.borrower = element;
+
+				break;
+			}
+		}
+
+		this.borrowedDate = LocalDate.parse(borrowedDateToString, DateTimeFormatter.ISO_DATE);
 	}
 
 	public String getTitle() {
@@ -29,17 +53,33 @@ public abstract class Collection {
 		return isBorrowable;
 	}
 
-	public LocalDate getBorrowedDate() {
-		return borrowedDate;
-	}
-
 	public Person getBorrower() {
 		return borrower;
 	}
 
-	public abstract void setBorrowable(boolean isBorrowable) throws CollectionException;
+	public String getBorrowerInformation() {
+		if (borrower != null) {
+			return borrower.getName() + "(" + borrower.getUid() + ")";
+		} else {
+			return "--";
+		}
+	}
 
-	public abstract void setBorrowedDate(LocalDate borrowedDate) throws CollectionException;
+	public LocalDate getBorrowedDate() {
+		return borrowedDate;
+	}
+
+	public String getBorrowedDateToString() {
+		if (borrowedDate != null) {
+			return borrowedDate.toString();
+		} else {
+			return "--";
+		}
+	}
+
+	public abstract void setIsBorrowable(boolean isBorrowable) throws CollectionException;
 
 	public abstract void setBorrower(Person borrower) throws CollectionException;
+
+	public abstract void setBorrowedDate(LocalDate borrowedDate) throws CollectionException;
 }

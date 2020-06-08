@@ -37,8 +37,4 @@ public abstract class Person {
 	public ArrayList<Collection> getBorrowingCollection() {
 		return borrowingCollection;
 	}
-	
-	//public Collection findCollection(String title) {
-
-	//}
 }

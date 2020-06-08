@@ -34,7 +34,7 @@ public class Core {
                     case 4 -> library.printCollectionArrayList();
                     case 5 -> library.saveLibrary();
                     case 6 -> library.borrowCollection(runUiSearchPerson(), runUiSearchCollection());
-                    case 7 -> library.returnCollection(runUiSearchPerson(), runUiSearchCollection());
+                    case 7 -> library.returnCollection(runUiSearchCollection());
                     case 8 -> {
                         return;
                     }
@@ -49,19 +49,10 @@ public class Core {
     }
 
     private static Person runUiCreatePersonInformation() throws PersonException {
+        System.out.println("--------------------------------------------------------------------------------");
         System.out.print("회원의 고유번호(uid)를 입력하십시오.: ");
 
         try {
-            int uid = Integer.parseInt(scanner.nextLine());
-
-            if (!library.isUidUnique(uid)) {
-                throw new PersonException("중복된 고유번호(uid)가 존재합니다.");
-            }
-
-            System.out.print("회원의 이름을 입력하십시오.: ");
-
-            String name = scanner.nextLine();
-
             System.out.println("회원의 타입을 입력하십시오.");
             System.out.print("([s] 또는 [Student] - Student / [p] 또는 [Professor] - Professor): ");
 
@@ -77,10 +68,21 @@ public class Core {
                 throw new PersonException("회원 타입의 입력이 올바르지 않습니다.");
             }
 
+            int uid = Integer.parseInt(scanner.nextLine());
+
+            if (!library.isUidUnique(uid)) {
+                throw new PersonException("중복된 고유번호(uid)가 존재합니다.");
+            }
+
+            System.out.print("회원의 이름을 입력하십시오.: ");
+
+            String name = scanner.nextLine();
+
+            System.out.println("--------------------------------------------------------------------------------");
             System.out.println("다음 정보를 갖는 회원을 생성합니다.");
+            System.out.println("회원 타입: " + className);
             System.out.println("고유번호(uid): " + uid);
             System.out.println("이름: " + name);
-            System.out.println("타입: " + className);
 
             if (className.equals("Student")) {
                 return new Student(uid, name);
@@ -95,14 +97,7 @@ public class Core {
     }
 
     private static Collection runUiCreateCollectionInformation() throws CollectionException {
-        System.out.print("자료의 제목을 입력하십시오.: ");
-
-        String title = scanner.nextLine();
-
-        System.out.print("자료의 저자를 입력하십시오.: ");
-
-        String author = scanner.nextLine();
-
+        System.out.println("--------------------------------------------------------------------------------");
         System.out.println("자료의 타입을 입력하십시오.");
         System.out.print("([b] 또는 [Book] - Book / [c] 또는 [ClassMaterial] - ClassMaterial): ");
 
@@ -118,10 +113,19 @@ public class Core {
             throw new CollectionException("자료 타입의 입력이 올바르지 않습니다.");
         }
 
+        System.out.print("자료의 제목을 입력하십시오.: ");
+
+        String title = scanner.nextLine();
+
+        System.out.print("자료의 저자를 입력하십시오.: ");
+
+        String author = scanner.nextLine();
+
+        System.out.println("--------------------------------------------------------------------------------");
         System.out.println("다음 정보를 갖는 자료를 생성합니다.");
+        System.out.println("자료 타입: " + className);
         System.out.println("제목: " + title);
         System.out.println("저자: " + author);
-        System.out.println("타입: " + className);
 
         if (className.equals("Book")) {
             return new Book(title, author);
@@ -132,6 +136,7 @@ public class Core {
 
     private static Person runUiSearchPerson() throws PersonException {
         while (true) {
+            System.out.println("--------------------------------------------------------------------------------");
             System.out.println("자료를 대출하려는 회원을 검색합니다. 메뉴를 선택하십시오. ([1-3])");
             System.out.print("([1] - 이름으로 검색, [2] - 고유번호(uid)로 검색, [3] - 취소): ");
 
@@ -145,7 +150,7 @@ public class Core {
                     case 2 -> {
                         return library.runUiSearchPersonByUid();
                     }
-                    case 3 -> throw new PersonException("자료 대출이 취소되었습니다.");
+                    case 3 -> throw new PersonException("회원 검색이 취소되었습니다. 자료 대출을 취소합니다.");
                     default -> System.out.println("존재하지 않는 메뉴입니다.");
                 }
             } catch (NumberFormatException e) {
@@ -156,6 +161,7 @@ public class Core {
 
     private static Collection runUiSearchCollection() throws CollectionException {
         while (true) {
+            System.out.println("--------------------------------------------------------------------------------");
             System.out.println("대출할 자료를 검색합니다. 메뉴를 선택하십시오. ([1-2])");
             System.out.print("([1] - 제목으로 검색, [2] - 취소): ");
 
@@ -166,7 +172,7 @@ public class Core {
                     case 1 -> {
                         return library.runUiSearchCollectionByTitle();
                     }
-                    case 2 -> throw new CollectionException("자료 대출이 취소되었습니다.");
+                    case 2 -> throw new CollectionException("자료 검색이 취소되었습니다. 자료 대출을 취소합니다.");
                     default -> System.out.println("존재하지 않는 메뉴입니다.");
                 }
             } catch (NumberFormatException e) {
@@ -180,9 +186,10 @@ public class Core {
 
         int stringLength = 0;
 
+        // Count character bytes
         for (char element : string.toCharArray()) {
             if (stringLength <= length) {
-                if (element >= 0x21 && element <= 0x7e) { // 1-byte character
+                if (element <= 0x7f) { // 1-byte character
                     stringLength++;
                 } else {
                     stringLength += 2;
@@ -192,12 +199,14 @@ public class Core {
             }
         }
 
+        // Fill rest of [length] character bytes except [string] with whitespace character
+        // If total character bytes of [string] exceeds [length], cut into [length] character bytes with '++' end
         if (stringLength <= length) {
             stringBuilder.append(" ".repeat(Math.max(0, length - stringLength)));
         } else {
             while (stringLength > length - 2) {
                 char stringLastChar = stringBuilder.charAt(stringBuilder.length() - 1);
-                if (stringLastChar >= 0x21 && stringLastChar <= 0x7e) {
+                if (stringLastChar <= 0x7f) {
                     stringLength--;
                 } else {
                     stringLength -= 2;
