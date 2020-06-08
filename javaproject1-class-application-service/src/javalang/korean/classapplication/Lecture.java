@@ -1,4 +1,4 @@
-package iam0rch1d.java.korean.classapplication;
+package javalang.korean.classapplication;
 
 class Lecture {
 	private final String name;

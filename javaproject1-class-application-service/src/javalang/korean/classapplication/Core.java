@@ -1,14 +1,14 @@
-package iam0rch1d.java.korean.classapplication;
+package javalang.korean.classapplication;
 
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Core {
     static Scanner scanner = new Scanner(System.in);
-    static ArrayList<Student> studentArrayList = new ArrayList<>();
-    static ArrayList<Professor> professorArrayList = new ArrayList<>();
-    static ArrayList<Staff> staffArrayList = new ArrayList<>();
-    static ArrayList<Lecture> lectureArrayList = new ArrayList<>();
+    static final ArrayList<Student> studentArrayList = new ArrayList<>();
+    static final ArrayList<Professor> professorArrayList = new ArrayList<>();
+    static final ArrayList<Staff> staffArrayList = new ArrayList<>();
+    static final ArrayList<Lecture> lectureArrayList = new ArrayList<>();
 
     static void runCoreUi() {
         while (true) {
@@ -46,7 +46,7 @@ class Core {
 
         for (Lecture element : Core.lectureArrayList) {
             System.out.printf(
-                "| %3d | %s | %-5s | %s |  %2d  |",
+                "| %3d | %s | %s | %s |  %2d  |",
                 i++,
                 alignString(element.getName(), 24),
                 alignString(element.getProfessorName(), 16),

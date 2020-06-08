@@ -1,4 +1,4 @@
-package iam0rch1d.java.korean.classapplication;
+package javalang.korean.classapplication;
 
 interface Scholar {
 	void runRegisterLectureUi();

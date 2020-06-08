@@ -1,4 +1,4 @@
-package iam0rch1d.java.korean.classapplication;
+package javalang.korean.classapplication;
 
 import java.util.ArrayList;
 import java.util.Scanner;

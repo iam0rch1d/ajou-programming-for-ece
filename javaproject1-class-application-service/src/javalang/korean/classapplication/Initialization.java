@@ -1,4 +1,4 @@
-package iam0rch1d.java.korean.classapplication;
+package javalang.korean.classapplication;
 
 class Initialization {
 	static void initialize() {
@@ -91,7 +91,7 @@ class Initialization {
 		);
 		Core.professorArrayList.get(2).registerLecture(
 			"Python",
-			"화C금B",
+			"화C금C",
 			3
 		);
 		Core.professorArrayList.get(3).registerLecture(
