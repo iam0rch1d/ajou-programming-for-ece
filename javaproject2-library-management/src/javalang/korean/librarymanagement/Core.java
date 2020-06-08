@@ -4,9 +4,9 @@ import java.util.Scanner;
 import javalang.korean.librarymanagement.collection.*;
 import javalang.korean.librarymanagement.person.*;
 
-public class Core {
+class Core {
     private static final Scanner scanner = new Scanner(System.in);
-    static Library library = new Library();
+    private static final Library library = new Library();
 
     public static void main(String[] args) {
         while (true) {

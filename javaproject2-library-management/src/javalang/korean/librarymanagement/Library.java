@@ -8,7 +8,7 @@ import java.util.Scanner;
 import javalang.korean.librarymanagement.collection.*;
 import javalang.korean.librarymanagement.person.*;
 
-public class Library {
+class Library {
 	private static final Scanner scanner = new Scanner(System.in);
 
 	// Constants
@@ -144,7 +144,7 @@ public class Library {
 		}
 	}
 
-	public void printPersonArrayList() throws PersonException {
+	void printPersonArrayList() throws PersonException {
 		System.out.println("--------------------------------------------------------------------------------");
 
 		if (personArrayList.isEmpty()) {
@@ -174,7 +174,7 @@ public class Library {
 		}
 	}
 
-	public void printCollectionArrayList() throws CollectionException {
+	void printCollectionArrayList() throws CollectionException {
 		System.out.println("--------------------------------------------------------------------------------");
 
 		if (collectionArrayList.isEmpty()) {
@@ -209,7 +209,7 @@ public class Library {
 		);
 	}
 
-	public void saveLibrary() {
+	void saveLibrary() {
 		// Save people data
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/people.txt"));
@@ -473,7 +473,7 @@ public class Library {
 		}
 	}
 
-	public void borrowCollection(Person person, Collection collection) throws PersonException {
+	void borrowCollection(Person person, Collection collection) throws PersonException {
 		if (person.getBorrowingCollection().size() >= person.getNumberOfBorrowable()) {
 			throw new PersonException("대출한도를 초과하였습니다.");
 		} else {
@@ -498,7 +498,7 @@ public class Library {
 		}
 	}
 	
-	public void returnCollection(Collection collection) throws PersonException, CollectionException {
+	void returnCollection(Collection collection) throws PersonException, CollectionException {
 		Person borrower = collection.getBorrower();
 
 		if (borrower == null) {

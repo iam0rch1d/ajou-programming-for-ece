@@ -10,7 +10,7 @@ public abstract class Person {
 	private final int daysOfBorrowable;
 	private final ArrayList<Collection> borrowingCollection;
 	
-	public Person(int uid, String name, int numberOfBorrowable, int daysOfBorrowable) {
+	Person(int uid, String name, int numberOfBorrowable, int daysOfBorrowable) {
 		this.uid = uid;
 		this.name = name;
 		this.numberOfBorrowable = numberOfBorrowable;
