@@ -1,8 +1,8 @@
 package javalang.korean.librarymanagement;
 
 import java.io.*;
-import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javalang.korean.librarymanagement.collection.*;
@@ -528,7 +528,7 @@ class Library {
 			throw new PersonException("대출한도를 초과하였습니다.");
 		} else {
 			for (Collection element : person.getBorrowingCollection()) {
-				if (Duration.between(element.getBorrowedDate(), LocalDate.now()).toDays()
+				if (ChronoUnit.DAYS.between(element.getBorrowedDate(), LocalDate.now())
 					> person.getDaysOfBorrowable()
 				) {
 					throw new PersonException("반납기한이 연체된 자료가 존재합니다.");
