@@ -33,8 +33,11 @@ class Core {
                     case 3 -> library.addCollection(runUiCreateCollectionInformation());
                     case 4 -> library.printCollectionArrayList();
                     case 5 -> library.saveLibrary();
-                    case 6 -> library.borrowCollection(runUiSearchPerson(), runUiSearchCollection());
-                    case 7 -> library.returnCollection(runUiSearchCollection());
+                    case 6 -> library.borrowCollection(
+                        library.runUiSearchPerson(),
+                        library.runUiSearchCollection()
+                    );
+                    case 7 -> library.returnCollection(library.runUiSearchCollection());
                     case 8 -> {
                         System.out.println("프로그램이 종료됩니다.");
 
@@ -133,53 +136,6 @@ class Core {
             return new Book(title, author);
         } else {
             return new ClassMaterial(title, author);
-        }
-    }
-
-    private static Person runUiSearchPerson() throws PersonException {
-        while (true) {
-            System.out.println("--------------------------------------------------------------------------------");
-            System.out.println("자료를 대출하려는 회원을 검색합니다. 메뉴를 선택하십시오. ([1-3])");
-            System.out.print("([1] - 이름으로 검색, [2] - 고유번호(uid)로 검색, [3] - 취소): ");
-
-            try {
-                int menuSelection = Integer.parseInt(scanner.nextLine());
-
-                switch (menuSelection) {
-                    case 1 -> {
-                        return library.runUiSearchPersonByName();
-                    }
-                    case 2 -> {
-                        return library.runUiSearchPersonByUid();
-                    }
-                    case 3 -> throw new PersonException("회원 검색이 취소되었습니다. 자료 대출을 취소합니다.");
-                    default -> System.out.println("존재하지 않는 메뉴입니다.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("에러: 숫자 형태로 입력해 주십시오. (" + e.getClass().getName() + ")");
-            }
-        }
-    }
-
-    private static Collection runUiSearchCollection() throws CollectionException {
-        while (true) {
-            System.out.println("--------------------------------------------------------------------------------");
-            System.out.println("대출할 자료를 검색합니다. 메뉴를 선택하십시오. ([1-2])");
-            System.out.print("([1] - 제목으로 검색, [2] - 취소): ");
-
-            try {
-                int menuSelection = Integer.parseInt(scanner.nextLine());
-
-                switch (menuSelection) {
-                    case 1 -> {
-                        return library.runUiSearchCollectionByTitle();
-                    }
-                    case 2 -> throw new CollectionException("자료 검색이 취소되었습니다. 자료 대출을 취소합니다.");
-                    default -> System.out.println("존재하지 않는 메뉴입니다.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("에러: 숫자 형태로 입력해 주십시오. (" + e.getClass().getName() + ")");
-            }
         }
     }
 
