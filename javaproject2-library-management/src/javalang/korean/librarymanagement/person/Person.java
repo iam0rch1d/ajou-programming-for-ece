@@ -49,4 +49,15 @@ public abstract class Person {
 			throw new CollectionException("해당 자료는 이미 대출 중입니다.");
 		}
 	}
+
+	public void returnCollection(Collection collection) throws CollectionException {
+		if (borrowingCollection.contains(collection)) {
+			collection.setIsBorrowable(true);
+			collection.setBorrower(null);
+			collection.setBorrowedDate(null);
+			getBorrowingCollection().remove(collection);
+		} else {
+			throw new CollectionException(name + " 님은 해당 자료를 대출하지 않았습니다.");
+		}
+	}
 }

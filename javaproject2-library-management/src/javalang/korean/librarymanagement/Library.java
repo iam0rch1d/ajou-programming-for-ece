@@ -18,9 +18,9 @@ class Library {
 	private static final int COLLECTION_CLASSNAME = 0;
 	private static final int COLLECTION_TITLE = 1;
 	private static final int COLLECTION_AUTHOR = 2;
-	private static final int COLLECTION_IS_BORROWABLE_TOSTRING = 3;
+	private static final int COLLECTION_IS_BORROWABLE = 3;
 	private static final int COLLECTION_BORROWER_NAME = 4;
-	private static final int COLLECTION_BORROWED_DATE_TOSTRING = 5;
+	private static final int COLLECTION_BORROWED_DATE = 5;
 
 	private final ArrayList<Person> personArrayList;
 	private final ArrayList<Collection> collectionArrayList;
@@ -91,9 +91,9 @@ class Library {
 									personArrayList,
 									collectionInformationElement[COLLECTION_TITLE],
 									collectionInformationElement[COLLECTION_AUTHOR],
-									collectionInformationElement[COLLECTION_IS_BORROWABLE_TOSTRING],
+									collectionInformationElement[COLLECTION_IS_BORROWABLE],
 									collectionInformationElement[COLLECTION_BORROWER_NAME],
-									collectionInformationElement[COLLECTION_BORROWED_DATE_TOSTRING]
+									collectionInformationElement[COLLECTION_BORROWED_DATE]
 								)
 							);
 						}
@@ -111,9 +111,9 @@ class Library {
 									personArrayList,
 									collectionInformationElement[COLLECTION_TITLE],
 									collectionInformationElement[COLLECTION_AUTHOR],
-									collectionInformationElement[COLLECTION_IS_BORROWABLE_TOSTRING],
+									collectionInformationElement[COLLECTION_IS_BORROWABLE],
 									collectionInformationElement[COLLECTION_BORROWER_NAME],
-									collectionInformationElement[COLLECTION_BORROWED_DATE_TOSTRING]
+									collectionInformationElement[COLLECTION_BORROWED_DATE]
 								)
 							);
 						}
@@ -194,13 +194,13 @@ class Library {
 
 		for (Collection element : collectionArrayList) {
 			System.out.printf(
-				"| %-13s | %s | %s | %-14s | %s | %s |\n",
+				"| %-13s | %s | %s | %-14s | %s | %-10s |\n",
 				element.getClass().getSimpleName(),
 				Core.alignString(element.getTitle(), 32),
 				Core.alignString(element.getAuthor(), 16),
 				element.getIsBorrowable(),
 				Core.alignString(element.getBorrowerInformation(), 27),
-				Core.alignString(element.getBorrowedDateToString(), 10)
+				element.getBorrowedDateToString()
 			);
 		}
 
@@ -229,8 +229,6 @@ class Library {
 			System.out.println("회원의 데이터를 저장했습니다.");
 		} catch (IOException e) {
 			System.out.println("에러: 회원의 데이터를 저장하는 데 실패했습니다. (" + e.getClass().getName() + ")");
-		} catch (NullPointerException e) {
-			System.out.println("저장할 회원의 데이터가 없습니다. (" + e.getClass().getName() + ")");
 		}
 
 		// Save collections data
@@ -244,14 +242,14 @@ class Library {
 					+ "\\"
 					+ element.getAuthor() // COLLECTION_AUTHOR(2)
 					+ "\\"
-					+ element.getIsBorrowable() // COLLECTION_IS_BORROWABLE_TOSTRING(3)
+					+ element.getIsBorrowable() // COLLECTION_IS_BORROWABLE(3)
 				);
 
 				if (element.getBorrower() != null) {
 					bufferedWriter.write("\\"
 						+ element.getBorrower().getUid() // COLLECTION_BORROWER_NAME(4)
 						+ "\\"
-						+ element.getBorrowedDateToString() // COLLECTION_BORROWED_DATE_TOSTRING(5)
+						+ element.getBorrowedDateToString() // COLLECTION_BORROWED_DATE(5)
 					);
 				}
 
@@ -471,14 +469,14 @@ class Library {
 
 				for (int i = 0; i < collectionWithTitleArrayList.size(); i++) {
 					System.out.printf(
-						"| %s | %-13s | %s | %s | %-14s | %s | %s |\n",
+						"| %s | %-13s | %s | %s | %-14s | %s | %-10s |\n",
 						Core.alignString("[" + (i + 1) + "]", 5),
 						collectionWithTitleArrayList.get(i).getClass().getSimpleName(),
 						Core.alignString(collectionWithTitleArrayList.get(i).getTitle(), 32),
 						Core.alignString(collectionWithTitleArrayList.get(i).getAuthor(), 16),
 						collectionWithTitleArrayList.get(i).getIsBorrowable(),
 						Core.alignString(collectionWithTitleArrayList.get(i).getBorrowerInformation(), 27),
-						Core.alignString(collectionWithTitleArrayList.get(i).getBorrowedDateToString(), 10)
+						collectionWithTitleArrayList.get(i).getBorrowedDateToString()
 					);
 				}
 
@@ -525,7 +523,7 @@ class Library {
 		}
 	}
 
-	void borrowCollection(Person person, Collection collection) throws PersonException {
+	void lendCollection(Person person, Collection collection) throws PersonException {
 		if (person.getBorrowingCollection().size() >= person.getNumberOfBorrowable()) {
 			throw new PersonException("대출한도를 초과하였습니다.");
 		} else {
@@ -538,8 +536,9 @@ class Library {
 			}
 		}
 
+		System.out.println("--------------------------------------------------------------------------------");
+
 		try {
-			System.out.println("--------------------------------------------------------------------------------");
 			person.borrowCollection(collection);
 			System.out.println("자료를 성공적으로 대출했습니다.");
 		} catch (CollectionException e) {
@@ -548,20 +547,21 @@ class Library {
 		}
 	}
 	
-	void returnCollection(Collection collection) throws PersonException, CollectionException {
+	void takebackCollection(Collection collection) throws CollectionException {
 		Person borrower = collection.getBorrower();
 
 		if (borrower == null) {
 			throw new CollectionException("해당 자료는 현재 대출 중이 아닙니다.");
-		} else if (!borrower.getBorrowingCollection().contains(collection)) {
-			throw new PersonException(borrower + " 님은 해당 자료를 대출하지 않았습니다.");
 		}
 
 		System.out.println("--------------------------------------------------------------------------------");
-		collection.setIsBorrowable(true);
-		collection.setBorrower(null);
-		collection.setBorrowedDate(null);
-		borrower.getBorrowingCollection().remove(collection);
-		System.out.println("자료를 성공적으로 반납했습니다.");
+
+		try {
+			borrower.returnCollection(collection);
+			System.out.println("자료를 성공적으로 반납했습니다.");
+		} catch (CollectionException e) {
+			System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
+			System.out.println("반납에 실패했습니다.");
+		}
 	}
 }
