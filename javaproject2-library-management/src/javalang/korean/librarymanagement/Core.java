@@ -28,9 +28,9 @@ class Core {
                 int menuSelection = Integer.parseInt(scanner.nextLine());
 
                 switch (menuSelection) {
-                    case 1 -> library.addPerson(runUiCreatePersonInformation());
+                    case 1 -> library.addPerson(runUiCreatePerson());
                     case 2 -> library.printPersonArrayList();
-                    case 3 -> library.addCollection(runUiCreateCollectionInformation());
+                    case 3 -> library.addCollection(runUiCreateCollection());
                     case 4 -> library.printCollectionArrayList();
                     case 5 -> library.saveLibrary();
                     case 6 -> library.borrowCollection(
@@ -53,7 +53,7 @@ class Core {
         }
     }
 
-    private static Person runUiCreatePersonInformation() throws PersonException {
+    private static Person runUiCreatePerson() throws PersonException {
         System.out.println("--------------------------------------------------------------------------------");
         System.out.println("회원의 타입을 입력하십시오.");
         System.out.print("([s] 또는 [Student] - Student / [p] 또는 [Professor] - Professor): ");
@@ -101,7 +101,7 @@ class Core {
         return null;
     }
 
-    private static Collection runUiCreateCollectionInformation() throws CollectionException {
+    private static Collection runUiCreateCollection() throws CollectionException {
         System.out.println("--------------------------------------------------------------------------------");
         System.out.println("자료의 타입을 입력하십시오.");
         System.out.print("([b] 또는 [Book] - Book / [c] 또는 [ClassMaterial] - ClassMaterial): ");
