@@ -98,7 +98,7 @@ class Library {
 							);
 						}
 					} else {
-						if (collectionInformationElement[COLLECTION_BORROWER_NAME] == null) {
+						if (collectionInformationElement.length == 4) {
 							addCollection(
 								new ClassMaterial(
 									collectionInformationElement[COLLECTION_TITLE],
@@ -523,22 +523,30 @@ class Library {
 		}
 	}
 
-	void lendCollection(Person person, Collection collection) throws PersonException {
+	void lendCollection(Person person, Collection collection) {
 		System.out.println("--------------------------------------------------------------------------------");
 
-		if (person.getBorrowingCollectionArrayList().size() >= person.getNumberOfBorrowable()) {
-			throw new PersonException("대출한도를 초과하였습니다.");
-		} else {
-			for (Collection element : person.getBorrowingCollectionArrayList()) {
-				if (ChronoUnit.DAYS.between(element.getBorrowedDate(), LocalDate.now())
-					> person.getDaysOfBorrowable()
-				) {
-					throw new PersonException("반납기한이 연체된 자료가 존재합니다.");
-				}
+		person.getBorrowingCollectionArrayList().clear();
+
+		for (Collection element : collectionArrayList) {
+			if (element.getBorrower() != null && element.getBorrower().getUid() == person.getUid()) {
+				person.getBorrowingCollectionArrayList().add(element);
 			}
 		}
 
 		try {
+			if (person.getBorrowingCollectionArrayList().size() >= person.getNumberOfBorrowable()) {
+				throw new PersonException("대출한도를 초과하였습니다.");
+			} else {
+				for (Collection element : person.getBorrowingCollectionArrayList()) {
+					if (ChronoUnit.DAYS.between(element.getBorrowedDate(), LocalDate.now())
+						>= person.getDaysOfBorrowable()
+					) {
+						throw new PersonException("반납기한이 연체된 자료가 존재합니다.");
+					}
+				}
+			}
+
 			if (collection.getIsBorrowable()) {
 				collection.setIsBorrowable(false);
 				collection.setBorrower(person);
@@ -548,30 +556,34 @@ class Library {
 			} else {
 				throw new CollectionException("해당 자료는 이미 대출 중입니다.");
 			}
-		} catch (CollectionException e) {
+		} catch (PersonException | CollectionException e) {
 			System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
 			System.out.println("대출에 실패했습니다.");
 		}
 	}
 	
-	void redeemCollection(Collection collection) throws CollectionException {
+	void redeemCollection(Collection collection) {
 		Person borrower = collection.getBorrower();
 
 		System.out.println("--------------------------------------------------------------------------------");
 
-		if (borrower == null) {
-			throw new CollectionException("해당 자료는 현재 대출 중이 아닙니다.");
-		}
-
 		try {
-			if (borrower.getBorrowingCollectionArrayList().contains(collection)) {
-				collection.setIsBorrowable(true);
-				collection.setBorrower(null);
-				collection.setBorrowedDate(null);
-				borrower.getBorrowingCollectionArrayList().remove(collection);
-			} else {
-				throw new CollectionException(borrower.getName() + " 님은 해당 자료를 대출하지 않았습니다.");
+			if (borrower == null) {
+				throw new CollectionException("해당 자료는 현재 대출 중이 아닙니다.");
 			}
+
+			borrower.getBorrowingCollectionArrayList().clear();
+
+			for (Collection element : collectionArrayList) {
+				if (element.getBorrower() != null && element.getBorrower().getUid() == borrower.getUid()) {
+					borrower.getBorrowingCollectionArrayList().add(element);
+				}
+			}
+
+			collection.setIsBorrowable(true);
+			collection.setBorrower(null);
+			collection.setBorrowedDate(null);
+			borrower.getBorrowingCollectionArrayList().remove(collection);
 			System.out.println("자료를 성공적으로 반납했습니다.");
 		} catch (CollectionException e) {
 			System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
