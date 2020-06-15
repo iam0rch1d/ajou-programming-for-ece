@@ -12,10 +12,10 @@ public abstract class Collection {
 	Person borrower;
 	LocalDate borrowedDate;
 
-	Collection(String title, String author, boolean isBorrowable) {
+	Collection(String title, String author) {
 		this.title = title;
 		this.author = author;
-		this.isBorrowable = isBorrowable;
+		isBorrowable = true;
 	}
 
 	Collection(

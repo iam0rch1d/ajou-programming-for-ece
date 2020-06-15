@@ -33,11 +33,8 @@ class Core {
                     case 3 -> library.addCollection(runUiCreateCollection());
                     case 4 -> library.printCollectionArrayList();
                     case 5 -> library.saveLibrary();
-                    case 6 -> library.lendCollection(
-                        library.runUiSearchPerson(),
-                        library.runUiSearchCollection()
-                    );
-                    case 7 -> library.takebackCollection(library.runUiSearchCollection());
+                    case 6 -> library.lendCollection(library.runUiSearchPerson(), library.runUiSearchCollection());
+                    case 7 -> library.redeemCollection(library.runUiSearchCollection());
                     case 8 -> {
                         System.out.println("프로그램이 종료됩니다.");
 

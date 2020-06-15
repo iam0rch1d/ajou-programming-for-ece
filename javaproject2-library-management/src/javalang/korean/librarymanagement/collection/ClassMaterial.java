@@ -6,7 +6,7 @@ import javalang.korean.librarymanagement.person.Person;
 
 public class ClassMaterial extends Collection {
 	public ClassMaterial(String title, String author) {
-		super(title, author, false);
+		super(title, author);
 	}
 
 	public ClassMaterial(
