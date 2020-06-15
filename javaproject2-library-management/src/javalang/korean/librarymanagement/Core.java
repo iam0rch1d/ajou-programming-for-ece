@@ -32,7 +32,7 @@ class Core {
                     case 2 -> library.printPersonArrayList();
                     case 3 -> library.addCollection(runUiCreateCollection());
                     case 4 -> library.printCollectionArrayList();
-                    case 5 -> library.saveLibrary();
+                    case 5 -> library.saveLibraryData();
                     case 6 -> library.lendCollection(library.runUiSearchPerson(), library.runUiSearchCollection());
                     case 7 -> library.redeemCollection(library.runUiSearchCollection());
                     case 8 -> {

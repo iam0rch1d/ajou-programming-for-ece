@@ -209,7 +209,9 @@ class Library {
 		);
 	}
 
-	void saveLibrary() {
+	void saveLibraryData() {
+		System.out.println("--------------------------------------------------------------------------------");
+
 		// Save people data
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/people.txt"));
