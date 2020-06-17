@@ -1,6 +1,7 @@
 package javalang.korean.librarymanagement.person;
 
 import java.util.ArrayList;
+import javalang.korean.librarymanagement.Library;
 import javalang.korean.librarymanagement.collection.*;
 
 public abstract class Person {
@@ -10,7 +11,16 @@ public abstract class Person {
 	private final int daysOfBorrowable;
 	private final ArrayList<Collection> borrowingCollectionArrayList;
 	
-	Person(int uid, String name, int numberOfBorrowable, int daysOfBorrowable) {
+	Person(Library library, int uid, String name, int numberOfBorrowable, int daysOfBorrowable) throws PersonException {
+		if (library.isUidDuplicated(uid)) {
+			throw new PersonException("회원의 데이터 파일의 line "
+				+ (library.getPersonArrayList().size() + 1)
+				+ "\n'"
+				+ library.getPersonInformationLine()
+				+ "'에서 중복된 고유번호(uid)가 존재합니다."
+			);
+		}
+
 		this.uid = uid;
 		this.name = name;
 		this.numberOfBorrowable = numberOfBorrowable;

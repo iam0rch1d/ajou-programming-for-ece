@@ -1,9 +1,9 @@
 package javalang.korean.librarymanagement.collection;
 
-import javalang.korean.librarymanagement.person.Person;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import javalang.korean.librarymanagement.Library;
+import javalang.korean.librarymanagement.person.Person;
 
 public abstract class Collection {
 	private final String title;
@@ -19,7 +19,7 @@ public abstract class Collection {
 	}
 
 	Collection(
-		ArrayList<Person> personArrayList,
+		Library library,
 		String title,
 		String author,
 		String isBorrowableToString,
@@ -30,7 +30,7 @@ public abstract class Collection {
 		this.author = author;
 		this.isBorrowable = Boolean.parseBoolean(isBorrowableToString);
 
-		for (Person element : personArrayList) {
+		for (Person element : library.getPersonArrayList()) {
 			if (element.getUid() == Integer.parseInt(borrowerUidToString)) {
 				this.borrower = element;
 

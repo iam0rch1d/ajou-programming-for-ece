@@ -8,8 +8,9 @@ import java.util.Scanner;
 import javalang.korean.librarymanagement.collection.*;
 import javalang.korean.librarymanagement.person.*;
 
-class Library {
+public class Library {
 	private static final Scanner scanner = new Scanner(System.in);
+	private String personInformationLine;
 
 	// Constants
 	private static final int PERSON_CLASSNAME = 0;
@@ -33,32 +34,7 @@ class Library {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader("data/people.txt"));
 
-			while (true) {
-				String personInformationLine = bufferedReader.readLine();
-
-				if (personInformationLine == null) {
-					break;
-				} else {
-					String[] personInformationElement = personInformationLine.split("\\\\");
-
-					if (personInformationElement[PERSON_CLASSNAME].equals("Student")) {
-						addPerson(
-							new Student(
-								Integer.parseInt(personInformationElement[PERSON_UID]),
-								personInformationElement[PERSON_NAME]
-							)
-						);
-					} else {
-						addPerson(
-							new Professor(
-								Integer.parseInt(personInformationElement[PERSON_UID]),
-								personInformationElement[PERSON_NAME]
-							)
-						);
-					}
-				}
-			}
-
+			loadPeopleData(bufferedReader);
 			System.out.println("회원의 데이터를 불러왔습니다.");
 			bufferedReader.close();
 		} catch (IOException e) {
@@ -69,8 +45,89 @@ class Library {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader("data/collections.txt"));
 
-			while (true) {
-				String collectionInformationLine = bufferedReader.readLine();
+			loadCollectionsData(bufferedReader);
+			System.out.println("자료의 데이터를 불러왔습니다.");
+			bufferedReader.close();
+		} catch (IOException | NumberFormatException e) {
+			System.out.println("에러: 자료의 데이터를 불러오는 데 실패했습니다. (" + e.getClass().getName() + ")");
+		}
+	}
+
+	public ArrayList<Person> getPersonArrayList() {
+		return personArrayList;
+	}
+
+	public String getPersonInformationLine() {
+		return personInformationLine;
+	}
+
+	private void loadPeopleData(BufferedReader bufferedReader) throws IOException {
+		while (true) {
+			personInformationLine = bufferedReader.readLine();
+
+			try {
+				boolean hasPersonExceptionOccurred = false;
+
+				if (personInformationLine == null) {
+					break;
+				} else {
+					String[] personInformationElement = personInformationLine.split("\\\\");
+
+					if (personInformationElement.length == 3) {
+						if (personInformationElement[PERSON_CLASSNAME].equals("Student")) {
+							addPerson(
+								new Student(
+									this,
+									Integer.parseInt(personInformationElement[PERSON_UID]),
+									personInformationElement[PERSON_NAME]
+								)
+							);
+						} else if (personInformationElement[PERSON_CLASSNAME].equals("Professor")) {
+							addPerson(
+								new Professor(
+									this,
+									Integer.parseInt(personInformationElement[PERSON_UID]),
+									personInformationElement[PERSON_NAME]
+								)
+							);
+						} else {
+							hasPersonExceptionOccurred = true;
+						}
+					} else {
+						hasPersonExceptionOccurred = true;
+					}
+
+					if (hasPersonExceptionOccurred) {
+						throw new PersonException("회원의 데이터 파일의 line "
+							+ (personArrayList.size() + 1)
+							+ "\n'"
+							+ personInformationLine
+							+ "'에서 오류가 발생했습니다."
+						);
+					}
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("회원의 데이터 파일의 line "
+					+ (personArrayList.size() + 1)
+					+ "\n'"
+					+ personInformationLine
+					+ "'에서 오류가 발생했습니다."
+					+ " ("
+					+ e.getClass().getName()
+					+ ")"
+				);
+			} catch (PersonException e) {
+				System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
+			}
+		}
+	}
+
+	private void loadCollectionsData(BufferedReader bufferedReader) throws IOException {
+		while (true) {
+			String collectionInformationLine = bufferedReader.readLine();
+
+			try {
+				boolean hasCollectionExceptionOccurred = false;
 
 				if (collectionInformationLine == null) {
 					break;
@@ -85,10 +142,10 @@ class Library {
 									collectionInformationElement[COLLECTION_AUTHOR]
 								)
 							);
-						} else {
+						} else if (collectionInformationElement.length == 6) {
 							addCollection(
 								new Book(
-									personArrayList,
+									this,
 									collectionInformationElement[COLLECTION_TITLE],
 									collectionInformationElement[COLLECTION_AUTHOR],
 									collectionInformationElement[COLLECTION_IS_BORROWABLE],
@@ -96,8 +153,10 @@ class Library {
 									collectionInformationElement[COLLECTION_BORROWED_DATE]
 								)
 							);
+						} else {
+							hasCollectionExceptionOccurred = true;
 						}
-					} else {
+					} else if (collectionInformationElement[COLLECTION_CLASSNAME].equals("ClassMaterial")) {
 						if (collectionInformationElement.length == 4) {
 							addCollection(
 								new ClassMaterial(
@@ -105,10 +164,10 @@ class Library {
 									collectionInformationElement[COLLECTION_AUTHOR]
 								)
 							);
-						} else {
+						} else if (collectionInformationElement.length == 6) {
 							addCollection(
 								new ClassMaterial(
-									personArrayList,
+									this,
 									collectionInformationElement[COLLECTION_TITLE],
 									collectionInformationElement[COLLECTION_AUTHOR],
 									collectionInformationElement[COLLECTION_IS_BORROWABLE],
@@ -116,26 +175,36 @@ class Library {
 									collectionInformationElement[COLLECTION_BORROWED_DATE]
 								)
 							);
+						} else {
+							hasCollectionExceptionOccurred = true;
 						}
+					} else {
+						hasCollectionExceptionOccurred = true;
+					}
+
+					if (hasCollectionExceptionOccurred) {
+						throw new CollectionException("자료의 데이터 파일의 line "
+							+ (collectionArrayList.size() + 1)
+							+ "\n'"
+							+ collectionInformationLine
+							+ "'에서 오류가 발생했습니다."
+						);
 					}
 				}
+			} catch (CollectionException e) {
+				System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
 			}
-
-			System.out.println("자료의 데이터를 불러왔습니다.");
-			bufferedReader.close();
-		} catch (IOException e) {
-			System.out.println("에러: 자료의 데이터를 불러오는 데 실패했습니다. (" + e.getClass().getName() + ")");
 		}
 	}
 
-	boolean isUidUnique(int uid) {
+	public boolean isUidDuplicated(int uid) {
 		for (Person element : personArrayList) {
 			if (element.getUid() == uid) {
-				return false;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	void addPerson(Person person) {
@@ -263,6 +332,74 @@ class Library {
 			System.out.println("자료의 데이터를 저장했습니다.");
 		} catch (IOException e) {
 			System.out.println("에러: 자료의 데이터를 저장하는 데 실패했습니다. (" + e.getClass().getName() + ")");
+		}
+	}
+
+	void lendCollection(Person person, Collection collection) {
+		System.out.println("--------------------------------------------------------------------------------");
+
+		person.getBorrowingCollectionArrayList().clear();
+
+		for (Collection element : collectionArrayList) {
+			if (element.getBorrower() != null && element.getBorrower().getUid() == person.getUid()) {
+				person.getBorrowingCollectionArrayList().add(element);
+			}
+		}
+
+		try {
+			if (person.getBorrowingCollectionArrayList().size() >= person.getNumberOfBorrowable()) {
+				throw new PersonException("대출한도를 초과하였습니다.");
+			} else {
+				for (Collection element : person.getBorrowingCollectionArrayList()) {
+					if (ChronoUnit.DAYS.between(element.getBorrowedDate(), LocalDate.now())
+						>= person.getDaysOfBorrowable()
+					) {
+						throw new PersonException("반납기한이 연체된 자료가 존재합니다.");
+					}
+				}
+			}
+
+			if (collection.getIsBorrowable()) {
+				collection.setIsBorrowable(false);
+				collection.setBorrower(person);
+				collection.setBorrowedDate(LocalDate.now());
+				person.getBorrowingCollectionArrayList().add(collection);
+				System.out.println("자료를 성공적으로 대출했습니다.");
+			} else {
+				throw new CollectionException("해당 자료는 이미 대출 중입니다.");
+			}
+		} catch (PersonException | CollectionException e) {
+			System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
+			System.out.println("대출에 실패했습니다.");
+		}
+	}
+
+	void redeemCollection(Collection collection) {
+		Person borrower = collection.getBorrower();
+
+		System.out.println("--------------------------------------------------------------------------------");
+
+		try {
+			if (borrower == null) {
+				throw new CollectionException("해당 자료는 현재 대출 중이 아닙니다.");
+			}
+
+			borrower.getBorrowingCollectionArrayList().clear();
+
+			for (Collection element : collectionArrayList) {
+				if (element.getBorrower() != null && element.getBorrower().getUid() == borrower.getUid()) {
+					borrower.getBorrowingCollectionArrayList().add(element);
+				}
+			}
+
+			collection.setIsBorrowable(true);
+			collection.setBorrower(null);
+			collection.setBorrowedDate(null);
+			borrower.getBorrowingCollectionArrayList().remove(collection);
+			System.out.println("자료를 성공적으로 반납했습니다.");
+		} catch (CollectionException e) {
+			System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
+			System.out.println("반납에 실패했습니다.");
 		}
 	}
 
@@ -522,74 +659,6 @@ class Library {
 					}
 				}
 			}
-		}
-	}
-
-	void lendCollection(Person person, Collection collection) {
-		System.out.println("--------------------------------------------------------------------------------");
-
-		person.getBorrowingCollectionArrayList().clear();
-
-		for (Collection element : collectionArrayList) {
-			if (element.getBorrower() != null && element.getBorrower().getUid() == person.getUid()) {
-				person.getBorrowingCollectionArrayList().add(element);
-			}
-		}
-
-		try {
-			if (person.getBorrowingCollectionArrayList().size() >= person.getNumberOfBorrowable()) {
-				throw new PersonException("대출한도를 초과하였습니다.");
-			} else {
-				for (Collection element : person.getBorrowingCollectionArrayList()) {
-					if (ChronoUnit.DAYS.between(element.getBorrowedDate(), LocalDate.now())
-						>= person.getDaysOfBorrowable()
-					) {
-						throw new PersonException("반납기한이 연체된 자료가 존재합니다.");
-					}
-				}
-			}
-
-			if (collection.getIsBorrowable()) {
-				collection.setIsBorrowable(false);
-				collection.setBorrower(person);
-				collection.setBorrowedDate(LocalDate.now());
-				person.getBorrowingCollectionArrayList().add(collection);
-				System.out.println("자료를 성공적으로 대출했습니다.");
-			} else {
-				throw new CollectionException("해당 자료는 이미 대출 중입니다.");
-			}
-		} catch (PersonException | CollectionException e) {
-			System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
-			System.out.println("대출에 실패했습니다.");
-		}
-	}
-	
-	void redeemCollection(Collection collection) {
-		Person borrower = collection.getBorrower();
-
-		System.out.println("--------------------------------------------------------------------------------");
-
-		try {
-			if (borrower == null) {
-				throw new CollectionException("해당 자료는 현재 대출 중이 아닙니다.");
-			}
-
-			borrower.getBorrowingCollectionArrayList().clear();
-
-			for (Collection element : collectionArrayList) {
-				if (element.getBorrower() != null && element.getBorrower().getUid() == borrower.getUid()) {
-					borrower.getBorrowingCollectionArrayList().add(element);
-				}
-			}
-
-			collection.setIsBorrowable(true);
-			collection.setBorrower(null);
-			collection.setBorrowedDate(null);
-			borrower.getBorrowingCollectionArrayList().remove(collection);
-			System.out.println("자료를 성공적으로 반납했습니다.");
-		} catch (CollectionException e) {
-			System.out.println(e.getMessage() + " (" + e.getClass().getName() + ")");
-			System.out.println("반납에 실패했습니다.");
 		}
 	}
 }

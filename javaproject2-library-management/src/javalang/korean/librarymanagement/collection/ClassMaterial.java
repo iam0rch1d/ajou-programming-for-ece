@@ -1,7 +1,7 @@
 package javalang.korean.librarymanagement.collection;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import javalang.korean.librarymanagement.Library;
 import javalang.korean.librarymanagement.person.Person;
 
 public class ClassMaterial extends Collection {
@@ -10,14 +10,14 @@ public class ClassMaterial extends Collection {
 	}
 
 	public ClassMaterial(
-		ArrayList<Person> personArrayList,
+		Library library,
 		String title,
 		String author,
 		String isBorrowableToString,
 		String borrowerUidToString,
 		String borrowedDateToString
 	) {
-		super(personArrayList, title, author, isBorrowableToString, borrowerUidToString, borrowedDateToString);
+		super(library, title, author, isBorrowableToString, borrowerUidToString, borrowedDateToString);
 	}
 
 	@Override

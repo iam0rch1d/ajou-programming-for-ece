@@ -72,7 +72,7 @@ class Core {
 
             int uid = Integer.parseInt(scanner.nextLine());
 
-            if (!library.isUidUnique(uid)) {
+            if (library.isUidDuplicated(uid)) {
                 throw new PersonException("중복된 고유번호(uid)가 존재합니다.");
             }
 
@@ -87,9 +87,9 @@ class Core {
             System.out.println("이름: " + name);
 
             if (className.equals("Student")) {
-                return new Student(uid, name);
+                return new Student(library, uid, name);
             } else {
-                return new Professor(uid, name);
+                return new Professor(library, uid, name);
             }
         } catch (NumberFormatException e) {
             System.out.println("에러: 숫자 형태의 고유번호(uid)를 입력해 주십시오. (" + e.getClass().getName() + ")");
