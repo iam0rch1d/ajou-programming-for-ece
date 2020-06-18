@@ -1,6 +1,6 @@
 package javalang.korean.classapplication;
 
-class Lecture {
+public class Lecture {
 	private final String name;
 	private final String professorName;
 	private final String time; // Form of '[weekday0][timeAlphabet0][weekday1][timeAlphabet1]'

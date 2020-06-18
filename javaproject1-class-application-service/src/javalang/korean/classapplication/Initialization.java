@@ -1,7 +1,7 @@
 package javalang.korean.classapplication;
 
-class Initialization {
-	static void initialize() {
+public class Initialization {
+	public static void initialize() {
 		// Student sign-up
 		Core.studentArrayList.add(
 			new Student(

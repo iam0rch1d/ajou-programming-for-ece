@@ -2,7 +2,7 @@ package javalang.korean.classapplication;
 
 import java.util.Scanner;
 
-class Member {
+public class Member {
 	private final String name;
 	private final String id;
 	private String password;

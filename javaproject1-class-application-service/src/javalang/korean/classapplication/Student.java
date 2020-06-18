@@ -3,7 +3,7 @@ package javalang.korean.classapplication;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Student extends Member implements Scholar {
+public class Student extends Member implements Scholar {
 	private final int grade;
 	private final ArrayList<Lecture> lectureArrayList = new ArrayList<>();
 
