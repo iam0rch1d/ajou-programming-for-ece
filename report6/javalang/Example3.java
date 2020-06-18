@@ -35,6 +35,7 @@ public class Example3 {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.print("Enter your birth date. ('[year] [month] [day]' format): ");
 
+        // Scan in order of [year], [month], [day]
         LocalDate birthDate = LocalDate.of(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 
         System.out.println("Your birthday: " + toString(birthDate));
