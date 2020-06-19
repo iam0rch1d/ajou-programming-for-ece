@@ -1,12 +1,9 @@
-package javalang.korean.classapplication.gui;
+package javalang.korean.classapplication;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
-import javalang.korean.classapplication.Entrance;
-import javalang.korean.classapplication.Member;
 import javax.swing.*;
 
 public class EntranceUi extends JFrame implements ActionListener {
@@ -47,8 +44,10 @@ public class EntranceUi extends JFrame implements ActionListener {
                     "로그인 오류",
                     JOptionPane.ERROR_MESSAGE
                 );
-            } else {
-                System.out.println(member.getClass().getSimpleName());
+            } else if (member.getClass().getSimpleName().equals("Student")) {
+                dispose();
+
+                new StudentUi(member);
             }
         }
     }

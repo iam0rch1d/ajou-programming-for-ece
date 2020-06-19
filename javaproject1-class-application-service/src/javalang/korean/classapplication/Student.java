@@ -7,7 +7,7 @@ public class Student extends Member implements Scholar {
 	private final int grade;
 	private final ArrayList<Lecture> lectureArrayList = new ArrayList<>();
 
-	Student(String name, String id, String password, String registrationNumber, int grade) {
+	public Student(String name, String id, String password, String registrationNumber, int grade) {
 		super(name, id, password, registrationNumber);
 		this.grade = grade;
 	}

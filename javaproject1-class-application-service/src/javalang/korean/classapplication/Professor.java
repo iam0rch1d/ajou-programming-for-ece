@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Professor extends Member implements Scholar {
 	private final ArrayList<Lecture> lectureArrayList = new ArrayList<>();
 
-	Professor(String name, String id, String password, String registrationNumber) {
+	public Professor(String name, String id, String password, String registrationNumber) {
 		super(name, id, password, registrationNumber);
 	}
 
@@ -183,7 +183,7 @@ public class Professor extends Member implements Scholar {
 	}
 
 	// USED IN [Initialization] CLASS ONLY
-	void registerLecture(String name, String time, int minimumGrade) {
+	public void registerLecture(String name, String time, int minimumGrade) {
 		Lecture lecture = new Lecture(name, this.getName(), time, minimumGrade);
 
 		lectureArrayList.add(lecture);

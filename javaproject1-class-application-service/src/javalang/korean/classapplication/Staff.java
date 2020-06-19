@@ -3,7 +3,7 @@ package javalang.korean.classapplication;
 import java.util.Scanner;
 
 public class Staff extends Member {
-	Staff(String name, String id, String password, String registrationNumber) {
+	public Staff(String name, String id, String password, String registrationNumber) {
 		super(name, id, password, registrationNumber);
 	}
 
