@@ -12,7 +12,7 @@ class RegisterLectureUi extends JPanel implements ActionListener {
 	private final int numRow = CoreWithGui.lectureArrayList.size() + 1;
 	private final JButton[] button = new JButton[numRow - 1];
 
-	public RegisterLectureUi(Student student) {
+	RegisterLectureUi(Student student) {
 		this.student = student;
 
 		final int MARGIN = 5;
@@ -31,11 +31,11 @@ class RegisterLectureUi extends JPanel implements ActionListener {
 					legendLabel[j].setHorizontalAlignment(JLabel.CENTER);
 					add(legendLabel[j]);
 				} else switch (j) {
-					case 0 -> add(new JTextArea("" + i));
-					case 1 -> add(new JTextArea(CoreWithGui.lectureArrayList.get(i - 1).getName()));
-					case 2 -> add(new JTextArea(CoreWithGui.lectureArrayList.get(i - 1).getProfessorName()));
-					case 3 -> add(new JTextArea(CoreWithGui.lectureArrayList.get(i - 1).getTime()));
-					case 4 -> add(new JTextArea("" + CoreWithGui.lectureArrayList.get(i - 1).getMinimumGrade()));
+					case 0 -> add(new JLabel("" + i));
+					case 1 -> add(new JLabel(CoreWithGui.lectureArrayList.get(i - 1).getName()));
+					case 2 -> add(new JLabel(CoreWithGui.lectureArrayList.get(i - 1).getProfessorName()));
+					case 3 -> add(new JLabel(CoreWithGui.lectureArrayList.get(i - 1).getTime()));
+					case 4 -> add(new JLabel("" + CoreWithGui.lectureArrayList.get(i - 1).getMinimumGrade()));
 					default -> {
 						button[i - 1] = new JButton("신청");
 

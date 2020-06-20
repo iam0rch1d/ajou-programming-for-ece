@@ -13,6 +13,7 @@ public class StudentUi extends JFrame implements ActionListener {
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		tabbedPane.addTab("수강신청", new RegisterLectureUi(student));
+		tabbedPane.addTab("수강 목록 확인", new CheckLectureArrayListUi(student));
 		setResizable(false);
 		setTitle("학생 메뉴");
 		pack();
