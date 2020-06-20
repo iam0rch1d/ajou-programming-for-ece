@@ -17,7 +17,7 @@ public class EntranceUi extends JFrame implements ActionListener {
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setTitle("아주대학교 수강신청 프로그램");
+		setTitle("로그인 - 아주대학교 수강신청 프로그램");
 		pack();
 
 		Dimension frameSize = this.getSize();
@@ -33,7 +33,7 @@ public class EntranceUi extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("로그인")) {
+		if (e.getSource().equals(signInButton)) {
 			Member member = Entrance.isSignInValid(idField.getText(), String.copyValueOf(passwordField.getPassword()));
 
 			if (member == null) {
