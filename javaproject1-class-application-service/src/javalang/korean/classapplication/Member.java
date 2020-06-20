@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class Member {
 	private final String name;
 	private final String id;
-	private String password;
 	private final String registrationNumber;
+	private String password;
 
 	Member(String name, String id, String password, String registrationNumber) {
 		this.name = name;
@@ -34,7 +34,7 @@ public class Member {
 	void runMemberUi() {
 	}
 
-	void runChangePasswordUi() {
+	void runPasswordChangeUi() {
 		Scanner scanner = new Scanner(System.in);
 		String passwordTemp;
 

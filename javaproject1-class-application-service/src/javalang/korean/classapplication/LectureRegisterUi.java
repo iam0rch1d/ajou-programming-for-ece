@@ -7,12 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.stream.IntStream;
 
-class RegisterLectureUi extends JPanel implements ActionListener {
+class LectureRegisterUi extends JPanel implements ActionListener {
 	private final Student student;
 	private final int numRow = CoreWithGui.lectureArrayList.size() + 1;
 	private final JButton[] button = new JButton[numRow - 1];
 
-	RegisterLectureUi(Student student) {
+	LectureRegisterUi(Student student) {
 		this.student = student;
 
 		final int MARGIN = 5;

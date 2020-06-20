@@ -27,9 +27,9 @@ public class Professor extends Member implements Scholar {
 			int menuSelection = scanner.nextInt();
 
 			switch (menuSelection) {
-				case 1 -> runRegisterLectureUi();
-				case 2 -> runCheckLectureArrayListUi();
-				case 3 -> super.runChangePasswordUi();
+				case 1 -> runLectureRegisterUi();
+				case 2 -> runLectureArrayListCheckUi();
+				case 3 -> super.runPasswordChangeUi();
 				case 4 -> {
 					return;
 				}
@@ -39,7 +39,7 @@ public class Professor extends Member implements Scholar {
 	}
 
 	@Override
-	public void runRegisterLectureUi() {
+	public void runLectureRegisterUi() {
 		Scanner scanner = new Scanner(System.in);
 		String lectureName;
 		String lectureTime;
@@ -109,7 +109,7 @@ public class Professor extends Member implements Scholar {
 	}
 
 	@Override
-	public void runCheckLectureArrayListUi() {
+	public void runLectureArrayListCheckUi() {
 		int i = 1;
 
 		System.out.println("-----------------------------------------------------------------------------");

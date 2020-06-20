@@ -37,9 +37,9 @@ public class Student extends Member implements Scholar {
 			int menuSelection = scanner.nextInt();
 
 			switch (menuSelection) {
-				case 1 -> runRegisterLectureUi();
-				case 2 -> runCheckLectureArrayListUi();
-				case 3 -> super.runChangePasswordUi();
+				case 1 -> runLectureRegisterUi();
+				case 2 -> runLectureArrayListCheckUi();
+				case 3 -> super.runPasswordChangeUi();
 				case 4 -> {
 					return;
 				}
@@ -49,7 +49,7 @@ public class Student extends Member implements Scholar {
 	}
 
 	@Override
-	public void runRegisterLectureUi() {
+	public void runLectureRegisterUi() {
 		Scanner scanner = new Scanner(System.in);
 
 		Core.printLectureArrayList();
@@ -77,7 +77,7 @@ public class Student extends Member implements Scholar {
 	}
 
 	@Override
-	public void runCheckLectureArrayListUi() {
+	public void runLectureArrayListCheckUi() {
 		int i = 1;
 		System.out.println("-----------------------------------------------------------------------------");
 		System.out.println("신청하신 강의 목록입니다.");

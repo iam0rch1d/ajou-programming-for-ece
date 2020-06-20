@@ -13,7 +13,7 @@ public class Entrance {
 	static String password;
 	static int grade;
 
-	static void runCreateAccountUi() {
+	static void runSignUpUi() {
 		Scanner scanner = new Scanner(System.in);
 		int memberTypeSelection;
 

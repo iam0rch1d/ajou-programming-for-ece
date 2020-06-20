@@ -1,9 +1,9 @@
 package javalang.korean.classapplication;
 
 interface Scholar {
-	void runRegisterLectureUi();
+	void runLectureRegisterUi();
 
-	void runCheckLectureArrayListUi();
+	void runLectureArrayListCheckUi();
 
 	boolean isTimeAvailable(String lectureTime);
 }

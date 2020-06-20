@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Core {
-	static Scanner scanner = new Scanner(System.in);
 	static final ArrayList<Student> studentArrayList = new ArrayList<>();
 	static final ArrayList<Professor> professorArrayList = new ArrayList<>();
 	static final ArrayList<Staff> staffArrayList = new ArrayList<>();
 	static final ArrayList<Lecture> lectureArrayList = new ArrayList<>();
+	static Scanner scanner = new Scanner(System.in);
 
 	static void runCoreUi() {
 		while (true) {
@@ -24,7 +24,7 @@ public class Core {
 			int menuSelection = scanner.nextInt();
 
 			switch (menuSelection) {
-				case 1 -> Entrance.runCreateAccountUi();
+				case 1 -> Entrance.runSignUpUi();
 				case 2 -> Entrance.runSignInUi();
 				case 3 -> {
 					System.out.println("프로그램이 종료됩니다.");

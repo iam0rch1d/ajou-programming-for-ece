@@ -28,7 +28,7 @@ public class Staff extends Member {
 				case 1 -> Core.printLectureArrayList();
 				case 2 -> Core.printStudentArrayList();
 				case 3 -> Core.printProfessorArrayList();
-				case 4 -> super.runChangePasswordUi();
+				case 4 -> super.runPasswordChangeUi();
 				case 5 -> {
 					return;
 				}
