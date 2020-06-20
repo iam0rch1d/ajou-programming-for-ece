@@ -58,13 +58,45 @@ class CheckLectureArrayListUi extends JPanel implements ActionListener {
 						add(new JLabel());
 					}
 				} else if (student.getLectureArrayList().size() > 0) switch (j) {
-					case 0 -> add(new JLabel("" + i));
-					case 1 -> add(new JLabel(student.getLectureArrayList().get(i - 1).getName()));
-					case 2 -> add(new JLabel(student.getLectureArrayList().get(i - 1).getProfessorName()));
-					case 3 -> add(new JLabel(student.getLectureArrayList().get(i - 1).getTime()));
-					case 4 -> add(new JLabel("" + student.getLectureArrayList().get(i - 1).getMinimumGrade()));
-				} else if (student.getLectureArrayList().size() == 0) {
+					case 0 -> {
+						JLabel lectureNoLabel = new JLabel("" + i);
+
+						lectureNoLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(lectureNoLabel);
+					}
+					case 1 -> {
+						JLabel nameLabel = new JLabel(student.getLectureArrayList().get(i - 1).getName());
+
+						nameLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(nameLabel);
+					}
+					case 2 -> {
+						JLabel professorNameLabel = new JLabel(
+							student.getLectureArrayList().get(i - 1).getProfessorName()
+						);
+
+						professorNameLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(professorNameLabel);
+					}
+					case 3 -> {
+						JLabel timeLabel = new JLabel(student.getLectureArrayList().get(i - 1).getTime());
+
+						timeLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(timeLabel);
+					}
+					default -> {
+						JLabel minimumGradeLabel = new JLabel(
+							"" + student.getLectureArrayList().get(i - 1).getMinimumGrade()
+						);
+
+						minimumGradeLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(minimumGradeLabel);
+					}
+				} else if (student.getLectureArrayList().isEmpty()) {
 					if (i == 1 && j == 2) {
+						JLabel emptyMessageLabel = new JLabel("등록된 강의가 없습니다.");
+
+						emptyMessageLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(new JLabel("등록된 강의가 없습니다."));
 					} else {
 						add(new JLabel());
