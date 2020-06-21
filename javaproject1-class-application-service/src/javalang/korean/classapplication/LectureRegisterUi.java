@@ -15,7 +15,7 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 	LectureRegisterUi(Student student) {
 		this.student = student;
 
-		final int MARGIN = 5;
+		final int MARGIN = 4;
 		final int NUM_COLUMN = 6;
 
 		setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));

@@ -26,8 +26,8 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 	}
 
 	private void printLectureArrayList() {
+		final int MARGIN = 4;
 		final int NUM_COLUMN = 5;
-		final int MARGIN = 5;
 
 		int numRow = student.getLectureArrayList().size() + 2;
 

@@ -1,6 +1,6 @@
 package javalang.korean.classapplication;
 
-public enum Weekday {
+enum Weekday {
 	MONDAY('월'),
 	TUESDAY('화'),
 	WEDNESDAY('수'),

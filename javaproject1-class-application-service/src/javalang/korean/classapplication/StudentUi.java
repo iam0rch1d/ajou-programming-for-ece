@@ -5,9 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StudentUi extends JFrame implements ActionListener {
+class StudentUi extends JFrame implements ActionListener {
 	private JPanel mainPanel;
 	private JTabbedPane tabbedPane;
+	private ApplicationInformationFrame applicationInformationFrame;
 
 	JMenuBar menuBar = new JMenuBar();
 	JMenu[] menu = {new JMenu("기능"), new JMenu("정보")};
@@ -16,7 +17,7 @@ public class StudentUi extends JFrame implements ActionListener {
 		{new JMenuItem("프로그램 정보")}
 	};
 
-	public StudentUi(Student student) {
+	StudentUi(Student student) {
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -52,7 +53,11 @@ public class StudentUi extends JFrame implements ActionListener {
 		} else if (e.getSource().equals(menuItem[0][1])) {
 			System.exit(0);
 		} else if (e.getSource().equals(menuItem[1][0])) {
-			new ApplicationInformation();
+			if (applicationInformationFrame != null) {
+				applicationInformationFrame.dispose();
+			}
+
+			applicationInformationFrame = new ApplicationInformationFrame();
 		}
 	}
 }

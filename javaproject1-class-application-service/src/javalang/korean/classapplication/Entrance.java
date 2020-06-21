@@ -2,7 +2,7 @@ package javalang.korean.classapplication;
 
 import java.util.Scanner;
 
-public class Entrance {
+class Entrance {
 	private static final int STUDENT = 1;
 	private static final int PROFESSOR = 2;
 	private static final int STAFF = 3;
@@ -333,7 +333,7 @@ public class Entrance {
 		return password.length() <= 16;
 	}
 
-	public static Member isSignInValid(String id, String password) {
+	static Member isSignInValid(String id, String password) {
 		for (Student element : Core.studentArrayList) {
 			if (id.equals(element.getId()) && password.equals(element.getPassword())) {
 				return element;

@@ -3,10 +3,10 @@ package javalang.korean.classapplication;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Professor extends Member implements Scholar {
+class Professor extends Member implements Scholar {
 	private final ArrayList<Lecture> lectureArrayList = new ArrayList<>();
 
-	public Professor(String name, String id, String password, String registrationNumber) {
+	Professor(String name, String id, String password, String registrationNumber) {
 		super(name, id, password, registrationNumber);
 	}
 
@@ -135,7 +135,7 @@ public class Professor extends Member implements Scholar {
 		System.out.println("-----------------------------------------------------------------------------");
 	}
 
-	public boolean isLectureTimeValid(String lectureTime) {
+	boolean isLectureTimeValid(String lectureTime) {
 		if (lectureTime.length() != 4) {
 			return false;
 		}
@@ -183,7 +183,7 @@ public class Professor extends Member implements Scholar {
 	}
 
 	// USED IN [Initialization] CLASS ONLY
-	public void registerLecture(String name, String time, int minimumGrade) {
+	void registerLecture(String name, String time, int minimumGrade) {
 		Lecture lecture = new Lecture(name, this.getName(), time, minimumGrade);
 
 		lectureArrayList.add(lecture);

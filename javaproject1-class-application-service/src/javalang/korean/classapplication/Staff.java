@@ -2,8 +2,8 @@ package javalang.korean.classapplication;
 
 import java.util.Scanner;
 
-public class Staff extends Member {
-	public Staff(String name, String id, String password, String registrationNumber) {
+class Staff extends Member {
+	Staff(String name, String id, String password, String registrationNumber) {
 		super(name, id, password, registrationNumber);
 	}
 

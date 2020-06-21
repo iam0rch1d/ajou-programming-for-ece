@@ -3,7 +3,7 @@ package javalang.korean.classapplication;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Core {
+class Core {
 	static final ArrayList<Student> studentArrayList = new ArrayList<>();
 	static final ArrayList<Professor> professorArrayList = new ArrayList<>();
 	static final ArrayList<Staff> staffArrayList = new ArrayList<>();

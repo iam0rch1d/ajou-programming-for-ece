@@ -5,15 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EntranceUi extends JFrame implements ActionListener {
-	public JPanel mainPanel;
+class EntranceUi extends JFrame implements ActionListener {
+	private JPanel mainPanel;
 	private JButton signInButton;
 	private JButton createAccountButton;
 	private JButton exitButton;
 	private JTextField idField;
 	private JPasswordField passwordField;
 
-	public EntranceUi() {
+	EntranceUi() {
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
