@@ -24,7 +24,7 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 		final int MARGIN = 4;
 		final int NUM_COLUMN = 6;
 
-		int numRow = CoreWithGui.lectureArrayList.size() + 1;
+		int numRow = CoreWithGui.lectureArrayList.size() + 2;
 
 		setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
 		setLayout(new GridLayout(numRow, NUM_COLUMN, MARGIN, MARGIN));
@@ -38,17 +38,49 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 
 					legendLabel[j].setHorizontalAlignment(JLabel.CENTER);
 					add(legendLabel[j]);
-				} else switch (j) {
-					case 0 -> add(new JLabel("" + i));
-					case 1 -> add(new JLabel(CoreWithGui.lectureArrayList.get(i - 1).getName()));
-					case 2 -> add(new JLabel(CoreWithGui.lectureArrayList.get(i - 1).getProfessorName()));
-					case 3 -> add(new JLabel(CoreWithGui.lectureArrayList.get(i - 1).getTime()));
-					case 4 -> add(new JLabel("" + CoreWithGui.lectureArrayList.get(i - 1).getMinimumGrade()));
+				} else if (i == 1) {
+					add(new JSeparator());
+				}
+				else switch (j) {
+					case 0 -> {
+						JLabel lectureNoLabel = new JLabel("" + (i - 1));
+
+						lectureNoLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(lectureNoLabel);
+					}
+					case 1 -> {
+						JLabel nameLabel = new JLabel(CoreWithGui.lectureArrayList.get(i - 2).getName());
+
+						nameLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(nameLabel);
+					}
+					case 2 -> {
+						JLabel professorNameLabel = new JLabel(
+							CoreWithGui.lectureArrayList.get(i - 2).getProfessorName()
+						);
+
+						professorNameLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(professorNameLabel);
+					}
+					case 3 -> {
+						JLabel timeLabel = new JLabel(CoreWithGui.lectureArrayList.get(i - 2).getTime());
+
+						timeLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(timeLabel);
+					}
+					case 4 -> {
+						JLabel minimumGradeLabel = new JLabel(
+							"" + CoreWithGui.lectureArrayList.get(i - 2).getMinimumGrade()
+						);
+
+						minimumGradeLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(minimumGradeLabel);
+					}
 					default -> {
 						studentButton.add(new JButton("신청"));
 
-						add(studentButton.get(i - 1));
-						studentButton.get(i - 1).addActionListener(this);
+						add(studentButton.get(i - 2));
+						studentButton.get(i - 2).addActionListener(this);
 					}
 				}
 			}
