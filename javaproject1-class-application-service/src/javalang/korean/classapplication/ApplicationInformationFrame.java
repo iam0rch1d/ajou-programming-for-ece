@@ -3,16 +3,33 @@ package javalang.korean.classapplication;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 class ApplicationInformationFrame extends JFrame {
 	private JPanel mainPanel;
 	private JLabel logoLabel;
 
 	ApplicationInformationFrame() {
-		final int MARGIN = 40;
+		final int MARGIN_LEFTRIGHT = 64;
+		final int MARGIN_TOPBOTTOM = 32;
 
-		mainPanel.setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
+		mainPanel.setBorder(new EmptyBorder(MARGIN_TOPBOTTOM, MARGIN_LEFTRIGHT, MARGIN_TOPBOTTOM, MARGIN_LEFTRIGHT));
 		logoLabel.setIcon(new ImageIcon("data/0rch1d_logo_small.png"));
+		logoLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		logoLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI("https://github.com/iam0rch1d"));
+				} catch (IOException | URISyntaxException exception) {
+					exception.printStackTrace();
+				}
+			}
+		});
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("프로그램 정보");
