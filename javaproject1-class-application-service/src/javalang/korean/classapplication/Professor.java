@@ -1,11 +1,8 @@
 package javalang.korean.classapplication;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 class Professor extends Member implements Scholar {
-	private final ArrayList<Lecture> lectureArrayList = new ArrayList<>();
-
 	Professor(String name, String id, String password, String registrationNumber) {
 		super(name, id, password, registrationNumber);
 	}

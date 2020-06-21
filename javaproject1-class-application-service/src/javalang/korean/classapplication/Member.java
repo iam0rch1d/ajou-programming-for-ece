@@ -1,5 +1,6 @@
 package javalang.korean.classapplication;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Member {
@@ -7,12 +8,14 @@ class Member {
 	private final String id;
 	private final String registrationNumber;
 	private String password;
+	final ArrayList<Lecture> lectureArrayList;
 
 	Member(String name, String id, String password, String registrationNumber) {
 		this.name = name;
 		this.id = id;
 		this.password = password;
 		this.registrationNumber = registrationNumber;
+		lectureArrayList = new ArrayList<>();
 	}
 
 	String getName() {
@@ -29,6 +32,10 @@ class Member {
 
 	String getRegistrationNumber() {
 		return this.registrationNumber;
+	}
+
+	ArrayList<Lecture> getLectureArrayList() {
+		return lectureArrayList;
 	}
 
 	void runMemberUi() {

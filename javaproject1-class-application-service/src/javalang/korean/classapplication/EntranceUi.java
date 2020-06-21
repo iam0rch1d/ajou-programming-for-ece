@@ -43,10 +43,10 @@ class EntranceUi extends JFrame implements ActionListener {
 					"로그인 오류",
 					JOptionPane.ERROR_MESSAGE
 				);
-			} else if (member instanceof Student) {
+			} else {
 				dispose();
 
-				new StudentUi((Student) member);
+				new MemberUi(member);
 			}
 		}
 	}

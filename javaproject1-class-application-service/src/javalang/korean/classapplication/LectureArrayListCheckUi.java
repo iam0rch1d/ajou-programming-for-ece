@@ -7,25 +7,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class LectureArrayListCheckUi extends JPanel implements ActionListener {
-	private final Student student;
 	private final JButton refreshButton;
+	private final Member member;
 
-	LectureArrayListCheckUi(Student student) {
-		this.student = student;
+	LectureArrayListCheckUi(Member member) {
 		refreshButton = new JButton("새로고침");
+		this.member = member;
 
-		printLectureArrayList();
+		if (member.getClass().getSimpleName().equals("Student")) {
+			printLectureArrayList((Student) this.member);
+		} else {
+			printLectureArrayList((Professor) this.member);
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(refreshButton)) {
 			removeAll();
-			printLectureArrayList();
+
+			if (member.getClass().getSimpleName().equals("Student")) {
+				printLectureArrayList((Student) member);
+			} else {
+				printLectureArrayList((Professor) member);
+			}
 		}
 	}
 
-	private void printLectureArrayList() {
+	private void printLectureArrayList(Student student) {
 		final int MARGIN = 4;
 		final int NUM_COLUMN = 5;
 
@@ -37,7 +46,7 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 		for (int i = 0; i < numRow; i++) {
 			for (int j = 0; j < NUM_COLUMN; j++) {
 				if (student.getLectureArrayList().isEmpty()) {
-					if (i == 0 && j == 2) {
+					if (i == 0 && j == 0) {
 						JLabel emptyMessageLabel = new JLabel("등록된 강의가 없습니다.");
 
 						emptyMessageLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -92,6 +101,75 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 					default -> {
 						JLabel minimumGradeLabel = new JLabel(
 							"" + student.getLectureArrayList().get(i - 1).getMinimumGrade()
+						);
+
+						minimumGradeLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(minimumGradeLabel);
+					}
+				}
+			}
+		}
+	}
+
+	private void printLectureArrayList(Professor professor) {
+		final int MARGIN = 4;
+		final int NUM_COLUMN = 4;
+
+		int numRow = professor.getLectureArrayList().size() + 2;
+
+		setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
+		setLayout(new GridLayout(numRow, NUM_COLUMN, MARGIN, MARGIN));
+
+		for (int i = 0; i < numRow; i++) {
+			for (int j = 0; j < NUM_COLUMN; j++) {
+				if (professor.getLectureArrayList().isEmpty()) {
+					if (i == 0 && j == 0) {
+						JLabel emptyMessageLabel = new JLabel("등록된 강의가 없습니다.");
+
+						emptyMessageLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(new JLabel("등록된 강의가 없습니다."));
+					} else if (i == numRow - 1 && j == 0) {
+						add(refreshButton);
+						refreshButton.addActionListener(this);
+					} else {
+						add(new JLabel());
+					}
+				} else if (i == 0) {
+					JLabel[] legendLabel = new JLabel[NUM_COLUMN];
+					String[] legendText = {"No.", "과목명", "시간", "수강가능학년"};
+					legendLabel[j] = new JLabel(legendText[j]);
+
+					legendLabel[j].setHorizontalAlignment(JLabel.CENTER);
+					add(legendLabel[j]);
+				} else if (i == numRow - 1) {
+					if (j == 0) {
+						add(refreshButton);
+						refreshButton.addActionListener(this);
+					} else {
+						add(new JLabel());
+					}
+				} else switch (j) {
+					case 0 -> {
+						JLabel lectureNoLabel = new JLabel("" + i);
+
+						lectureNoLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(lectureNoLabel);
+					}
+					case 1 -> {
+						JLabel nameLabel = new JLabel(professor.getLectureArrayList().get(i - 1).getName());
+
+						nameLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(nameLabel);
+					}
+					case 2 -> {
+						JLabel timeLabel = new JLabel(professor.getLectureArrayList().get(i - 1).getTime());
+
+						timeLabel.setHorizontalAlignment(JLabel.CENTER);
+						add(timeLabel);
+					}
+					default -> {
+						JLabel minimumGradeLabel = new JLabel(
+							"" + professor.getLectureArrayList().get(i - 1).getMinimumGrade()
 						);
 
 						minimumGradeLabel.setHorizontalAlignment(JLabel.CENTER);
