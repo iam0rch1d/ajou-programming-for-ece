@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class MemberUi extends JFrame implements ActionListener {
+class MemberUiFrame extends JFrame implements ActionListener {
 	JMenuBar menuBar = new JMenuBar();
 	JMenu[] menu = {new JMenu("기능"), new JMenu("정보")};
 	JMenuItem[][] menuItem = {
@@ -16,7 +16,7 @@ class MemberUi extends JFrame implements ActionListener {
 	private JTabbedPane tabbedPane;
 	private ApplicationInformationFrame applicationInformationFrame;
 
-	MemberUi(Member member) {
+	MemberUiFrame(Member member) {
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -30,12 +30,12 @@ class MemberUi extends JFrame implements ActionListener {
 		}
 
 		if (member.getClass().getSimpleName().equals("Student")) {
-			tabbedPane.addTab("수강신청", new LectureRegisterUi((Student) member));
-			tabbedPane.addTab("수강 목록 확인", new LectureArrayListCheckUi(member));
+			tabbedPane.addTab("수강신청", new LectureRegisterUiPanel((Student) member));
+			tabbedPane.addTab("수강 목록 확인", new LectureArrayListCheckUiPanel(member));
 			setTitle("학생 메뉴");
 		} else if (member.getClass().getSimpleName().equals("Professor")) {
-			tabbedPane.addTab("강의 개설", new LectureRegisterUi((Professor) member));
-			tabbedPane.addTab("강의 목록 확인", new LectureArrayListCheckUi(member));
+			tabbedPane.addTab("강의 개설", new LectureRegisterUiPanel((Professor) member));
+			tabbedPane.addTab("강의 목록 확인", new LectureArrayListCheckUiPanel(member));
 			setTitle("교수 메뉴");
 		}
 
@@ -55,7 +55,7 @@ class MemberUi extends JFrame implements ActionListener {
 		if (e.getSource().equals(menuItem[0][0])) {
 			dispose();
 
-			new EntranceUi();
+			new EntranceUiFrame();
 		} else if (e.getSource().equals(menuItem[0][1])) {
 			System.exit(0);
 		} else if (e.getSource().equals(menuItem[1][0])) {

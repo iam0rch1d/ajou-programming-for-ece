@@ -5,16 +5,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class EntranceUi extends JFrame implements ActionListener {
+class EntranceUiFrame extends JFrame implements ActionListener {
 	private JPanel mainPanel;
 	private JTextField idField;
 	private JPasswordField passwordField;
 	private JButton signInButton;
 	private JButton createAccountButton;
 	private JButton exitButton;
-	private SignUpUi signUpUi;
+	private SignUpUiFrame signUpUiFrame;
 
-	EntranceUi() {
+	EntranceUiFrame() {
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -45,16 +45,16 @@ class EntranceUi extends JFrame implements ActionListener {
 					JOptionPane.ERROR_MESSAGE
 				);
 			} else {
-				if (signUpUi != null) {
-					signUpUi.dispose();
+				if (signUpUiFrame != null) {
+					signUpUiFrame.dispose();
 				}
 
 				dispose();
 
-				new MemberUi(member);
+				new MemberUiFrame(member);
 			}
 		} else if (e.getSource().equals(createAccountButton)) {
-			signUpUi = new SignUpUi();
+			signUpUiFrame = new SignUpUiFrame();
 		}
 	}
 }

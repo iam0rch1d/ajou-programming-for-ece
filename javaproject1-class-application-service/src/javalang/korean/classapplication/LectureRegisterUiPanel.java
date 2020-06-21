@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-class LectureRegisterUi extends JPanel implements ActionListener {
+class LectureRegisterUiPanel extends JPanel implements ActionListener {
 	private final Student student;
 	private final Professor professor;
 	private final ArrayList<JButton> studentButton = new ArrayList<>();
@@ -17,7 +17,7 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 	private final JTextField lectureMinimumGradeField = new JTextField();
 	private final JButton professorButton = new JButton("등록");
 
-	LectureRegisterUi(Student student) {
+	LectureRegisterUiPanel(Student student) {
 		this.student = student;
 		this.professor = null;
 
@@ -87,7 +87,7 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 		}
 	}
 
-	LectureRegisterUi(Professor professor) {
+	LectureRegisterUiPanel(Professor professor) {
 		this.student = null;
 		this.professor = professor;
 

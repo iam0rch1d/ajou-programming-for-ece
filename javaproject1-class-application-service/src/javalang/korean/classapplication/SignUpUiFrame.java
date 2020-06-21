@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class SignUpUi extends JFrame implements ActionListener {
+class SignUpUiFrame extends JFrame implements ActionListener {
 	private JPanel mainPanel;
 	private JTextField idField;
 	private JPasswordField passwordField;
@@ -17,7 +17,7 @@ class SignUpUi extends JFrame implements ActionListener {
 	private JTextField frontRegistrationNumberField;
 	private JPasswordField backRegistrationNumberField;
 
-	SignUpUi() {
+	SignUpUiFrame() {
 		setContentPane(mainPanel);
 		setResizable(false);
 		setTitle("회원가입");

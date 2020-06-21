@@ -6,11 +6,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class LectureArrayListCheckUi extends JPanel implements ActionListener {
+class LectureArrayListCheckUiPanel extends JPanel implements ActionListener {
 	private final JButton refreshButton;
 	private final Member member;
 
-	LectureArrayListCheckUi(Member member) {
+	LectureArrayListCheckUiPanel(Member member) {
 		refreshButton = new JButton("새로고침");
 		this.member = member;
 
