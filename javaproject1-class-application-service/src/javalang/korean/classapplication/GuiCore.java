@@ -1,6 +1,6 @@
 package javalang.korean.classapplication;
 
-class CoreWithGui extends Core {
+class GuiCore extends Core {
 	public static void main(String[] args) {
 		Initialization.initialize();
 

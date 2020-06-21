@@ -24,7 +24,7 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 		final int MARGIN = 4;
 		final int NUM_COLUMN = 6;
 
-		int numRow = CoreWithGui.lectureArrayList.size() + 2;
+		int numRow = GuiCore.lectureArrayList.size() + 2;
 
 		setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
 		setLayout(new GridLayout(numRow, NUM_COLUMN, MARGIN, MARGIN));
@@ -49,28 +49,28 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 						add(lectureNoLabel);
 					}
 					case 1 -> {
-						JLabel nameLabel = new JLabel(CoreWithGui.lectureArrayList.get(i - 2).getName());
+						JLabel nameLabel = new JLabel(GuiCore.lectureArrayList.get(i - 2).getName());
 
 						nameLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(nameLabel);
 					}
 					case 2 -> {
 						JLabel professorNameLabel = new JLabel(
-							CoreWithGui.lectureArrayList.get(i - 2).getProfessorName()
+							GuiCore.lectureArrayList.get(i - 2).getProfessorName()
 						);
 
 						professorNameLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(professorNameLabel);
 					}
 					case 3 -> {
-						JLabel timeLabel = new JLabel(CoreWithGui.lectureArrayList.get(i - 2).getTime());
+						JLabel timeLabel = new JLabel(GuiCore.lectureArrayList.get(i - 2).getTime());
 
 						timeLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(timeLabel);
 					}
 					case 4 -> {
 						JLabel minimumGradeLabel = new JLabel(
-							"" + CoreWithGui.lectureArrayList.get(i - 2).getMinimumGrade()
+							"" + GuiCore.lectureArrayList.get(i - 2).getMinimumGrade()
 						);
 
 						minimumGradeLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -96,7 +96,7 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 		setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
 		setLayout(new GridLayout(7, 1, MARGIN, MARGIN));
 
-		for (int i = 0; i < CoreWithGui.lectureArrayList.size(); i++) {
+		for (int i = 0; i < GuiCore.lectureArrayList.size(); i++) {
 			studentButton.add(new JButton());
 		}
 
@@ -118,10 +118,10 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// Action performed by student
 		if (student != null && professor == null) {
-			IntStream.range(0, CoreWithGui.lectureArrayList.size()).forEach(
+			IntStream.range(0, GuiCore.lectureArrayList.size()).forEach(
 				i -> {
 					if (e.getSource().equals(studentButton.get(i))) {
-						Lecture lecture = CoreWithGui.lectureArrayList.get(i);
+						Lecture lecture = GuiCore.lectureArrayList.get(i);
 
 						if (!student.isGradeEnough(lecture)) {
 							JOptionPane.showMessageDialog(
@@ -243,7 +243,7 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 					Lecture lecture = new Lecture(lectureName, super.getName(), lectureTime, lectureMinimumGrade);
 
 					professor.lectureArrayList.add(lecture);
-					CoreWithGui.lectureArrayList.add(lecture);
+					GuiCore.lectureArrayList.add(lecture);
 					JOptionPane.showMessageDialog(
 						null,
 						"[" + lecture.getName() + "] 강의을 개설했습니다.",
