@@ -72,8 +72,8 @@ class LectureRegisterUi extends JPanel implements ActionListener {
 		add(lectureNameField);
 		add(new JLabel(
 			"<html><p>강의 시간 ([요일1][시간1][요일2][시간2] 형태로 구성,<br>"
-			+ "[요일]은 [월, 화, 수, 목, 금] 중 하나를 입력,<br>"
-			+ "[시간]은 [A, B, C, D, E] 중 하나를 입력)</p><html>"
+				+ "[요일]은 [월, 화, 수, 목, 금] 중 하나를 입력,<br>"
+				+ "[시간]은 [A, B, C, D, E] 중 하나를 입력)</p><html>"
 		));
 		add(lectureTimeField);
 		add(new JLabel("수강 가능 최소 학년 ([1-4])"));

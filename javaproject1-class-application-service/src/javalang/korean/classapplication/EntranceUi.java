@@ -7,17 +7,18 @@ import java.awt.event.ActionListener;
 
 class EntranceUi extends JFrame implements ActionListener {
 	private JPanel mainPanel;
+	private JTextField idField;
+	private JPasswordField passwordField;
 	private JButton signInButton;
 	private JButton createAccountButton;
 	private JButton exitButton;
-	private JTextField idField;
-	private JPasswordField passwordField;
+	private SignUpUi signUpUi;
 
 	EntranceUi() {
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setTitle("로그인 - 아주대학교 수강신청 프로그램");
+		setTitle("로그인");
 		pack();
 
 		Dimension frameSize = this.getSize();
@@ -44,10 +45,16 @@ class EntranceUi extends JFrame implements ActionListener {
 					JOptionPane.ERROR_MESSAGE
 				);
 			} else {
+				if (signUpUi != null) {
+					signUpUi.dispose();
+				}
+
 				dispose();
 
 				new MemberUi(member);
 			}
+		} else if (e.getSource().equals(createAccountButton)) {
+			signUpUi = new SignUpUi();
 		}
 	}
 }

@@ -6,16 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class MemberUi extends JFrame implements ActionListener {
-	private JPanel mainPanel;
-	private JTabbedPane tabbedPane;
-	private ApplicationInformationFrame applicationInformationFrame;
-
 	JMenuBar menuBar = new JMenuBar();
 	JMenu[] menu = {new JMenu("기능"), new JMenu("정보")};
 	JMenuItem[][] menuItem = {
 		{new JMenuItem("로그아웃"), new JMenuItem("종료")},
 		{new JMenuItem("프로그램 정보")}
 	};
+	private JPanel mainPanel;
+	private JTabbedPane tabbedPane;
+	private ApplicationInformationFrame applicationInformationFrame;
 
 	MemberUi(Member member) {
 		setContentPane(mainPanel);
@@ -33,11 +32,11 @@ class MemberUi extends JFrame implements ActionListener {
 		if (member.getClass().getSimpleName().equals("Student")) {
 			tabbedPane.addTab("수강신청", new LectureRegisterUi((Student) member));
 			tabbedPane.addTab("수강 목록 확인", new LectureArrayListCheckUi(member));
-			setTitle("학생 메뉴 - 아주대학교 수강신청 프로그램");
+			setTitle("학생 메뉴");
 		} else if (member.getClass().getSimpleName().equals("Professor")) {
 			tabbedPane.addTab("강의 개설", new LectureRegisterUi((Professor) member));
 			tabbedPane.addTab("강의 목록 확인", new LectureArrayListCheckUi(member));
-			setTitle("교수 메뉴 - 아주대학교 수강신청 프로그램");
+			setTitle("교수 메뉴");
 		}
 
 		setJMenuBar(menuBar);

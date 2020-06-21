@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 class Member {
+	final ArrayList<Lecture> lectureArrayList;
 	private final String name;
 	private final String id;
 	private final String registrationNumber;
 	private String password;
-	final ArrayList<Lecture> lectureArrayList;
 
 	Member(String name, String id, String password, String registrationNumber) {
 		this.name = name;
