@@ -40,6 +40,10 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 
 		int numRow = student.getLectureArrayList().size() + 2;
 
+		if (!student.getLectureArrayList().isEmpty()) {
+			numRow += 2;
+		}
+
 		setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
 		setLayout(new GridLayout(numRow, NUM_COLUMN, MARGIN, MARGIN));
 
@@ -64,7 +68,9 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 
 					legendLabel[j].setHorizontalAlignment(JLabel.CENTER);
 					add(legendLabel[j]);
-				} else if (i == numRow - 1) {
+				} else if (i == 1 || i == numRow - 2)
+					add(new JSeparator());
+				else if (i == numRow - 1) {
 					if (j == 0) {
 						add(refreshButton);
 						refreshButton.addActionListener(this);
@@ -73,34 +79,34 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 					}
 				} else switch (j) {
 					case 0 -> {
-						JLabel lectureNoLabel = new JLabel("" + i);
+						JLabel lectureNoLabel = new JLabel("" + (i - 1));
 
 						lectureNoLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(lectureNoLabel);
 					}
 					case 1 -> {
-						JLabel nameLabel = new JLabel(student.getLectureArrayList().get(i - 1).getName());
+						JLabel nameLabel = new JLabel(student.getLectureArrayList().get(i - 2).getName());
 
 						nameLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(nameLabel);
 					}
 					case 2 -> {
 						JLabel professorNameLabel = new JLabel(
-							student.getLectureArrayList().get(i - 1).getProfessorName()
+							student.getLectureArrayList().get(i - 2).getProfessorName()
 						);
 
 						professorNameLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(professorNameLabel);
 					}
 					case 3 -> {
-						JLabel timeLabel = new JLabel(student.getLectureArrayList().get(i - 1).getTime());
+						JLabel timeLabel = new JLabel(student.getLectureArrayList().get(i - 2).getTime());
 
 						timeLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(timeLabel);
 					}
 					default -> {
 						JLabel minimumGradeLabel = new JLabel(
-							"" + student.getLectureArrayList().get(i - 1).getMinimumGrade()
+							"" + student.getLectureArrayList().get(i - 2).getMinimumGrade()
 						);
 
 						minimumGradeLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -116,6 +122,10 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 		final int NUM_COLUMN = 4;
 
 		int numRow = professor.getLectureArrayList().size() + 2;
+
+		if (!professor.getLectureArrayList().isEmpty()) {
+			numRow += 2;
+		}
 
 		setBorder(new EmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
 		setLayout(new GridLayout(numRow, NUM_COLUMN, MARGIN, MARGIN));
@@ -141,6 +151,8 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 
 					legendLabel[j].setHorizontalAlignment(JLabel.CENTER);
 					add(legendLabel[j]);
+				} else if (i == 1 || i == numRow - 2) {
+					add(new JSeparator());
 				} else if (i == numRow - 1) {
 					if (j == 0) {
 						add(refreshButton);
@@ -150,26 +162,26 @@ class LectureArrayListCheckUi extends JPanel implements ActionListener {
 					}
 				} else switch (j) {
 					case 0 -> {
-						JLabel lectureNoLabel = new JLabel("" + i);
+						JLabel lectureNoLabel = new JLabel("" + (i - 1));
 
 						lectureNoLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(lectureNoLabel);
 					}
 					case 1 -> {
-						JLabel nameLabel = new JLabel(professor.getLectureArrayList().get(i - 1).getName());
+						JLabel nameLabel = new JLabel(professor.getLectureArrayList().get(i - 2).getName());
 
 						nameLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(nameLabel);
 					}
 					case 2 -> {
-						JLabel timeLabel = new JLabel(professor.getLectureArrayList().get(i - 1).getTime());
+						JLabel timeLabel = new JLabel(professor.getLectureArrayList().get(i - 2).getTime());
 
 						timeLabel.setHorizontalAlignment(JLabel.CENTER);
 						add(timeLabel);
 					}
 					default -> {
 						JLabel minimumGradeLabel = new JLabel(
-							"" + professor.getLectureArrayList().get(i - 1).getMinimumGrade()
+							"" + professor.getLectureArrayList().get(i - 2).getMinimumGrade()
 						);
 
 						minimumGradeLabel.setHorizontalAlignment(JLabel.CENTER);
