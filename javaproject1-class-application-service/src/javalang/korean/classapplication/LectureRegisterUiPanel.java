@@ -40,8 +40,7 @@ class LectureRegisterUiPanel extends JPanel implements ActionListener {
 					add(legendLabel[j]);
 				} else if (i == 1) {
 					add(new JSeparator());
-				}
-				else switch (j) {
+				} else switch (j) {
 					case 0 -> {
 						JLabel lectureNoLabel = new JLabel("" + (i - 1));
 

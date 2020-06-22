@@ -12,6 +12,7 @@ class EntranceUiFrame extends JFrame implements ActionListener {
 	private JButton signInButton;
 	private JButton createAccountButton;
 	private JButton exitButton;
+	private JLabel imageLabel;
 	private SignUpUiFrame signUpUiFrame;
 
 	EntranceUiFrame() {
@@ -20,6 +21,8 @@ class EntranceUiFrame extends JFrame implements ActionListener {
 		setResizable(false);
 		setTitle("로그인");
 		pack();
+
+		imageLabel.setIcon(new ImageIcon("resources/ajou_logo.png"));
 
 		Dimension frameSize = this.getSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

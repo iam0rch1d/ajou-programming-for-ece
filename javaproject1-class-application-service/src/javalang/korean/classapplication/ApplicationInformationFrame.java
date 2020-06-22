@@ -11,16 +11,16 @@ import java.net.URISyntaxException;
 
 class ApplicationInformationFrame extends JFrame {
 	private JPanel mainPanel;
-	private JLabel logoLabel;
+	private JLabel imageLabel;
 
 	ApplicationInformationFrame() {
 		final int MARGIN_LEFTRIGHT = 64;
 		final int MARGIN_TOPBOTTOM = 32;
 
 		mainPanel.setBorder(new EmptyBorder(MARGIN_TOPBOTTOM, MARGIN_LEFTRIGHT, MARGIN_TOPBOTTOM, MARGIN_LEFTRIGHT));
-		logoLabel.setIcon(new ImageIcon("resources/0rch1d_logo_small.png"));
-		logoLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		logoLabel.addMouseListener(new MouseAdapter() {
+		imageLabel.setIcon(new ImageIcon("resources/0rch1d_logo_small.png"));
+		imageLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		imageLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {

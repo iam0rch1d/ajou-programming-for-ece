@@ -6,13 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class MemberUiFrame extends JFrame implements ActionListener {
+	private JPanel mainPanel;
 	JMenuBar menuBar = new JMenuBar();
 	JMenu[] menu = {new JMenu("기능"), new JMenu("정보")};
 	JMenuItem[][] menuItem = {
 		{new JMenuItem("로그아웃"), new JMenuItem("종료")},
 		{new JMenuItem("프로그램 정보")}
 	};
-	private JPanel mainPanel;
 	private JTabbedPane tabbedPane;
 	private ApplicationInformationFrame applicationInformationFrame;
 

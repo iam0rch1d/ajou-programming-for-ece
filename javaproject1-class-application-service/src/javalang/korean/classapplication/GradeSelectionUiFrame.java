@@ -10,8 +10,8 @@ class GradeSelectionUiFrame extends JFrame implements ActionListener {
 	private final String id;
 	private final String password;
 	private final String registrationNumber;
-	private JPanel mainPanel;
 	private final ButtonGroup radioButtonGroup;
+	private JPanel mainPanel;
 	private JRadioButton gradeRadioButton1;
 	private JRadioButton gradeRadioButton2;
 	private JRadioButton gradeRadioButton3;
