@@ -241,7 +241,7 @@ class LectureRegisterUiPanel extends JPanel implements ActionListener {
 
 					Lecture lecture = new Lecture(lectureName, super.getName(), lectureTime, lectureMinimumGrade);
 
-					professor.lectureArrayList.add(lecture);
+					professor.getLectureArrayList().add(lecture);
 					GuiCore.lectureArrayList.add(lecture);
 					JOptionPane.showMessageDialog(
 						null,

@@ -16,6 +16,10 @@ class Student extends Member implements Scholar {
 		return this.grade;
 	}
 
+	ArrayList<Lecture> getLectureArrayList() {
+		return lectureArrayList;
+	}
+
 	@Override
 	public void runMemberUi() {
 		Scanner scanner = new Scanner(System.in);

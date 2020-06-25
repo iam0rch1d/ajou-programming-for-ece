@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 class Member {
-	final ArrayList<Lecture> lectureArrayList;
 	private final String name;
 	private final String id;
 	private final String registrationNumber;
@@ -15,7 +14,6 @@ class Member {
 		this.id = id;
 		this.password = password;
 		this.registrationNumber = registrationNumber;
-		lectureArrayList = new ArrayList<>();
 	}
 
 	String getName() {
@@ -32,10 +30,6 @@ class Member {
 
 	String getRegistrationNumber() {
 		return this.registrationNumber;
-	}
-
-	ArrayList<Lecture> getLectureArrayList() {
-		return lectureArrayList;
 	}
 
 	void runMemberUi() {
