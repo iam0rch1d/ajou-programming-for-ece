@@ -191,6 +191,18 @@ class LectureRegisterUiPanel extends JPanel implements ActionListener {
 				}
 
 				String lectureTime = lectureTimeField.getText().toUpperCase();
+
+				if (lectureTime.length() != 4) {
+					JOptionPane.showMessageDialog(
+						null,
+						"[요일1][시간1][요일2][시간2]의 형태로 강의 시간을 구성해 주십시오.",
+						"강의 등록 오류",
+						JOptionPane.ERROR_MESSAGE
+					);
+
+					return;
+				}
+
 				int[] lectureTimeCode = {
 					Weekday.ordinalOf(lectureTime.charAt(0)) * 5 + lectureTime.charAt(1) - 'A',
 					Weekday.ordinalOf(lectureTime.charAt(2)) * 5 + lectureTime.charAt(3) - 'A'
