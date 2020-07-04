@@ -1,5 +1,5 @@
 # ECE255 Programming for ECE | 전자공학프로그래밍
-## 2020-1학기 수강
+2020-1학기 수강
 ## Collections
 |Category|Language|Content(Source code)|
 |-|:-:|-|
@@ -12,7 +12,7 @@
 |report6|Java|- 시간 관련 클래스 연습(Example3.java)|
 |exercise1|C|- 하노이의 탑(part1.c)<br>- 에라토스테네스의 체(part2.c)<br>- GPIO 제어(part3.c)|
 |exercise2|Java|- 생성자와 소멸자(part1)<br>- 도서 대출 관리 Small(part2)|
-|exercise3|Java|Java Swing GUI 구현(javaproject1-class-application-service에 포함)|
+|exercise3|Java|- Java Swing GUI 구현(javaproject1-class-application-service에 포함)|
 |cproject1-gomoku|C|오목|
 |cproject2-lcrs-binary-tree|C|Left-Child Right-Sibling Binary 트리|
 |javaproject1-class-application-service|Java|수강신청 서비스 프로그램 (+ GUI)|
