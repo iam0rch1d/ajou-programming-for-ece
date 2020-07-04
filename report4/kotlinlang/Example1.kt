@@ -1,4 +1,9 @@
-// Example1.kt
+/**
+ * Example1.kt
+ */
+
+package kotlinlang
+
 class StringList(stringArray: Array<String>) {
     private val list: MutableList<String> = ArrayList()
     private val listSize: Int
@@ -39,7 +44,7 @@ fun main() {
 
     print("Before: ")
     stringList.printList()
-    region[2] = "Jinju" // Test value protection of [StringList] class member
+    region[2] = "Jinju" // Test value protection of [kotlinlang.StringList] class member
     stringList.reverseList()
     print("After: ")
     stringList.printList()

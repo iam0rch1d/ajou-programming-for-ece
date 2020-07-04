@@ -1,4 +1,7 @@
+package javalang;
+
 class Museum {
+    // Members
     private int numCurrentVisitor;
     private int numTotalVisitor;
     private int sales;
@@ -27,7 +30,7 @@ class Museum {
         sales += visitor.getFeeToPay();
 
         visitor.pay();
-        System.out.print("Visitor admission - Age: " + visitor.getAge() + " / ");
+        System.out.print("kotlinlang.Visitor admission - Age: " + visitor.getAge() + " / ");
 
         if (!visitor.isMember()) {
             System.out.print("Non-");
@@ -49,7 +52,7 @@ class Museum {
     void sendout(Visitor visitor) {
         numCurrentVisitor--;
 
-        System.out.print("Visitor exit - Age: " + visitor.getAge() + " / ");
+        System.out.print("kotlinlang.Visitor exit - Age: " + visitor.getAge() + " / ");
 
         if (!visitor.isMember()) {
             System.out.print("Non-");

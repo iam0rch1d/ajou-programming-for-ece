@@ -1,4 +1,9 @@
-// Example2.kt
+/**
+ * Example2.kt
+ */
+
+package kotlinlang
+
 class Visitor(private val age: Int, private val membership: Boolean, private var money: Int) {
     constructor(age: Int, money: Int) : this(age, false, money)
 
@@ -85,7 +90,7 @@ class Museum {
         sales += visitor.getFeeToPay()
 
         visitor.pay()
-        print("Visitor admission - Age: " + visitor.getAge() + " / ")
+        print("kotlinlang.Visitor admission - Age: " + visitor.getAge() + " / ")
 
         if (!visitor.isMember()) {
             print("Non-")
@@ -107,7 +112,7 @@ class Museum {
     fun sendout(visitor: Visitor) {
         numCurrentVisitor--
 
-        print("Visitor exit - Age: " + visitor.getAge() + " / ")
+        print("kotlinlang.Visitor exit - Age: " + visitor.getAge() + " / ")
 
         if (!visitor.isMember()) {
             print("Non-")

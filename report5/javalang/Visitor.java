@@ -1,4 +1,7 @@
+package javalang;
+
 class Visitor {
+    // Members
     private final int age;
     private final boolean membership;
     private int money;

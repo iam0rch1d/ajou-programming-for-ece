@@ -1,3 +1,5 @@
+package javalang;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +48,7 @@ class Example1 {
 
         System.out.print("Before: ");
         stringList.printList();
-        region[2] = "Jinju"; // Test value protection of [StringList] class member
+        region[2] = "Jinju"; // Test value protection of [kotlinlang.StringList] class member
         stringList.reverseList();
         System.out.print("After: ");
         stringList.printList();
