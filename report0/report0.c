@@ -1,75 +1,97 @@
 #include <stdio.h>
+#include <limits.h>
 
-// Macros
-#define NUM_DATA 13
+enum boolean {
+    false = 0,
+    true
+};
 
-// Global variables
-int target;
-int iTarget;
+// Initiate functions
+int parseInt(char *);
+int search(int *, int, int, int);
+void showSearchResult(int, int);
 
-// Initiate Functions
-void showIntro();
-int setTarget();
-int search(int*, int, int, int);
-void showResult(int, int);
 
-//----------------------------------------------------------------------------------------------------------------------
 // Main function
 int main() {
-    int data[NUM_DATA] = {10, 12, 13, 14, 18, 20, 25, 27, 30, 35, 40, 45, 47};
+    int data[] = {10, 12, 13, 14, 18, 20, 25, 27, 30, 35, 40, 45, 47};
 
-    showIntro();
-    setTarget();
-    search(data, target, 0, NUM_DATA - 1);
-    showResult(target, iTarget);
+    printf("Welcome to Programming for Electrical and Computer Engineering class!\n");
+    printf("Input the target number:");
+
+    char targetString[2];
+
+    scanf("%s", targetString);
+
+    int target = parseInt(targetString);
+    int indexTarget = search(data, target, 0, sizeof(data) / sizeof(data[0]));
+
+    showSearchResult(target, indexTarget);
 
     return 0;
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 // Functions
 
-// showIntro() - Say Hi
-void showIntro() {
-    printf("Welcome to Programming for Electrical and Computer Engineering class!\n");
-    printf("Input the target number:");
+/** int parseInt(char *)
+ * Parse string to integer.
+ */
+int parseInt(char *string) {
+    char *stringCursor = string;
+    int boolNegative = false;
+    int value = 0;
+
+    while (*stringCursor != '\0') {
+        if (*stringCursor == '-' && stringCursor == string) {
+            boolNegative = true;
+        } else if (*stringCursor < '0' || *stringCursor > '9') {
+            printf("Number Format Exception.\n");
+
+            return INT_MAX;
+        }
+
+        value *= 10;
+
+        if (boolNegative) {
+            value -= *stringCursor - '0';
+        } else {
+            value += *stringCursor - '0';
+        }
+
+        stringCursor++;
+    }
+
+    return value;
 }
 
-// setTarget() - Scan and set target from user
-int setTarget() {
-    scanf("%d", &target);
-
-    return target;
-}
-
-// search() - Perform binary search
-int search(int* arr, int _target, int iLow, int iHigh) {
-    if (iLow > iHigh) { // Target is not found
-        iTarget = -1;
-
-        return 0;
+/** int search(int *, int, int, int)
+ * Perform binary search.
+ * If search fails, return -1.
+ */
+int search(int *data, int target, int indexLow, int indexHigh) {
+    if (indexLow > indexHigh) { // Target is not found
+        return -1;
     }
 
-    int iPivot = (iLow + iHigh) / 2;
+    int indexPivot = (indexLow + indexHigh) / 2;
 
-    if (_target == arr[iPivot]) { // Target hits the pivot
-        iTarget = iPivot;
-
-        return 0;
-    }
-    else if (_target < arr[iPivot]) { // Target is smaller than the pivot
-        return search(arr, _target, iLow, iPivot - 1);
-    }
-    else { // Target is larger than the pivot
-        return search(arr, _target, iPivot + 1, iHigh);
+    if (target == data[indexPivot]) { // Target hits the pivot
+        return indexPivot;
+    } else if (target < data[indexPivot]) { // Target is smaller than the pivot
+        return search(data, target, indexLow, indexPivot - 1);
+    } else { // Target is larger than the pivot
+        return search(data, target, indexPivot + 1, indexHigh);
     }
 }
 
-// showResult() - Show result
-void showResult(int _target, int _iTarget) {
-    if (_iTarget == -1) { // Search fails
-        printf("%d is not found.", _target);
-    }
-    else { // Search succeeds
-        printf("%d is the index %d.\n", _target, _iTarget);
+/** void showSearchResult(int, int)
+ * Show binary search result.
+ */
+void showSearchResult(int target, int indexTarget) {
+    if (indexTarget == -1) { // Search fails
+        printf("%d is not found.", target);
+    } else { // Search succeeds
+        printf("%d is the index %d.\n", target, indexTarget);
     }
 }
