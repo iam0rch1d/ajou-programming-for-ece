@@ -1,62 +1,60 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // Macros
 #define NUM_INPUT 5
 
-// Initiate Functions
-void showIntro();
-int* getInput();
-void printMaxMinValue(const int*);
+// Function prototypes
+int *scanNumberArray();
+void printMaxMinValue(const int *);
 
-//----------------------------------------------------------------------------------------------------------------------
 // Main function
 int main() {
-    showIntro();
-    printMaxMinValue(getInput());
+    printf("+-------------------------------------+\n");
+    printf("|          Max./Min. Finder           |\n");
+    printf("+-------------------------------------+\n");
+    printf("|          Input %3d numbers          |\n", NUM_INPUT);
+    printf("|  (divided by null space character)  |\n");
+    printf("+-------------------------------------+\n");
+    printMaxMinValue(scanNumberArray());
 
     return 0;
 }
-//----------------------------------------------------------------------------------------------------------------------
+
 // Functions
-
-// showIntro() - User interface
-void showIntro() {
-    printf("+-----------------------------------------+\n");
-    printf("|            Max./Min. Finder             |\n");
-    printf("+-----------------------------------------+\n");
-    printf("|            Input %3d numbers            |\n", NUM_INPUT);
-    printf("|    (divided by null space character)    |\n");
-    printf("+-----------------------------------------+\n");
-    printf("\n");
-}
-
-// getInput() - Scan numbers from user, return address of numbers array
-int* getInput() {
-    static int num[NUM_INPUT];
+/**
+ * int *scanNumberArray()
+ * Scans numbers from user.
+ * Returns address of numbers array.
+ */
+int *scanNumberArray() {
+    char numberString[11];
+    static int numberArray[NUM_INPUT];
     int i;
 
     for (i = 0; i < NUM_INPUT; i++) {
-        scanf("%d", &num[i]);
+        scanf("%s", numberString);
+
+        numberArray[i] = strtol(numberString, NULL, 10);
     }
 
-    return num;
+    return numberArray;
 }
 
-// printMaxMin() - Print maximum and minimum value of array
-void printMaxMinValue(const int* arr) {
-    int maxValue = arr[0];
-    int minValue = arr[0];
+/**
+ * void printMaxMinValue(const int *)
+ * Prints maximum and minimum value of array.
+ */
+void printMaxMinValue(const int *numberArray) {
+    int maxValue = numberArray[0];
+    int minValue = numberArray[0];
     int i;
 
     for (i = 1; i < NUM_INPUT; i++) {
-        if (arr[i] > maxValue) {
-            maxValue = arr[i];
-        }
+        if (numberArray[i] > maxValue) maxValue = numberArray[i];
 
-        if (arr[i] < minValue) {
-            minValue = arr[i];
-        }
+        if (numberArray[i] < minValue) minValue = numberArray[i];
     }
 
-    printf("Max. value is %d, min. value is %d.", maxValue, minValue);
+    printf("Maximum value is %d.\nMinimum value is %d.\n", maxValue, minValue);
 }

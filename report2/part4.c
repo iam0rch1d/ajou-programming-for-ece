@@ -3,60 +3,50 @@
 // Macros
 #define MAX_STRING_LENGTH 256
 
-// Global variables
-char str[MAX_STRING_LENGTH];
-
 // Initiate Functions
-void showIntro();
-void getInput();
-void change(char*);
+void changeString(char *);
 
-//----------------------------------------------------------------------------------------------------------------------
 // Main function
 int main() {
-    showIntro();
-    getInput();
-    change(str);
-
-    return 0;
-}
-//----------------------------------------------------------------------------------------------------------------------
-// Functions
-
-// showIntro() - User interface
-void showIntro() {
     printf("+---------------------------+\n");
     printf("|   String Changer Mk.III   |\n");
     printf("+---------------------------+\n");
     printf("|     Input any string      |\n");
     printf("+---------------------------+\n");
-    printf("\n");
+
+    char string[MAX_STRING_LENGTH];
+
+    scanf("%s", string);
+    changeString(string);
+
+    return 0;
 }
 
-// getInput() - Scan string from user, return address of string
-void getInput() {
-    gets(str);
-}
-
-// change() - Replace all first character of each words with uppercase
-void change(char* _str) {
+// Functions
+/**
+ * void changeString(char *)
+ * Replaces all first character of each words with uppercase.
+ */
+void changeString(char *string) {
     int i = 0; // Cursor of string array
-    int iWordFirstChar = 0; // Indicate first character of each words
+    int indexWordFirstCharacter = 0; // Indicate first character of each words
 
-    printf("\"%s\" changed into \"", _str);
+    printf("\"%s\" changed into \"", string);
 
-    while (_str[i] != '\0') {
-        while (_str[i] != ' ' && _str[i] != '\0') { // Move cursor until next blank letter to indicate first letter of
-            i++;                                    // each word
+    while (string[i] != '\0') {
+        // Move cursor until next blank letter to indicate first letter of each word
+        while (string[i] != ' ' && string[i] != '\0') {
+            i++;
         }
 
-        if (_str[iWordFirstChar] >= 'a' && _str[iWordFirstChar] <= 'z') { // If first character is lowercase, replace it
-            _str[iWordFirstChar] += 'A' - 'a';                            // with uppercase
+        // If first character is lowercase, replace it with uppercase
+        if (string[indexWordFirstCharacter] >= 'a' && string[indexWordFirstCharacter] <= 'z') {
+            string[indexWordFirstCharacter] += 'A' - 'a';
         }
 
         i++;
-        iWordFirstChar = i; // Indicate first character of next word
+        indexWordFirstCharacter = i; // Indicate first character of next word
     }
 
-    printf("%s\".\n", _str);
+    printf("%s\".\n", string);
 }

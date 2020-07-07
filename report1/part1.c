@@ -13,20 +13,25 @@ enum boolean {
 
 // Function prototypes
 void initializeDatabase(int *, int *);
-void printInformation();
 void runMainLoop(int *);
-void showOne(int *, int);
-void showAllPrimes(int *);
+void printIsNumberPrime(int *, int);
+void printPrimes(int *);
 int isDynamicPrime(const int *, int);
 int isStaticPrime(int);
 
 // Main function
 int main() {
-    int memoPrime[NUM_PRIME] = {FIRST_PRIME};
+    int memoPrime[NUM_PRIME] = { FIRST_PRIME };
     int countPrime = 1;
 
     initializeDatabase(memoPrime, &countPrime);
-    printInformation();
+    printf("+--------------------------------------------------------------+\n");
+    printf("|                     Prime Number Finder                      |\n");
+    printf("+--------------------------------------------------------------+\n");
+    printf("|   <natural number> : Check if the number is a prime number   |\n");
+    printf("|               '-1' : Show all prime number database          |\n");
+    printf("|                '0' : Exit                                    |\n");
+    printf("+--------------------------------------------------------------+\n");
     runMainLoop(memoPrime);
 
     return 0;
@@ -43,27 +48,11 @@ void initializeDatabase(int *memoPrime, int *countPrime) {
     while (*countPrime <= NUM_PRIME) {
         i++;
 
-        if (isDynamicPrime(memoPrime, i) == true) {
+        if (isDynamicPrime(memoPrime, i)) {
             memoPrime[*countPrime] = i;
             (*countPrime)++;
         }
     }
-}
-
-/**
- * void printInformation()
- * Print program information.
- */
-void printInformation() {
-    setbuf(stdout, 0);
-    printf("+--------------------------------------------------------------+\n");
-    printf("|                     Prime Number Finder                      |\n");
-    printf("+--------------------------------------------------------------+\n");
-    printf("|   <natural number> : Check if the number is a prime number   |\n");
-    printf("|               '-1' : Show all prime number database          |\n");
-    printf("|                '0' : Exit                                    |\n");
-    printf("+--------------------------------------------------------------+\n");
-    printf("----------------------------------------------------------------\n");
 }
 
 /**
@@ -82,18 +71,20 @@ void runMainLoop(int *memoPrime) {
         int number = strtol(numberString, NULL, 10);
 
         if (number == 0) break;
-        else if (number == -1) showAllPrimes(memoPrime);
-        else if (number >= 1) showOne(memoPrime, number);
+        else if (number == -1) printPrimes(memoPrime);
+        else if (number >= 1) printIsNumberPrime(memoPrime, number);
         else printf("Invalid number.\n");
+
+        printf("--------------------------------------------------------------\n");
     }
 }
 
 /**
- * void showOne(int)
+ * void printIsNumberPrime(int)
  * Function called when user inputs natural number.
  * Checks if the number is prime number.
  */
-void showOne(int *memoPrime, int number) {
+void printIsNumberPrime(int *memoPrime, int number) {
     int i;
 
     if (number <= memoPrime[NUM_PRIME - 1]) {
@@ -101,38 +92,30 @@ void showOne(int *memoPrime, int number) {
         for (i = 0; memoPrime[i] <= number; i++) {
             if (number == memoPrime[i]) {
                 printf("%d is a prime number.\n", number);
-                printf("----------------------------------------------------------------\n");
 
                 return;
             }
         }
-    } else if (number <= pow(memoPrime[NUM_PRIME - 1], 2)) {
+    } else if (number <= pow(memoPrime[NUM_PRIME - 1], 2) && isDynamicPrime(memoPrime, number)) {
         // If square root of the number is smaller than maximum of memoization database
-        if (isDynamicPrime(memoPrime, number) == true) {
-            printf("%d is a prime number.\n", number);
-            printf("----------------------------------------------------------------\n");
+        printf("%d is a prime number.\n", number);
 
-            return;
-        }
-    } else {
-        // If the number is larger than maximum of memoization database
-        if (isStaticPrime(number) == true) {
-            printf("%d is a prime number.\n", number);
-            printf("----------------------------------------------------------------\n");
+        return;
+    } else if (isStaticPrime(number)) { // If the number is larger than maximum of memoization database
+        printf("%d is a prime number.\n", number);
 
-            return;
-        }
+        return;
     }
 
     printf("%d is not a prime number.\n", number);
 }
 
 /**
- * void showAllPrimes()
+ * void printPrimes()
  * Function called when user inputs '-1'.
  * Shows all prime number database.
  */
-void showAllPrimes(int *memoPrime) {
+void printPrimes(int *memoPrime) {
     int i;
 
     for (i = 0; i < NUM_PRIME; i++) {
@@ -140,7 +123,6 @@ void showAllPrimes(int *memoPrime) {
     }
 
     printf("\n");
-    printf("----------------------------------------------------------------\n");
 }
 
 /**
@@ -150,9 +132,8 @@ void showAllPrimes(int *memoPrime) {
  * The term 'Dynamic' means dynamic programming.
  */
 int isDynamicPrime(const int *memoPrime, int number) {
-    if (number == 1) {
-        return false;
-    } else {
+    if (number == 1) return false;
+    else {
         int i;
 
         for (i = 0; (memoPrime[i] != 0) && (memoPrime[i] <= sqrt(number)); i++) {
