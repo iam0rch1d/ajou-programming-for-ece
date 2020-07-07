@@ -18,7 +18,7 @@ int main() {
 // Functions
 /**
  * void identifyCharacter()
- * Scans a character from user and identify if the character is digit.
+ * Scans character from user and identify if the character is digit.
  */
 void identifyCharacter() {
     char character;

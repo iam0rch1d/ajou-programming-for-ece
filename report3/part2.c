@@ -1,85 +1,77 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
-// Initiate Functions
-void showIntro();
-int getSize();
-int getArray(int);
-void printSumAvg(int, int);
+// Function prototypes
+int scanNumberArray(int);
+void printSumAverage(int, int);
 
-//----------------------------------------------------------------------------------------------------------------------
 // Main function
 int main() {
-    int size;
+    printf("+------------------+\n");
+    printf("|  Average Finder  |\n");
+    printf("+------------------+\n");
 
-    showIntro();
+    char sizeString[10];
 
-    size = getSize();
+    printf("How many numbers?:\n");
+    scanf("%s", sizeString);
 
-    printSumAvg(getArray(size), size);
+    int size = strtol(sizeString, NULL, 10);
+
+    printSumAverage(scanNumberArray(size), size);
 
     return 0;
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+
 // Functions
-
-// showIntro() - User interface
-void showIntro() {
-    printf("+---------------------+\n");
-    printf("|   Average Finder    |\n");
-    printf("+---------------------+\n");
-    printf("\n");
-}
-
-// getSize() - Scan size of number array from user, return size
-int getSize() {
-    int size;
-
-    printf("How many numbers ?:\n");
-    scanf("%d", &size);
-
-    return size;
-}
-
-// getArray() - Scan each element of number array from user, return sum of number array
-int getArray(int size) {
-    int i;
+/**
+ * int scanNumberArray(int)
+ * Scans each element of number array from user.
+ * Returns sum of number array.
+ */
+int scanNumberArray(int size) {
     int sum = 0;
-    int* arr = NULL;
 
-    // assert(size > 0);
+    // Assert if [size] is larger than [0]
     if (size <= 0) {
         printf("Failure !\n");
         exit(1);
     }
 
-    arr = (int*)malloc(size * sizeof(int)); // Dynamic memory allocation - arr
+    int *numberArray = malloc(size * sizeof(int)); // Dynamic memory allocation of [numberArray]
 
-    // assert(arr != NULL);
-    if (arr == NULL) {
+    // Assert if [numberArray] is successfully allocated
+    if (numberArray == NULL) {
         printf("Failure !\n");
         exit(2);
     }
 
     printf("Enter %d numbers:\n", size);
 
-    for (i = 0; i < size; i++) {
-        scanf("%d", arr + i); // Put number in i-th element of array
+    for (int i = 0; i < size; i++) {
+        char numberString[11];
 
-        sum += arr[i];
+        scanf("%s", numberString); // Put number in [i]-th element of array
+
+        numberArray[i] = strtol(numberString, NULL, 10);
+
+        sum += numberArray[i];
     }
 
-    free(arr); // Dynamic memory release - arr
+    free(numberArray); // Dynamic memory release of [numberArray]
 
     return sum;
 }
 
-// printSumAvg() - Print sum and average of number array
-void printSumAvg(int sum, int size) {
+/**
+ * void printSumAverage(int, int)
+ * Prints sum and average of number array.
+ */
+void printSumAverage(int sum, int size) {
     double average;
 
-    average = (double)sum / size;
+    average = (double) sum / size;
 
     printf("Sum: %d\n", sum);
     printf("Average: %.3lf", average);

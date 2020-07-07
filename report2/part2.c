@@ -23,7 +23,7 @@ int main() {
 /**
  * char *scanInputString()
  * Scans string from user.
- * Returns address of string
+ * Returns address of string.
  */
 char *scanInputString() {
     static char inputString[MAX_STRING_LENGTH];
@@ -35,7 +35,7 @@ char *scanInputString() {
 
 /**
  * void changeString(const char *)
- * Cuts all spacings
+ * Cuts all spacings.
  */
 void changeString(const char *inputString) {
     int i;

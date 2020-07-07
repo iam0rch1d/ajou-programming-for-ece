@@ -3,7 +3,7 @@
 // Macros
 #define MAX_STRING_LENGTH 200
 
-// Initiate Functions
+// Function prototypes
 void changeString(char *);
 
 // Main function
@@ -25,7 +25,7 @@ int main() {
 // Functions
 /**
  * void changeString(char *)
- * Replaces all first lowercase of each words with uppercase
+ * Replaces all first lowercases of each word with uppercase
  */
 void changeString(char *inputString) {
     int i = 0; // Cursor of string array

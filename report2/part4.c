@@ -3,16 +3,16 @@
 // Macros
 #define MAX_STRING_LENGTH 256
 
-// Initiate Functions
+// Function prototypes
 void changeString(char *);
 
 // Main function
 int main() {
-    printf("+---------------------------+\n");
-    printf("|   String Changer Mk.III   |\n");
-    printf("+---------------------------+\n");
-    printf("|     Input any string      |\n");
-    printf("+---------------------------+\n");
+    printf("+-------------------------+\n");
+    printf("|  String Changer Mk.III  |\n");
+    printf("+-------------------------+\n");
+    printf("|    Input any string     |\n");
+    printf("+-------------------------+\n");
 
     char string[MAX_STRING_LENGTH];
 

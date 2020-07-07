@@ -27,18 +27,18 @@ int main() {
 /**
  * int performBinarySearch(int *, int, int, int)
  * Performs binary search.
- * If search fails, return -1.
+ * If search fails, returns [-1].
  */
 int performBinarySearch(int *data, int target, int indexLow, int indexHigh) {
     if (indexLow > indexHigh) return -1; // Target is not found
 
     int indexPivot = (indexLow + indexHigh) / 2;
 
-    // Target hits the pivot
+    // Target hits pivot
     if (target == data[indexPivot]) return indexPivot;
-    // Target is smaller than the pivot
+    // Target is smaller than pivot
     else if (target < data[indexPivot]) return performBinarySearch(data, target, indexLow, indexPivot - 1);
-    // Target is larger than the pivot
+    // Target is larger than pivot
     else return performBinarySearch(data, target, indexPivot + 1, indexHigh);
 }
 

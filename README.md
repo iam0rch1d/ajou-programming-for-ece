@@ -8,6 +8,7 @@ ___
 * 주어진 예제 코드가 상당히 더럽고 수준이 낮다. 우선 네이밍에서 기본적인 convention이 전혀 지켜지지 않으며 일관성도 없다.
 * 특히 Java 파트에서 두드러지는데, 주어진 예제 코드의 의미나 주어진 예제 코드를 그렇게 구성한 이유가 코드만 봐서 명확하게 드러나지 않고, 변수 사용이나 함수(메서드) 호출도 뭔가 묘하게 비효율적이다. 이 저장소에 업로드된 소스 코드들은 그런 부분들을 상당수 수정한 것.
 * 과제가 매번 바뀌는지는 잘 모름.
+* Kotlin 소스 코드들은 언어 연습할 겸 Java 소스 코드들을 직접 포팅해 본 것.
 ___
 ## Collections
 |Category|Language|Content(Source code)|
@@ -20,9 +21,9 @@ ___
 |report5|Java / Kotlin|- 박물관 입장(Example2.java/.kotlin)|
 |report6|Java|- 시간 관련 클래스 연습(Example3.java)|
 |exercise1|C|- 하노이의 탑(part1.c)<br>- 에라토스테네스의 체(part2.c)<br>- GPIO 제어(part3.c)|
-|exercise2|Java|- 생성자와 소멸자(part1)<br>- 도서 대출 관리 Small(part2)|
+|exercise2|Java|- 생성자와 소멸자(part1)<br>- 도서관 관리 프로그램 Small(part2)|
 |exercise3|Java|- Java Swing GUI 구현(javaproject1-class-application-service에 포함)|
 |cproject1-gomoku|C|오목|
 |cproject2-lcrs-binary-tree|C|Left-Child Right-Sibling Binary 트리|
 |javaproject1-class-application-service|Java|수강신청 서비스 프로그램 (+ GUI)|
-|javaproject2-library-management|Java|도서관 관리 프로그램|
+|javaproject2-library-management|Java|도서관 관리 프로그램 Large|
