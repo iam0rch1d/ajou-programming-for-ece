@@ -16,7 +16,7 @@ int main() {
 
     char string[MAX_STRING_LENGTH];
 
-    scanf("%s", string);
+    gets(string);
     changeString(string);
 
     return 0;
@@ -25,16 +25,16 @@ int main() {
 // Functions
 /**
  * void changeString(char *)
- * Replaces all first character of each words with uppercase.
+ * Replaces all first character of each word with uppercase.
  */
 void changeString(char *string) {
     int i = 0; // Cursor of string array
-    int indexWordFirstCharacter = 0; // Indicate first character of each words
+    int indexWordFirstCharacter = 0; // Indicate first character of each word
 
     printf("\"%s\" changed into \"", string);
 
     while (string[i] != '\0') {
-        // Move cursor until next blank letter to indicate first letter of each word
+        // Move cursor until next blank character to indicate first character of each word
         while (string[i] != ' ' && string[i] != '\0') {
             i++;
         }

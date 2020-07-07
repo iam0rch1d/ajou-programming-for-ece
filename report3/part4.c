@@ -47,7 +47,7 @@ void scanNumberArray(int *numberArray) {
 
 /**
  * void performBubbleSort(int *);
- * Performs bubble sort
+ * Performs bubble sort.
  */
 void performBubbleSort(int *numberArray) {
     int i;
@@ -67,7 +67,7 @@ void performBubbleSort(int *numberArray) {
 
 /**
  * void printNumberArray(const int *)
- * Prints number array
+ * Prints number array.
  */
 void printNumberArray(const int *numberArray) {
     int i;

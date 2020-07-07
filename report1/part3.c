@@ -36,7 +36,7 @@ int main() {
 // Functions
 /**
  * void printBinary()
- * Converts decimal into binary and print it by using recursion.
+ * Converts decimal into binary and prints it by using recursion.
  */
 void printBinary(int number, int hasDecimalPrinted) {
     if (number <= -1) {

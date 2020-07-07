@@ -16,7 +16,7 @@ int main() {
 
     char inputString[MAX_STRING_LENGTH];
 
-    scanf("%s", inputString);
+    gets(inputString);
     changeString(inputString);
 
     return 0;
@@ -25,7 +25,7 @@ int main() {
 // Functions
 /**
  * void changeString(char *)
- * Replaces all first lowercases of each word with uppercase
+ * Replaces all first character of each word with uppercase.
  */
 void changeString(char *inputString) {
     int i = 0; // Cursor of string array

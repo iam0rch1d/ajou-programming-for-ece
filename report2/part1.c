@@ -25,7 +25,7 @@ int main() {
 /**
  * int *scanNumberArray()
  * Scans numbers from user.
- * Returns address of numbers array.
+ * Returns address of number array.
  */
 int *scanNumberArray() {
     char numberString[11];
@@ -43,7 +43,7 @@ int *scanNumberArray() {
 
 /**
  * void printMaxMinValue(const int *)
- * Prints maximum and minimum value of array.
+ * Prints maximum and minimum value of number array.
  */
 void printMaxMinValue(const int *numberArray) {
     int maxValue = numberArray[0];
