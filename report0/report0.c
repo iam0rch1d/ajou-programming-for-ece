@@ -9,7 +9,7 @@ void printBinarySearchResult(int, int);
 int main() {
     int data[] = { 10, 12, 13, 14, 18, 20, 25, 27, 30, 35, 40, 45, 47 };
 
-    printf("Welcome to Programming for Electrical and Computer Engineering class!\n");
+    printf("Welcome to Programming for Electronics and Computer Engineering class!\n");
     printf("Input the target number:");
 
     char targetString[2];

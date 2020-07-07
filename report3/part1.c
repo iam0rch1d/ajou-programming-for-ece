@@ -6,8 +6,8 @@
 #define SWAP_MODE 0
 
 // Function prototypes
-void runFakeSwap(int, int);
-void runRealSwap(int *, int *);
+void performFakeSwap(int, int);
+void performRealSwap(int *, int *);
 
 // Main function
 int main() {
@@ -17,10 +17,10 @@ int main() {
     printf("Before swap: a = %d, b = %d\n", a, b);
 
 #if SWAP_MODE == 0
-    runFakeSwap(a, b);
+    performFakeSwap(a, b);
 
 #elif SWAP_MODE == 1
-    runRealSwap(&a, &b);
+    performRealSwap(&a, &b);
 
 #endif
 
@@ -31,11 +31,11 @@ int main() {
 
 // Functions
 /**
- * void runFakeSwap(int, int)
+ * void performFakeSwap(int, int)
  * Call-by-value function.
- * Does NOT swap.
+ * Does NOT perform swap.
  */
-void runFakeSwap(int a, int b) {
+void performFakeSwap(int a, int b) {
     int temp;
 
     temp = a;
@@ -46,11 +46,11 @@ void runFakeSwap(int a, int b) {
 }
 
 /**
- * void runRealSwap(int, int)
+ * void performRealSwap(int, int)
  * Call-by-reference function.
- * Does swap.
+ * Performs swap.
  */
-void runRealSwap(int* a, int* b) {
+void performRealSwap(int* a, int* b) {
     int temp;
 
     temp = *a;

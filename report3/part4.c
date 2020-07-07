@@ -6,7 +6,7 @@
 
 // Initiate Functions
 void scanNumberArray(int *);
-void runBubbleSort(int *);
+void performBubbleSort(int *);
 void printNumberArray(const int *);
 
 // Main function
@@ -19,7 +19,7 @@ int main() {
     scanNumberArray(numberArray);
     printf("Before sort: ");
     printNumberArray(numberArray);
-    runBubbleSort(numberArray);
+    performBubbleSort(numberArray);
     printf("After sort: ");
     printNumberArray(numberArray);
 
@@ -46,10 +46,10 @@ void scanNumberArray(int *numberArray) {
 }
 
 /**
- * void runBubbleSort(int *);
- * Does bubble sort.
+ * void performBubbleSort(int *);
+ * Performs bubble sort
  */
-void runBubbleSort(int *numberArray) {
+void performBubbleSort(int *numberArray) {
     int i;
     int j;
 
@@ -67,7 +67,7 @@ void runBubbleSort(int *numberArray) {
 
 /**
  * void printNumberArray(const int *)
- * Prints number array.
+ * Prints number array
  */
 void printNumberArray(const int *numberArray) {
     int i;
