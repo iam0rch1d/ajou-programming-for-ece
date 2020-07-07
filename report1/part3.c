@@ -42,7 +42,7 @@ void printBinary(int number, int hasDecimalPrinted) {
     if (number <= -1) {
         printf("Invalid number");
     } else {
-        if (hasDecimalPrinted == false) {
+        if (!hasDecimalPrinted) {
             printf("Decimal %d is binary ", number);
 
             hasDecimalPrinted = true;
