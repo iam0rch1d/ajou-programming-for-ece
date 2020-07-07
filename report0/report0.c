@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Initiate functions
+// Function prototypes
 int search(int *, int, int, int);
 void showSearchResult(int, int);
 

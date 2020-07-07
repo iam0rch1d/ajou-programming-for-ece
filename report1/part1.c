@@ -11,7 +11,7 @@ enum boolean {
     true
 };
 
-// Initiate Functions
+// Function prototypes
 void initializeDatabase(int *, int *);
 void printInformation();
 void runMainLoop(int *);
