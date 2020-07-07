@@ -1,16 +1,9 @@
 #include <stdio.h>
-#include <limits.h>
-
-enum boolean {
-    false = 0,
-    true
-};
+#include <stdlib.h>
 
 // Initiate functions
-int parseInt(char *);
 int search(int *, int, int, int);
 void showSearchResult(int, int);
-
 
 // Main function
 int main() {
@@ -23,75 +16,37 @@ int main() {
 
     scanf("%s", targetString);
 
-    int target = parseInt(targetString);
-    int indexTarget = search(data, target, 0, sizeof(data) / sizeof(data[0]));
+    int target = strtol(targetString, NULL, 10);
 
-    showSearchResult(target, indexTarget);
+    showSearchResult(target, search(data, target, 0, sizeof(int)));
 
     return 0;
 }
 
-
 // Functions
-
-/** int parseInt(char *)
- * Parse string to integer.
- */
-int parseInt(char *string) {
-    char *stringCursor = string;
-    int boolNegative = false;
-    int value = 0;
-
-    while (*stringCursor != '\0') {
-        if (*stringCursor == '-' && stringCursor == string) {
-            boolNegative = true;
-        } else if (*stringCursor < '0' || *stringCursor > '9') {
-            printf("Number Format Exception.\n");
-
-            return INT_MAX;
-        }
-
-        value *= 10;
-
-        if (boolNegative) {
-            value -= *stringCursor - '0';
-        } else {
-            value += *stringCursor - '0';
-        }
-
-        stringCursor++;
-    }
-
-    return value;
-}
-
-/** int search(int *, int, int, int)
+/**
+ * int search(int *, int, int, int)
  * Perform binary search.
  * If search fails, return -1.
  */
 int search(int *data, int target, int indexLow, int indexHigh) {
-    if (indexLow > indexHigh) { // Target is not found
-        return -1;
-    }
+    if (indexLow > indexHigh) return -1; // Target is not found
 
     int indexPivot = (indexLow + indexHigh) / 2;
 
-    if (target == data[indexPivot]) { // Target hits the pivot
-        return indexPivot;
-    } else if (target < data[indexPivot]) { // Target is smaller than the pivot
-        return search(data, target, indexLow, indexPivot - 1);
-    } else { // Target is larger than the pivot
-        return search(data, target, indexPivot + 1, indexHigh);
-    }
+    // Target hits the pivot
+    if (target == data[indexPivot]) return indexPivot;
+    // Target is smaller than the pivot
+    else if (target < data[indexPivot]) return search(data, target, indexLow, indexPivot - 1);
+    // Target is larger than the pivot
+    else return search(data, target, indexPivot + 1, indexHigh);
 }
 
-/** void showSearchResult(int, int)
+/**
+ * void showSearchResult(int, int)
  * Show binary search result.
  */
 void showSearchResult(int target, int indexTarget) {
-    if (indexTarget == -1) { // Search fails
-        printf("%d is not found.", target);
-    } else { // Search succeeds
-        printf("%d is the index %d.\n", target, indexTarget);
-    }
+    if (indexTarget == -1) printf("%d is not found.", target); // Search fails
+    else printf("%d is the index %d.\n", target, indexTarget); // Search succeeds
 }
