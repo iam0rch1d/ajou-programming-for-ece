@@ -14,7 +14,7 @@ ___
 ## Collections
 |Category|Language|Content(Source code)|
 |-|:-:|-|
-|report0|C|- 이진 탐색 알고리즘(part1.c)|
+|report0|C|- 이진 탐색 알고리즘(report0.c)|
 |report1|C|- 소수 찾기(part1.c)<br>- 숫자 Character 판별(part2.c)<br>- 십진수-이진수 변환(part3.c)|
 |report2|C|- 배열의 최대/최소 찾기(part1.c)<br>- 문자열 변경(part2.c, part3.c, part4.c)|
 |report3|C|- Swap(part1.c)<br>- 평균 찾기(part2.c)<br>- 문자열 복사 I(part3.c)<br> - 버블 정렬(part4.c)<br>- 문자열 복사 II(part5.c)|
