@@ -157,7 +157,10 @@ int main(void) {
 
 // Functions
 
-// InitBoard() - Initialize board
+/**
+ * void initializeBoard(int **, int)
+ * Defines initial board state.
+ */
 void initializeBoard(int **board, int boardSize) {
     int i;
     int j;
@@ -169,7 +172,10 @@ void initializeBoard(int **board, int boardSize) {
     }
 }
 
-// PrintCurrentBoard() - Print current state of board
+/**
+ * void printCurrentBoard(int **, int, int, int, int)
+ * Prints current board state.
+ */
 void printCurrentBoard(int **board, int xPosition, int yPosition, int countMoves, int boardSize) {
     int currentPlayer = countMoves % NUM_PLAYER;
     int i;
@@ -182,28 +188,30 @@ void printCurrentBoard(int **board, int xPosition, int yPosition, int countMoves
             if (i == yPosition && j == xPosition &&
                 isGomoku(board, xPosition, yPosition, countMoves, boardSize) == false) {
                 printf(" @ ");
-            } else switch (board[i][j]) {
-                case STATE_BLACK: {
-                    printf(" B ");
+            } else {
+                switch (board[i][j]) {
+                    case STATE_BLACK: {
+                        printf(" B ");
 
-                    break;
-                }
-                case STATE_WHITE: {
-                    printf(" W ");
-
-                    break;
-                }
-                case STATE_EMPTY: {
-                    if (i == yPosition && j == xPosition) {
-                        printf(" @ ");
-                    } else {
-                        printf(" . ");
+                        break;
                     }
+                    case STATE_WHITE: {
+                        printf(" W ");
 
-                    break;
-                }
-                default: {
-                    break;
+                        break;
+                    }
+                    case STATE_EMPTY: {
+                        if (i == yPosition && j == xPosition) {
+                            printf(" @ ");
+                        } else {
+                            printf(" . ");
+                        }
+
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
             }
         }
@@ -226,23 +234,38 @@ void printCurrentBoard(int **board, int xPosition, int yPosition, int countMoves
     }
 }
 
-// IsPositionInBoard() - Check if move is in board
+/**
+ * int isPositionInBoard(int, int, int)
+ * Checks if a move is in the board.
+ */
 int isPositionInBoard(int xPosition, int yPosition, int boardSize) {
     return (xPosition >= 0 && xPosition < boardSize && yPosition >= 0 && yPosition < boardSize);
 }
 
-// IsPlaceable() - Check if point is placeable. It should be empty and not '3-3' (for black) to place stone.
+/**
+ * int isPlaceable(int **, int, int, int, int)
+ * Checks if a point is placeable.
+ * The term 'placeable' refers to satisfying all these followings.
+ * First. The move must be empty([STATE_EMPTY]).
+ * Second. The move must not be '3-3', only for black.
+ */
 int isPlaceable(int **board, int xPosition, int yPosition, int countMoves, int boardSize) {
     return (isEmpty(board, xPosition, yPosition) == true
     && isThreeAndThree(board, xPosition, yPosition, countMoves, boardSize) == false);
 }
 
-// IsEmpty() - Check if point is empty
+/**
+ * int isEmpty(int **, int, int)
+ * Checks if a point is empty.
+ */
 int isEmpty(int **board, int xPosition, int yPosition) {
     return (board[yPosition][xPosition] == STATE_EMPTY);
 }
 
-// IsExplicitThreeAndThree() - Check if '3-3' has occurred, only for black.
+/**
+ * int isThreeAndThree(int **, int, int, int, int)
+ * Checks if a '3-3' has occurred.
+ */
 int isThreeAndThree(int **board, int xPosition, int yPosition, int countMoves, int boardSize) {
     int currentPlayer = countMoves % NUM_PLAYER;
     int xMargin;
@@ -262,7 +285,8 @@ int isThreeAndThree(int **board, int xPosition, int yPosition, int countMoves, i
     // Check how many 'opened 3-in-a-row' placed position has in four directions
     for (i = 0; i < NUM_DIRECTION; i++) {
         isThree[i] = false;
-        switch (i) {                      
+
+        switch (i) {
             case DIRECTION_NUMPAD1_TO_NUMPAD9: {
                 xMargin = 1;
                 yMargin = -1;
@@ -338,7 +362,10 @@ int isThreeAndThree(int **board, int xPosition, int yPosition, int countMoves, i
     }
 }
 
-// IsGomoku() - Check if there is victory
+/**
+ * int isGomoku(int **, int, int, int, int);
+ * Checks if there is a victory.
+ */
 int isGomoku(int **board, int xPosition, int yPosition, int countMoves, int boardSize) {
     int currentPlayer = countMoves % NUM_PLAYER;
     int lineStack[NUM_DIRECTION];
@@ -442,6 +469,10 @@ int isGomoku(int **board, int xPosition, int yPosition, int countMoves, int boar
     return false;
 }
 
+/**
+ * int isDrawGame(int, int)
+ * Checks if there is no point to place any stone.
+ */
 int isDrawGame(int countMove, int boardSize) {
     return (countMove >= (boardSize * boardSize - 1));
 }
