@@ -245,8 +245,10 @@ int isEmpty(int **board, int xPosition, int yPosition) {
 // IsExplicitThreeAndThree() - Check if '3-3' has occurred, only for black.
 int isThreeAndThree(int **board, int xPosition, int yPosition, int countMoves, int boardSize) {
     int currentPlayer = countMoves % NUM_PLAYER;
+    int xMargin;
+    int yMargin;
     int isThree[NUM_DIRECTION];
-    int countExplicitThree = 0;
+    int countThree = 0;
     int i;
 
     // Conditions that '3-3' never happen
@@ -258,153 +260,30 @@ int isThreeAndThree(int **board, int xPosition, int yPosition, int countMoves, i
     }
 
     // Check how many 'opened 3-in-a-row' placed position has in four directions
-    for (i = 0; i < NUM_DIRECTION; i++) { 
+    for (i = 0; i < NUM_DIRECTION; i++) {
+        isThree[i] = false;
         switch (i) {                      
             case DIRECTION_NUMPAD1_TO_NUMPAD9: {
-                isThree[DIRECTION_NUMPAD1_TO_NUMPAD9] = false;
-                
-                // Pattern '.AAA.'
-                //            ^
-                //      [PLACING HERE]
-                if (xPosition >= 2 && xPosition <= (boardSize - 3)
-                && yPosition >= 2 && yPosition <= (boardSize - 3)
-                && board[yPosition - 1][xPosition + 1] == currentPlayer
-                && board[yPosition + 1][xPosition - 1] == currentPlayer
-                && board[yPosition - 2][xPosition + 2] == STATE_EMPTY
-                && board[yPosition + 2][xPosition - 2] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD1_TO_NUMPAD9] = true;
-                }
-                // Pattern '?.AAA.'
-                //            ^
-                //      [PLACING HERE]
-                else if (xPosition >= 1 && xPosition <= (boardSize - 4)
-                && yPosition >= 3 && yPosition <= (boardSize - 2)
-                && board[yPosition - 1][xPosition + 1] == currentPlayer
-                && board[yPosition + 1][xPosition - 1] == STATE_EMPTY
-                && board[yPosition - 2][xPosition + 2] == currentPlayer
-                && board[yPosition - 3][xPosition + 3] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD1_TO_NUMPAD9] = true;
-                }
-                // Pattern '.AAA.?'
-                //             ^
-                //      [PLACING HERE]
-                else if (xPosition >= 3 && xPosition <= (boardSize - 2)
-                && yPosition >= 1 && yPosition <= (boardSize - 4)
-                && board[yPosition + 1][xPosition - 1] == currentPlayer
-                && board[yPosition - 1][xPosition + 1] == STATE_EMPTY
-                && board[yPosition + 2][xPosition - 2] == currentPlayer
-                && board[yPosition + 3][xPosition - 3] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD1_TO_NUMPAD9] = true;
-                }
+                xMargin = 1;
+                yMargin = -1;
 
                 break;
             }
             case DIRECTION_NUMPAD2_TO_NUMPAD8: {
-                isThree[DIRECTION_NUMPAD2_TO_NUMPAD8] = false;
-
-                // Pattern '.AAA.'
-                //            ^
-                //      [PLACING HERE]
-                if (yPosition >= 2 && yPosition <= (boardSize - 3)
-                && board[yPosition - 1][xPosition] == currentPlayer
-                && board[yPosition + 1][xPosition] == currentPlayer
-                && board[yPosition - 2][xPosition] == STATE_EMPTY
-                && board[yPosition + 2][xPosition] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD2_TO_NUMPAD8] = true;
-                }
-                // Pattern '?.AAA.'
-                //            ^
-                //      [PLACING HERE]
-                else if (yPosition >= 3 && yPosition <= (boardSize - 2)
-                && board[yPosition - 1][xPosition] == currentPlayer
-                && board[yPosition + 1][xPosition] == STATE_EMPTY
-                && board[yPosition - 2][xPosition] == currentPlayer
-                && board[yPosition - 3][xPosition] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD2_TO_NUMPAD8] = true;
-                }
-                // Pattern '.AAA.?'
-                //             ^
-                //      [PLACING HERE]
-                else if (yPosition >= 1 && yPosition <= (boardSize - 4)
-                && board[yPosition + 1][xPosition] == currentPlayer
-                && board[yPosition - 1][xPosition] == STATE_EMPTY
-                && board[yPosition + 2][xPosition] == currentPlayer
-                && board[yPosition + 3][xPosition] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD2_TO_NUMPAD8] = true;
-                }
+                xMargin = 1;
+                yMargin = 0;
 
                 break;
             }
             case DIRECTION_NUMPAD3_TO_NUMPAD7: {
-                isThree[DIRECTION_NUMPAD3_TO_NUMPAD7] = false;
-                // Pattern '.AAA.'
-                //            ^
-                //      [PLACING HERE]
-                if (xPosition >= 2 && xPosition <= (boardSize - 3)
-                && yPosition >= 2 && yPosition <= (boardSize - 3)
-                && board[yPosition + 1][xPosition + 1] == currentPlayer
-                && board[yPosition - 1][xPosition - 1] == currentPlayer
-                && board[yPosition + 2][xPosition + 2] == STATE_EMPTY
-                && board[yPosition - 2][xPosition - 2] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD3_TO_NUMPAD7] = true;
-                }
-                // Pattern '?.AAA.'
-                //            ^
-                //      [PLACING HERE]
-                else if (xPosition >= 1 && xPosition <= (boardSize - 4)
-                && yPosition >= 1 && yPosition <= (boardSize - 4)
-                && board[yPosition + 1][xPosition + 1] == currentPlayer
-                && board[yPosition - 1][xPosition - 1] == STATE_EMPTY
-                && board[yPosition + 2][xPosition + 2] == currentPlayer
-                && board[yPosition + 3][xPosition + 3] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD3_TO_NUMPAD7] = true;
-                }
-                // Pattern '.AAA.?'
-                //             ^
-                //      [PLACING HERE]
-                else if (xPosition >= 3 && xPosition <= (boardSize - 2)
-                && yPosition >= 3 && yPosition <= (boardSize - 2)
-                && board[yPosition - 1][xPosition - 1] == currentPlayer
-                && board[yPosition + 1][xPosition + 1] == STATE_EMPTY
-                && board[yPosition - 2][xPosition - 2] == currentPlayer
-                && board[yPosition - 3][xPosition - 3] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD3_TO_NUMPAD7] = true;
-                }
+                xMargin = 1;
+                yMargin = 1;
 
                 break;
             }
             case DIRECTION_NUMPAD4_TO_NUMPAD6: {
-                isThree[DIRECTION_NUMPAD4_TO_NUMPAD6] = false;
-                // Pattern '.AAA.'
-                //            ^
-                //      [PLACING HERE]
-                if (xPosition >= 2 && xPosition <= (boardSize - 3)
-                && board[yPosition][xPosition - 1] == currentPlayer
-                && board[yPosition][xPosition + 1] == currentPlayer
-                && board[yPosition][xPosition - 2] == STATE_EMPTY
-                && board[yPosition][xPosition + 2] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD4_TO_NUMPAD6] = true;
-                }
-                // Pattern '?.AAA.'
-                //            ^
-                //      [PLACING HERE]
-                else if (xPosition >= 3 && xPosition <= (boardSize - 2)
-                && board[yPosition][xPosition - 1] == currentPlayer
-                && board[yPosition][xPosition + 1] == STATE_EMPTY
-                && board[yPosition][xPosition - 2] == currentPlayer
-                && board[yPosition][xPosition - 3] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD4_TO_NUMPAD6] = true;
-                }
-                // Pattern '.AAA.?'
-                //             ^
-                //      [PLACING HERE]
-                else if (xPosition >= 1 && xPosition <= (boardSize - 4)
-                && board[yPosition][xPosition + 1] == currentPlayer
-                && board[yPosition][xPosition - 1] == STATE_EMPTY
-                && board[yPosition][xPosition + 2] == currentPlayer
-                && board[yPosition][xPosition + 3] == STATE_EMPTY) {
-                    isThree[DIRECTION_NUMPAD4_TO_NUMPAD6] = true;
-                }
+                xMargin = 0;
+                yMargin = 1;
 
                 break;
             }
@@ -412,13 +291,47 @@ int isThreeAndThree(int **board, int xPosition, int yPosition, int countMoves, i
                 break;
             }
         }
+
+        // Pattern '.AAA.'
+        //            ^
+        //      [PLACING HERE]
+        if (xPosition >= 2 && xPosition <= (boardSize - 3)
+        && yPosition >= 2 && yPosition <= (boardSize - 3)
+        && board[yPosition - 2 * yMargin][xPosition - 2 * xMargin] == STATE_EMPTY
+        && board[yPosition - 1 * yMargin][xPosition - 1 * xMargin] == currentPlayer
+        && board[yPosition + 1 * yMargin][xPosition + 1 * xMargin] == currentPlayer
+        && board[yPosition + 2 * yMargin][xPosition + 2 * xMargin] == STATE_EMPTY) {
+            isThree[i] = true;
+        }
+        // Pattern '?.AAA.'
+        //            ^
+        //      [PLACING HERE]
+        else if (xPosition >= 1 && xPosition <= (boardSize - 4)
+        && yPosition >= 3 && yPosition <= (boardSize - 2)
+        && board[yPosition - 1 * yMargin][xPosition - 1 * xMargin] == STATE_EMPTY
+        && board[yPosition + 1 * yMargin][xPosition + 1 * xMargin] == currentPlayer
+        && board[yPosition + 2 * yMargin][xPosition + 2 * xMargin] == currentPlayer
+        && board[yPosition + 3 * yMargin][xPosition + 3 * xMargin] == STATE_EMPTY) {
+            isThree[i] = true;
+        }
+        // Pattern '.AAA.?'
+        //             ^
+        //      [PLACING HERE]
+        else if (xPosition >= 3 && xPosition <= (boardSize - 2)
+        && yPosition >= 1 && yPosition <= (boardSize - 4)
+        && board[yPosition - 3 * yMargin][xPosition - 3 * xMargin] == STATE_EMPTY
+        && board[yPosition - 2 * yMargin][xPosition - 2 * xMargin] == currentPlayer
+        && board[yPosition - 1 * yMargin][xPosition - 1 * xMargin] == currentPlayer
+        && board[yPosition + 1 * yMargin][xPosition + 1 * xMargin] == STATE_EMPTY) {
+            isThree[i] = true;
+        }
     }
 
     for (i = 0; i <= NUM_DIRECTION; i++) {
-        countExplicitThree += isThree[i];
+        countThree += isThree[i];
     }
 
-    if (countExplicitThree == 2) { // Ban position if there are two 'explicit opened 3-in-a-row'
+    if (countThree == 2) { // Ban position if there are two 'opened 3-in-a-row'
         return true;
     } else {
         return false;
