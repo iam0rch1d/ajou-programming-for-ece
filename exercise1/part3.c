@@ -5,47 +5,56 @@
 // Macros
 #define TIME_SLEEP 1000
 
+enum boolean {
+    false = 0,
+    true
+};
+
 // Global variables
-unsigned char* gpioModeRegister;
-unsigned char* gpioInputRegister;
-unsigned char* gpioOutputRegister;
+unsigned char *gpioModeRegister;
+unsigned char *gpioInputRegister;
+unsigned char *gpioOutputRegister;
 unsigned char switch0;
 unsigned char switch1;
 unsigned char diode0;
 unsigned char diode1;
 
 // Function prototypes
-void init(void);
-void printMenu(void);
-unsigned int setMenuSelection(void);
+void initialize(void);
+void updateStatus(void);
 void printCurrentStatus(void);
-unsigned int checkGpioPin(const unsigned char* gpioRegister, unsigned int pinNo);
-void setGpioPinTrue(unsigned char* gpioRegister, unsigned int pinNo);
-void setGpioPinFalse(unsigned char* gpioRegister, unsigned int pinNo);
-void update(void);
+unsigned int isGpioPinTrue(const unsigned char *gpioRegister, unsigned int pinNo);
+void setGpioPinTrue(unsigned char *gpioRegister, unsigned int pinNo);
+void setGpioPinFalse(unsigned char *gpioRegister, unsigned int pinNo);
 void setGpioMode(void);
 void setGpioOutputVoltage(void);
 void setSwitch(void);
 
-//----------------------------------------------------------------------------------------------------------------------
 // Main function
 int main(void) {
-    init();
+    initialize();
 
     unsigned int menuSelection = 0;
 
     while (menuSelection != 4) {
         system("cls"); // Clean screen
-        update();
+        updateStatus();
         printCurrentStatus();
-        printMenu();
+        printf("----------------------------------------\n");
+        printf("1. Set GPIO Mode (Input / Output)\n");
+        printf("2. Set GPIO Output Voltage (0V / 5V)\n");
+        printf("3. Set Switch (On / Off)\n");
+        printf("4. Exit\n");
+        printf("----------------------------------------\n\n");
+        printf("Select option ([1-4]):");
 
-        menuSelection = setMenuSelection();
+        scanf("%d", &menuSelection);
+        printf("\n");
 
         switch (menuSelection) {
             case 1: {
                 setGpioMode();
-                
+
                 break;
             }
             case 2: {
@@ -64,54 +73,39 @@ int main(void) {
             default: {
                 printf("Option does not exist.\n");
                 Sleep(TIME_SLEEP);
-                
+
                 break;
             }
         }
     }
 
-    free(gpioModeRegister); // Release dynamic memory allocations
+    // Release dynamic memory allocations
+    free(gpioModeRegister);
     free(gpioInputRegister);
     free(gpioOutputRegister);
 
     return 0;
 }
-//----------------------------------------------------------------------------------------------------------------------
-// Functions
 
-// init() - Initialize GPIO registers
-void init(void) {
-    gpioModeRegister = (unsigned char*)malloc(sizeof(unsigned char));
-    gpioInputRegister = (unsigned char*)malloc(sizeof(unsigned char));
-    gpioOutputRegister = (unsigned char*)malloc(sizeof(unsigned char));
+// Functions
+/**
+ * void initialize(void)
+ * Initializes GPIO registers.
+ */
+void initialize(void) {
+    gpioModeRegister = (unsigned char *) malloc(sizeof(unsigned char));
+    gpioInputRegister = (unsigned char *) malloc(sizeof(unsigned char));
+    gpioOutputRegister = (unsigned char *) malloc(sizeof(unsigned char));
 
     *gpioModeRegister = 0x44;   // 0b01000100
     *gpioInputRegister = 0x00;  // 0b00000000
     *gpioOutputRegister = 0x00; // 0b00000000
 }
 
-// printMenu() - User interface about menu selection
-void printMenu(void) {
-    printf("----------------------------------------\n");
-    printf("1. Set GPIO Mode (Input / Output)\n");
-    printf("2. Set GPIO Output Voltage (0V / 5V)\n");
-    printf("3. Set Switch Mode (On / Off)\n");
-    printf("4. Exit\n");
-    printf("----------------------------------------\n\n");
-    printf("Select option:");
-}
-
-// setMenuSelection() - Scan menu selection from user
-unsigned int setMenuSelection(void) {
-    unsigned int menuSelection;
-
-    scanf("%d", &menuSelection);
-    printf("\n");
-
-    return menuSelection;
-}
-
-// printCurrentStatus() - User interface about GPIO register table, diodes, switches
+/**
+ * void printCurrentStatus(void)
+ * Prints UI about GPIO register table, diodes, switches.
+ */
 void printCurrentStatus(void) {
     printf("---------------------------------------------------------------------------------------\n");
     printf("| GPIO LIST   | GPIO 7 | GPIO 6 | GPIO 5 | GPIO 4 | GPIO 3 | GPIO 2 | GPIO 1 | GPIO 0 |\n");
@@ -119,10 +113,9 @@ void printCurrentStatus(void) {
     printf("| GPIO MODE   |");
 
     for (int i = 7; i >= 0; i--) {
-        if (checkGpioPin(gpioModeRegister, i) == 0) {
+        if (isGpioPinTrue(gpioModeRegister, i) == false) {
             printf("   IN   |");
-        }
-        else {
+        } else {
             printf("  OUT   |");
         }
     }
@@ -132,10 +125,9 @@ void printCurrentStatus(void) {
     printf("| GPIO INPUT  |");
 
     for (int i = 7; i >= 0; i--) {
-        if (checkGpioPin(gpioInputRegister, i) == 0) {
+        if (isGpioPinTrue(gpioInputRegister, i) == false) {
             printf("   0V   |");
-        }
-        else {
+        } else {
             printf("   5V   |");
         }
     }
@@ -145,10 +137,9 @@ void printCurrentStatus(void) {
     printf("| GPIO OUTPUT |");
 
     for (int i = 7; i >= 0; i--) {
-        if (checkGpioPin(gpioOutputRegister, i) == 0) {
+        if (isGpioPinTrue(gpioOutputRegister, i) == false) {
             printf("   0V   |");
-        }
-        else {
+        } else {
             printf("   5V   |");
         }
     }
@@ -157,125 +148,138 @@ void printCurrentStatus(void) {
     printf("---------------------------------------------------------------------------------------\n");
     printf("diode0 : ");
 
-    if (diode0 == 0) {
+    if (diode0 == false) {
         printf("OFF\n");
-    }
-    else if (diode0 == 1) {
+    } else if (diode0 == true) {
         printf("ON\n");
     }
 
     printf("diode1 : ");
 
-    if (diode1 == 0) {
+    if (diode1 == false) {
         printf("OFF\n");
-    }
-    else if (diode1 == 1) {
+    } else if (diode1 == true) {
         printf("ON\n");
     }
 
     printf("switch0 : ");
 
-    if (switch0 == 0) {
+    if (switch0 == false) {
         printf("OFF\n");
-    }
-    else if (switch0 == 1) {
+    } else if (switch0 == true) {
         printf("ON\n");
     }
 
     printf("switch1 : ");
 
-    if (switch1 == 0) {
+    if (switch1 == false) {
         printf("OFF\n");
-    }
-    else if (switch1 == 1) {
+    } else if (switch1 == true) {
         printf("ON\n");
     }
 }
 
-// checkGpioPin() - Check boolean state of single GPIO register pin
-unsigned int checkGpioPin(const unsigned char* gpioRegister, unsigned int pinNo) {
-    return (*gpioRegister & ((unsigned int)1 << pinNo)) >> pinNo;
+/**
+ * unsigned int isGpioPinTrue(const unsigned char *gpioRegister, unsigned int pinNo)
+ * Checks if single GPIO register pin is [true].
+ */
+unsigned int isGpioPinTrue(const unsigned char *gpioRegister, unsigned int pinNo) {
+    return (*gpioRegister & ((unsigned int) true << pinNo)) >> pinNo;
 }
 
-// setGpioPinTrue() - Set state of single GPIO register pin to '1'
-void setGpioPinTrue(unsigned char* gpioRegister, unsigned int pinNo) {
-    *gpioRegister |= ((unsigned int)1 << pinNo);
+/**
+ * void setGpioPinTrue(unsigned char *gpioRegister, unsigned int pinNo)
+ * Sets state of single GPIO register pin to [true].
+ */
+void setGpioPinTrue(unsigned char *gpioRegister, unsigned int pinNo) {
+    *gpioRegister |= ((unsigned int) true << pinNo);
 }
 
-// setGpioPinFalse() - Set state of single GPIO register pin to '0'
-void setGpioPinFalse(unsigned char* gpioRegister, unsigned int pinNo) {
+/**
+ * void setGpioPinFalse(unsigned char *gpioRegister, unsigned int pinNo)
+ * Sets state of single GPIO register pin to [false].
+ */
+void setGpioPinFalse(unsigned char *gpioRegister, unsigned int pinNo) {
     *gpioRegister = ~(*gpioRegister);
-    *gpioRegister |= ((unsigned int)1 << pinNo);
+    *gpioRegister |= ((unsigned int) true << pinNo);
     *gpioRegister = ~(*gpioRegister);
 }
 
-// update() - Update all status of GPIO registers, global variables
-void update(void) {
-    // GPIO input register pin 1 condition
-    if (switch0 == 1 && checkGpioPin(gpioModeRegister, 0) == 1 && checkGpioPin(gpioModeRegister, 1) == 0
-    && checkGpioPin(gpioOutputRegister, 0) == 1) {
+/**
+ * void updateStatus(void)
+ * Updates all status of GPIO registers, global variables
+ */
+void updateStatus(void) {
+    // GPIO input register pin 1 conditions
+    if (switch0 == true
+        && isGpioPinTrue(gpioModeRegister, 0) == true
+        && isGpioPinTrue(gpioModeRegister, 1) == false
+        && isGpioPinTrue(gpioOutputRegister, 0) == true
+    ) {
         setGpioPinTrue(gpioInputRegister, 1);
-    }
-    else {
+    } else {
         setGpioPinFalse(gpioInputRegister, 1);
     }
 
-    // GPIO output register pin 2 condition
-    if (checkGpioPin(gpioInputRegister, 1) == 1) {
+    // GPIO output register pin 2 conditions
+    if (isGpioPinTrue(gpioInputRegister, 1) == true) {
         setGpioPinTrue(gpioOutputRegister, 2);
-    }
-    else {
+    } else {
         setGpioPinFalse(gpioOutputRegister, 2);
     }
 
-    // diode0 condition
-    if (checkGpioPin(gpioOutputRegister, 2) == 1 && (checkGpioPin(gpioModeRegister, 3) == 0
-    || checkGpioPin(gpioOutputRegister, 3) == 0)) {
-        diode0 = 1;
-    }
-    else {
-        diode0 = 0;
+    // diode0 conditions
+    if (isGpioPinTrue(gpioOutputRegister, 2) == true
+        && (isGpioPinTrue(gpioModeRegister, 3) == false || isGpioPinTrue(gpioOutputRegister, 3) == false)
+    ) {
+        diode0 = true;
+    } else {
+        diode0 = false;
     }
 
-    // GPIO input register pin 5 condition
-    if (switch1 == 1 && checkGpioPin(gpioModeRegister, 4) == 1 && checkGpioPin(gpioModeRegister, 5) == 0
-    && checkGpioPin(gpioOutputRegister, 4) == 1) {
+    // GPIO input register pin 5 conditions
+    if (switch1 == true
+        && isGpioPinTrue(gpioModeRegister, 4) == true
+        && isGpioPinTrue(gpioModeRegister, 5) == false
+        && isGpioPinTrue(gpioOutputRegister, 4) == true
+    ) {
         setGpioPinTrue(gpioInputRegister, 5);
-    }
-    else {
+    } else {
         setGpioPinFalse(gpioInputRegister, 5);
     }
 
-    // GPIO output register pin 6 condition
-    if (checkGpioPin(gpioInputRegister, 5) == 1) {
+    // GPIO output register pin 6 conditions
+    if (isGpioPinTrue(gpioInputRegister, 5) == true) {
         setGpioPinTrue(gpioOutputRegister, 6);
-    }
-    else {
+    } else {
         setGpioPinFalse(gpioOutputRegister, 6);
     }
 
-    // diode1 condition
-    if (checkGpioPin(gpioOutputRegister, 6) == 1 && (checkGpioPin(gpioModeRegister, 7) == 0
-    || checkGpioPin(gpioOutputRegister, 7) == 0)) {
-        diode1 = 1;
-    }
-    else {
-        diode1 = 0;
+    // diode1 conditions
+    if (isGpioPinTrue(gpioOutputRegister, 6) == true
+        && (isGpioPinTrue(gpioModeRegister, 7) == false || isGpioPinTrue(gpioOutputRegister, 7) == false)
+    ) {
+        diode1 = true;
+    } else {
+        diode1 = false;
     }
 
     // All other conditions are 'don't care'
 }
 
-// setGpioMode() - Function performed when selected menu is '1'
+/**
+ * void setGpioMode(void)
+ * Function performed when selected menu is [1].
+ */
 void setGpioMode(void) {
-    unsigned int pinNo = 0;
-    unsigned int modeIO = 0;
+    unsigned int pinNo = false;
+    unsigned int gpioPinMode = false;
 
     printf("Select GPIO pin. ([0-7], except [2, 6]):");
     scanf("%d", &pinNo);
     printf("\n");
 
-    pinNo &= (unsigned int)0x00000007; // Bit masking
+    pinNo &= (unsigned int) 0x00000007; // Bit masking
 
     if (pinNo == 2 || pinNo == 6) {
         printf("Can't select GPIO pin %d. Select again.\n", pinNo);
@@ -284,28 +288,30 @@ void setGpioMode(void) {
         return;
     }
 
-    printf("Set GPIO pin mode. ([0] = Input / [1] = Output):");
-    scanf("%d", &modeIO);
+    printf("Set GPIO pin mode. ([0] - Input / [1] - Output):");
+    scanf("%d", &gpioPinMode);
     printf("\n");
 
-    if (modeIO == 0) {
+    if (gpioPinMode == false) {
         setGpioPinFalse(gpioModeRegister, pinNo);
-    }
-    else {
+    } else {
         setGpioPinTrue(gpioModeRegister, pinNo);
     }
 }
 
-// setGpioOutputVoltage() - Function performed when selected menu is '2'
+/**
+ * void setGpioOutputVoltage(void)
+ * Function performed when selected menu is [2].
+ */
 void setGpioOutputVoltage(void) {
-    unsigned int pinNo = 0;
-    unsigned int powerOnOff = 0;
+    unsigned int pinNo = false;
+    unsigned int voltageLevel = false;
 
     printf("Select GPIO pin. ([0-7], except [2, 6]):");
     scanf("%d", &pinNo);
     printf("\n");
 
-    pinNo &= (unsigned int)0x00000007; // Bit masking
+    pinNo &= (unsigned int) 0x00000007; // Bit masking
 
     if (pinNo == 2 || pinNo == 6) {
         printf("Can't select GPIO pin %d. Select again.\n", pinNo);
@@ -314,47 +320,46 @@ void setGpioOutputVoltage(void) {
         return;
     }
 
-    printf("Set voltage level. ([0] = 0V / [1] = 5V):");
-    scanf("%d", &powerOnOff);
+    printf("Set voltage level. ([0] - 0V / [1] - 5V):");
+    scanf("%d", &voltageLevel);
     printf("\n");
 
-    powerOnOff &= (unsigned int)0x00000001; // Bit masking
+    voltageLevel &= (unsigned int) 0x00000001; // Bit masking
 
-    if (powerOnOff == 0) {
+    if (voltageLevel == false) {
         setGpioPinFalse(gpioOutputRegister, pinNo);
-    }
-    else {
+    } else {
         setGpioPinTrue(gpioOutputRegister, pinNo);
     }
 }
 
-// setSwitch() - Function performed when selected menu is '3'
+/**
+ * void setSwitch(void)
+ * Function performed when selected menu is [3].
+ */
 void setSwitch(void) {
-    unsigned int switchNo = 0;
-    unsigned int powerOnOff = 0;
+    unsigned int switchNo = false;
+    unsigned int switchState = false;
 
-    printf("Select switch. ([0] = switch0 / [1] = switch1):");
+    printf("Select switch. ([0] - switch0 / [1] - switch1):");
     scanf("%d", &switchNo);
     printf("\n");
 
-    switchNo &= (unsigned int)0x00000001; // Bit masking
+    switchNo &= (unsigned int) 0x00000001; // Bit masking
 
-    printf("Set switch state. ([0] = Off / [1] = On):");
-    scanf("%d", &powerOnOff);
+    printf("Set switch state. ([0] - Off / [1] - On):");
+    scanf("%d", &switchState);
     printf("\n");
 
-    powerOnOff &= (unsigned int)0x00000001; // Bit masking
+    switchState &= (unsigned int) 0x00000001; // Bit masking
 
-    if (switchNo == 0 && powerOnOff == 0) {
-        switch0 = 0;
-    }
-    else if (switchNo == 0 && powerOnOff == 1) {
-        switch0 = 1;
-    }
-    else if (switchNo == 1 && powerOnOff == 0) {
-        switch1 = 0;
-    }
-    else {
-        switch1 = 1;
+    if (switchNo == false && switchState == false) {
+        switch0 = false;
+    } else if (switchNo == false && switchState == true) {
+        switch0 = true;
+    } else if (switchNo == true && switchState == false) {
+        switch1 = false;
+    } else {
+        switch1 = true;
     }
 }
