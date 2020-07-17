@@ -49,7 +49,7 @@ int main(void) {
     int **board = NULL;
     int boardSize;
     int countMoves = 0;
-    int currentPlayer = STATE_BLACK;
+    int currentPlayer;
     int i;
     char inputMoveCursor;
     Point CursorPosition;
@@ -156,7 +156,6 @@ int main(void) {
 }
 
 // Functions
-
 /**
  * void initializeBoard(int **, int)
  * Defines initial board state.
